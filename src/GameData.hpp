@@ -12,4 +12,6 @@ private:
 public:
     void renderMap(Renderer &ren);
     void renderEntities(Renderer &ren);
+
+    void addTile(SDL_Texture *texture);
 };

@@ -33,8 +33,12 @@ Renderer::~Renderer() {
 }
 
 void Renderer::clear() const {
-    SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255); // black
-    SDL_RenderClear(m_renderer);
+    if (SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255) != 0) {
+        err("Could not set render draw color", SDL_GetError());
+    }
+    if (SDL_RenderClear(m_renderer) != 0) {
+        err("Could not clear the renderer", SDL_GetError());
+    }
 }
 
 void Renderer::present() const {

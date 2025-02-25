@@ -1,7 +1,10 @@
 #define SDL_MAIN_HANDLED
 #include "Engine.hpp"
+#include "slog.hpp"
 
 int main() {
+    // slog::logLevel = slog::Level::TRACE;
+
     // 0 on success
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         err("SDL could not init.", SDL_GetError());

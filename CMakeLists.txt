@@ -24,6 +24,8 @@ add_executable(SDL_Engine
         src/Map.hpp
         src/Tile.cpp
         src/Tile.hpp
+        src/AssetLoader.cpp
+        src/AssetLoader.hpp
 )
 
 target_include_directories(SDL_Engine PRIVATE ${SDL2_DIR}/include/SDL2)

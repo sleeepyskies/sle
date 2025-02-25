@@ -1,9 +1,10 @@
 #include "Engine.hpp"
 
-#include <pstl/glue_execution_defs.h>
-
 Engine::Engine(): m_gameData(), m_eventHandler(), m_renderer() {
     nfo("Engine initialised successfully");
+
+    init();
+
     run();
 }
 
@@ -11,6 +12,16 @@ Engine::~Engine() {
     SDL_Quit();
     IMG_Quit();
     nfo("Engine has shutdown.");
+}
+
+void Engine::init() {
+    const std::string filePath = "../assets/textures/map/Blue-Iso-Tile.png";
+    SDL_Texture* blueCubeTexture = AssetLoader::loadTexture(m_renderer.getRenderer(), filePath);
+    for (int i = 0; i < MAP_WIDTH; i++) {
+        for (int j = 0; j < MAP_HEIGHT; j++) {
+            m_gameData.addTile(blueCubeTexture);
+        }
+    }
 }
 
 // TODO
@@ -61,6 +72,6 @@ void Engine::render() {
     // skip
 
     // swap buffers - present frame
-    m_renderer.render();
+    m_renderer.present();
 }
 

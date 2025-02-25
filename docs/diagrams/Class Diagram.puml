@@ -7,6 +7,20 @@ class main {
     + int main()
 }
 
+object AssetLoader {
+    + SDL_Texture* loadTexture(string filePath)
+}
+
+object Constants {
+    + std::string WINDOW_NAME
+    + int WIDTH
+    + int HEIGHT
+    + int TILE_HEIGHT
+    + int TILE_WIDTH
+    + int MAP_HEIGHT
+    + int MAP_WIDTH
+}
+
 class Engine {
     - Renderer m_renderer
     - GameData m_gameData
@@ -15,6 +29,7 @@ class Engine {
 
     + Engine()
     + ~Engine()
+    - void init()
     + void run()
     - void readInput()
     - void update()
@@ -36,6 +51,7 @@ class Renderer {
     + ~Renderer()
     + void clear()
     + void present()
+    + SDL_Renderer* getRenderer()
 }
 
 struct GameData {
@@ -44,12 +60,14 @@ struct GameData {
 
     + void renderMap(Renderer &ren)
     + void renderEntities(Renderer &ren)
+    + void addTile(SDL_Texture* texture)
 }
 
 struct Map {
     + vector<vector<Tile>> m_tiles
 
     + void renderTiles(Renderer &ren)
+    + void addTile(SDL_Texture* texture)
 }
 
 struct Tile {
@@ -60,6 +78,10 @@ struct Tile {
 }
 
 class Entity {
+    - unsigned int m_id
+    + SDL_Texture m_texture
+    + SDL_Rect m_posRect
+
     + void renderSelf(Renderer &ren)
 }
 

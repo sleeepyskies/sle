@@ -15,4 +15,6 @@ public:
 
     void clear() const;
     void present() const;
+
+    SDL_Renderer* getRenderer() const { return m_renderer; }
 };

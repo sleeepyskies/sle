@@ -12,10 +12,12 @@ namespace sle {
 class Map {
 private:
     std::vector<std::vector<Tile>> m_tiles{};
+    glm::ivec2 m_selectedTile{0, 0};
 public:
     Map();
 
-    void renderTiles(Renderer &ren);
+    void renderTiles(Renderer &ren) const;
+    void updateTiles(glm::ivec2 mousePos);
     void addTile(SDL_Texture *texture);
 };
 

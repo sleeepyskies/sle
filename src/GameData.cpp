@@ -11,6 +11,16 @@ void GameData::renderEntities(Renderer &ren) {
     }
 }
 
+void GameData::updateMap() {
+    m_map.updateTiles(m_mousePos);
+}
+
+void GameData::updateEntities() {
+    // TODO: add sumn here when i add entities
+
+    return;
+}
+
 void GameData::addTile(SDL_Texture* texture) {
     trc("Adding tile to map");
     m_map.addTile(texture);

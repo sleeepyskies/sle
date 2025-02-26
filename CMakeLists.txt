@@ -3,6 +3,21 @@ project(sle) # set project name
 
 set(CMAKE_CXX_STANDARD 20)
 
+# slog is my own lightweight header only logging library used throughout this project
+include(FetchContent)
+FetchContent_Declare(
+        slog
+        GIT_REPOSITORY https://github.com/sleeepyskies/slog.git
+        GIT_TAG main
+)
+FetchContent_MakeAvailable(slog)
+
+# get dependencies. I have installed these using vcpkg, and have configured
+# clion to look at this install location
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+find_package(glm REQUIRED)
+
 # define an executable using the listed .cpp files. .cpp files will be turned into .o files and be linked together
 # header files are not compiled but copy pasted or included into .cpp files before compilation, whereas source
 # files turn into .o files. .o files are binary
@@ -28,7 +43,5 @@ add_executable(sle
         src/math.hpp
 )
 
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
-find_package(glm REQUIRED)
+target_include_directories(sle PRIVATE ${slog_SOURCE_DIR})
 target_link_libraries(sle PRIVATE SDL2::SDL2 SDL2_image::SDL2_image glm::glm)

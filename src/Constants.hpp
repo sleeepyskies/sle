@@ -13,8 +13,8 @@ constexpr int TILE_WIDTH = 150;
 constexpr int MAP_HEIGHT = 10;
 constexpr int MAP_WIDTH = 10;
 
-constexpr glm::ivec2 HIGHLIGHT_TILE{0, 100};
-constexpr glm::ivec2 UN_HIGHLIGHT_TILE{0, -100};
+constexpr glm::ivec2 HIGHLIGHT_TILE{0, -10};
+constexpr glm::ivec2 UN_HIGHLIGHT_TILE{0, 10};
 
 
 } // namespace sle

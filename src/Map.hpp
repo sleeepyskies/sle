@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <vector>
+#include <optional>
 
 #include "Renderer.hpp"
 #include "Tile.hpp"
@@ -13,7 +14,7 @@ namespace sle {
 class Map {
 private:
     std::vector<std::vector<Tile>> m_tiles{};
-    glm::ivec2 m_selectedTile{0, 0};
+    std::optional<glm::ivec2> m_selectedTile{};
 public:
     Map();
 

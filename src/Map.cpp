@@ -18,17 +18,21 @@ void Map::renderTiles(Renderer &ren) const {
 
 
 void Map::updateTiles(const glm::ivec2 mousePos) {
-    const glm::ivec2 overTile = toGrid(mousePos);
+    const glm::ivec2 hoverTile = toGrid(mousePos); // get the tile the mouse is over
 
-    if (overTile.x < 0 || overTile.y < 0 || overTile.x >= m_tiles.size() || overTile.y >= m_tiles[0].size()) return;
-    if (m_selectedTile == overTile) return;
+    // Check if the mouse is over a tile
+    if (hoverTile.x < 0 || hoverTile.y < 0 || hoverTile.x >= m_tiles.size() || hoverTile.y >= m_tiles[0].size()) return;
+
+    if (m_selectedTile && m_selectedTile.value() == hoverTile) return; // haven't moved from current tile
 
     // unselect the selected tile
-    m_tiles[overTile.x][overTile.y].translate(UN_HIGHLIGHT_TILE);
+    if (m_selectedTile) {
+        m_tiles[m_selectedTile.value().x][m_selectedTile.value().y].translate(UN_HIGHLIGHT_TILE);
+    }
 
     // highlight new tile
-    m_selectedTile = overTile;
-    m_tiles[overTile.x][overTile.y].translate(HIGHLIGHT_TILE);
+    m_selectedTile = hoverTile;
+    m_tiles[m_selectedTile->x][m_selectedTile->y].translate(HIGHLIGHT_TILE);
 }
 
 void Map::addTile(SDL_Texture* texture) {

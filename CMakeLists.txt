@@ -1,12 +1,15 @@
-cmake_minimum_required(VERSION 3.29)
-project(SDL_Engine)
+cmake_minimum_required(VERSION 3.15...3.31)
+project(SDL_Engine) # set project name
 
 set(CMAKE_CXX_STANDARD 20)
 
-# add SDL2
-set(SDL2_DIR ${PROJECT_SOURCE_DIR}/libs/SDL2)
-set(SDL2_Image_DIR ${PROJECT_SOURCE_DIR}/libs/SDL2)
+# define variables holding filepaths
+#[[set(SDL2_DIR ${PROJECT_SOURCE_DIR}/libs/SDL2)
+set(SDL2_Image_DIR ${PROJECT_SOURCE_DIR}/libs/SDL2)]]
 
+# define an executable using the listed .cpp files. .cpp files will be turned into .o files and be linked together
+# header files are not compiled but copy pasted or included into .cpp files before compilation, whereas source
+# files turn into .o files. .o files are binary
 add_executable(SDL_Engine
         src/main.cpp
         src/Engine.cpp
@@ -28,10 +31,17 @@ add_executable(SDL_Engine
         src/AssetLoader.hpp
 )
 
-target_include_directories(SDL_Engine PRIVATE ${SDL2_DIR}/include/SDL2)
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+target_link_libraries(SDL_Engine PRIVATE SDL2::SDL2 SDL2_image::SDL2_image)
 
-# link SDL2 and SDL_Image
+# this tells the compiler where to look for SDL header files
+#[[target_include_directories(SDL_Engine PRIVATE ${SDL2_DIR}/include/SDL2)]]
+
+# link SDL2 and SDL_Image for windows
+#[[
 if(WIN32)
+    message("Building for windows")
     target_link_libraries(SDL_Engine
             ${SDL2_DIR}/lib/libSDL2.a
             ${SDL2_DIR}/lib/libSDL2main.a
@@ -42,3 +52,13 @@ if(WIN32)
             version
     )
 endif()
+
+if (APPLE)
+    message("Building for macOS")
+    target_link_libraries(SDL_Engine
+            ${SDL2_DIR}/lib/libSDL2.a
+            ${SDL2_DIR}/lib/libSDL2main.a
+            ${SDL2_Image_DIR}/lib/libSDL2_image.a
+    )
+endif()
+]]

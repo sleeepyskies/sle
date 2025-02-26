@@ -22,7 +22,7 @@ int main() {
     try {
         Engine engine;
     } catch (const std::exception &e) {
-        nfo("Engine could not init, exiting engine.", e.what());
+        err("Engine could not init, exiting engine.", e.what());
         return 1;
     }
     return 0;

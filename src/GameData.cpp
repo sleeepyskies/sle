@@ -11,5 +11,6 @@ void GameData::renderEntities(Renderer &ren) {
 }
 
 void GameData::addTile(SDL_Texture* texture) {
+    dbg("Adding tile to map");
     m_map.addTile(texture);
 }

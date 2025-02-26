@@ -1,10 +1,7 @@
 #include "Engine.hpp"
 
 Engine::Engine(): m_gameData(), m_eventHandler(), m_renderer() {
-    nfo("Engine initialised successfully");
-
     init();
-
     run();
 }
 
@@ -22,12 +19,16 @@ void Engine::init() {
             m_gameData.addTile(blueCubeTexture);
         }
     }
+
+    nfo("Engine initialised successfully");
 }
 
 // TODO
 void Engine::run() {
     // still need to handle cycle length properly to get desired FPS
     while (m_running) {
+        trc("Current tick", SDL_GetTicks());
+
         readInput();
         update();
         render();
@@ -36,6 +37,7 @@ void Engine::run() {
 
 // TODO
 void Engine::readInput() {
+    trc("Reading Inp");
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {

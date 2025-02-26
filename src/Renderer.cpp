@@ -15,7 +15,7 @@ Renderer::Renderer() {
         throw std::runtime_error(SDL_GetError());
     }
 
-    m_renderer = SDL_CreateRenderer(m_window, -1, 0);
+    m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_PRESENTVSYNC);
 
     if (m_renderer == nullptr) {
         err("SDL renderer could not be created.");

@@ -5,6 +5,8 @@
 #include "Renderer.hpp"
 #include "Tile.hpp"
 #include "Constants.hpp"
+#include <glm/vec2.hpp>
+#include "math.hpp"
 
 class Map {
 private:

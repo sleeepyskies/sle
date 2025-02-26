@@ -17,11 +17,13 @@ void Map::addTile(SDL_Texture* texture) {
     for (int rowIndex = 0; rowIndex < MAP_WIDTH; rowIndex++) {
         if (m_tiles[rowIndex].size() >= MAP_HEIGHT) continue;
 
+        glm::ivec2 position = toIsometric(rowIndex, (m_tiles[rowIndex].size()));
+
         SDL_Rect pos{};
         pos.w = TILE_WIDTH;
         pos.h = TILE_HEIGHT;
-        pos.x = TILE_WIDTH * rowIndex;
-        pos.y = TILE_HEIGHT * static_cast<int>(m_tiles[rowIndex].size());
+        pos.x = position.x;
+        pos.y = position.y;
 
         const Tile newTile{ pos, texture };
 

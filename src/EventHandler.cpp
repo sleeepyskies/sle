@@ -1,5 +1,6 @@
 #include "EventHandler.hpp"
 
+namespace sle {
 void EventHandler::enqueueEvent(SDL_Event &event, SDL_EventType eventType) {
     m_eventQueue.emplace(event, eventType);
 }
@@ -13,3 +14,5 @@ void EventHandler::processEvents(GameData &gameData) {
         m_eventQueue.pop();
     }
 }
+
+} // namespace sle

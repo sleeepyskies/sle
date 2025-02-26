@@ -9,6 +9,7 @@
 #include "EventHandler.hpp"
 #include "AssetLoader.hpp"
 
+namespace sle {
 class Engine {
 private:
     Renderer m_renderer;
@@ -30,3 +31,4 @@ public:
 
 };
 ;
+} // namespace sle

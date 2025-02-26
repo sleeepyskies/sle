@@ -4,6 +4,7 @@
 #include "Renderer.hpp"
 #include "slog.hpp"
 
+namespace sle {
 class Entity {
 private:
     const unsigned int m_id;
@@ -17,3 +18,5 @@ public:
 
     void renderSelf(Renderer &ren) const;
 };
+
+} // namespace sle

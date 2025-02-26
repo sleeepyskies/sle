@@ -4,6 +4,7 @@
 #include "Renderer.hpp"
 #include "slog.hpp"
 
+namespace sle {
 class Tile {
 private:
     SDL_Rect m_pos;
@@ -14,3 +15,5 @@ public:
 
     void renderSelf(const Renderer &ren) const;
 };
+
+} // namespace sle

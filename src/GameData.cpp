@@ -1,5 +1,6 @@
 #include "GameData.hpp"
 
+namespace sle {
 void GameData::renderMap(Renderer &ren) {
     m_map.renderTiles(ren);
 }
@@ -14,3 +15,4 @@ void GameData::addTile(SDL_Texture* texture) {
     trc("Adding tile to map");
     m_map.addTile(texture);
 }
+} // namespace sle

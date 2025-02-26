@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 
+namespace sle {
 constexpr std::string WINDOW_NAME = "Window";
 constexpr int WIDTH = 1600;
 constexpr int HEIGHT = 850;
@@ -12,3 +13,4 @@ constexpr int MAP_HEIGHT = 10;
 constexpr int MAP_WIDTH = 10;
 
 constexpr int FPS = 60;
+} // namespace sle

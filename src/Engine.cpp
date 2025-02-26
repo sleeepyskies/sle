@@ -1,5 +1,6 @@
 #include "Engine.hpp"
 
+namespace sle {
 Engine::Engine(): m_gameData(), m_eventHandler(), m_renderer() {
     init();
     run();
@@ -77,3 +78,5 @@ void Engine::render() {
     m_renderer.present();
 }
 
+
+} // namespace sle

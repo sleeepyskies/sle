@@ -4,6 +4,7 @@
 #include "slog.hpp"
 #include "Constants.hpp"
 
+namespace sle {
 class Renderer {
 private:
     SDL_Window *m_window;
@@ -18,3 +19,5 @@ public:
 
     SDL_Renderer* getRenderer() const { return m_renderer; }
 };
+
+} // namespace sle

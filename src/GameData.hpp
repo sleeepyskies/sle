@@ -4,6 +4,7 @@
 #include "Map.hpp"
 #include "Renderer.hpp"
 
+namespace sle {
 class GameData {
 private:
     Map m_map{};
@@ -15,3 +16,5 @@ public:
 
     void addTile(SDL_Texture *texture);
 };
+
+} // namespace sle

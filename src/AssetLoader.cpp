@@ -1,5 +1,6 @@
 #include "AssetLoader.hpp"
 
+namespace sle {
 SDL_Texture* AssetLoader::loadTexture(SDL_Renderer *ren, const std::string &filePath) {
     SDL_Surface *tempSurface = IMG_Load(filePath.c_str());
     if (!tempSurface) {
@@ -18,3 +19,5 @@ SDL_Texture* AssetLoader::loadTexture(SDL_Renderer *ren, const std::string &file
     dbg("Texture loaded successfully", filePath);
     return texture;
 }
+
+} // namespace sle

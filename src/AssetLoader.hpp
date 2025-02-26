@@ -7,7 +7,10 @@
 #include "Renderer.hpp"
 #include "Tile.hpp"
 
+namespace sle {
 class AssetLoader {
 public:
     static SDL_Texture* loadTexture(SDL_Renderer *ren, const std::string& filePath);
 };
+
+} // namespace sle

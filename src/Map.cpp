@@ -1,5 +1,6 @@
 #include "Map.hpp"
 
+namespace sle {
 Map::Map() {
     m_tiles.resize(MAP_WIDTH);
 }
@@ -30,3 +31,4 @@ void Map::addTile(SDL_Texture* texture) {
         m_tiles[rowIndex].push_back(newTile);
     }
 }
+} // namespace sle

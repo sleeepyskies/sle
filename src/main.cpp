@@ -20,7 +20,7 @@ int main() {
     nfo("IMG initialised successfully");
 
     try {
-        Engine engine;
+        sle::Engine engine;
     } catch (const std::exception &e) {
         err("Engine could not init, exiting engine.", e.what());
         return 1;

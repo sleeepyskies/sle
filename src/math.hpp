@@ -3,6 +3,7 @@
 #include <glm/mat2x2.hpp>
 #include "Constants.hpp"
 
+namespace sle {
 const glm::mat2 screenToIsometricTransform {
 
 };
@@ -28,3 +29,5 @@ inline glm::ivec2 toIsometric(const glm::ivec2 pos) {
 inline glm::vec2 toScreen(const int x, const int y) {
 
 }
+
+} // namespace sle

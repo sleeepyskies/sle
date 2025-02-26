@@ -1,5 +1,6 @@
 #include "Renderer.hpp"
 
+namespace sle {
 Renderer::Renderer() {
     m_window = SDL_CreateWindow(
         WINDOW_NAME.c_str(),
@@ -46,3 +47,5 @@ void Renderer::present() const {
 }
 
 
+
+} // namespace sle

@@ -25,8 +25,10 @@ add_executable(SDL_Engine
         src/Tile.hpp
         src/AssetLoader.cpp
         src/AssetLoader.hpp
+        src/math.hpp
 )
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
-target_link_libraries(SDL_Engine PRIVATE SDL2::SDL2 SDL2_image::SDL2_image)
+find_package(glm REQUIRED)
+target_link_libraries(SDL_Engine PRIVATE SDL2::SDL2 SDL2_image::SDL2_image glm::glm)

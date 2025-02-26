@@ -16,6 +16,7 @@ void Map::renderTiles(Renderer &ren) const {
     }
 }
 
+
 void Map::updateTiles(const glm::ivec2 mousePos) {
     const glm::ivec2 overTile = toGrid(mousePos);
 

@@ -2,16 +2,18 @@
 
 namespace sle {
 void Tile::renderSelf(const Renderer &ren) const {
-    const SDL_Rect renderPos = m_pos; // Copy updated position
-    SDL_RenderCopy(ren.getRenderer(), m_texture, nullptr, &renderPos);
+    SDL_RenderCopy(ren.getRenderer(), m_texture, nullptr, &m_pos);
 }
 
-
 void Tile::translate(const glm::ivec2 t) {
-    dbg("rect before, x: ", m_pos.x, ", y: ", m_pos.y);
+    dbg("rect before, x: {}, y: {}", m_pos.x, m_pos.y);
     m_pos.x += t.x;
     m_pos.y += t.y;
-    dbg("rect after, x: ", m_pos.x, ", y: ", m_pos.y);
+    dbg("rect after, x: {}, y: {}", m_pos.x, m_pos.y);
+}
+
+SDL_Rect Tile::getRect() const {
+    return m_pos;
 }
 
 } // namespace sle

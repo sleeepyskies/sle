@@ -15,6 +15,8 @@ public:
 
     void renderSelf(const Renderer &ren) const;
     void translate(glm::ivec2 t);
+
+    SDL_Rect getRect() const;
 };
 
 } // namespace sle

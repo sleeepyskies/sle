@@ -26,7 +26,7 @@ void EventHandler::processEvents(GameData &gameData) {
 
 void EventHandler::handleMouseMotion(const SDL_Event &event, GameData &gameData) {
     gameData.setMousePos(event.motion.x, event.motion.y);
-    trc("Mouse is at x: ", event.motion.x, ", y: ", event.motion.y);
+    trc("Mouse is at position x: {}, y: {}", event.motion.x, event.motion.y);
 }
 
 } // namespace sle

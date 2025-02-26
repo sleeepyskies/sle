@@ -21,7 +21,13 @@ void Map::updateTiles(const glm::ivec2 mousePos) {
     const glm::ivec2 hoverTile = toGrid(mousePos); // get the tile the mouse is over
 
     // Check if the mouse is over a tile
-    if (hoverTile.x < 0 || hoverTile.y < 0 || hoverTile.x >= m_tiles.size() || hoverTile.y >= m_tiles[0].size()) return;
+    if (hoverTile.x < 0 || hoverTile.y < 0 || hoverTile.x >= m_tiles.size() || hoverTile.y >= m_tiles[0].size()) {
+        if (m_selectedTile) {
+            m_tiles[m_selectedTile.value().x][m_selectedTile.value().y].translate(UN_HIGHLIGHT_TILE);
+            m_selectedTile.reset();
+        }
+        return;
+    };
 
     if (m_selectedTile && m_selectedTile.value() == hoverTile) return; // haven't moved from current tile
 

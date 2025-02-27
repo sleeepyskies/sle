@@ -1,11 +1,11 @@
 #include "GameData.hpp"
 
 namespace sle {
-void GameData::renderMap(Renderer &ren) {
-    m_map.renderTiles(ren);
+void GameData::renderMap(Renderer &ren) const {
+    m_map.renderTiles(m_camera, ren);
 }
 
-void GameData::renderEntities(Renderer &ren) {
+void GameData::renderEntities(Renderer &ren) const {
     for (auto e : m_entities) {
         e.renderSelf(ren);
     }
@@ -19,10 +19,10 @@ void GameData::updateCamera() {
     const auto gotS = m_keysPressed.find(SDLK_s);
     const auto gotD = m_keysPressed.find(SDLK_d);
 
-    if (gotW != m_keysPressed.end() && m_keysPressed[SDLK_w]) direction.y -= 1;
-    if (gotA != m_keysPressed.end() && m_keysPressed[SDLK_a]) direction.x -= 1;
-    if (gotS != m_keysPressed.end() && m_keysPressed[SDLK_s]) direction.y += 1;
-    if (gotD != m_keysPressed.end() && m_keysPressed[SDLK_d]) direction.x += 1;
+    if (gotW != m_keysPressed.end() && m_keysPressed[SDLK_w]) direction.y += 1;
+    if (gotA != m_keysPressed.end() && m_keysPressed[SDLK_a]) direction.x += 1;
+    if (gotS != m_keysPressed.end() && m_keysPressed[SDLK_s]) direction.y -= 1;
+    if (gotD != m_keysPressed.end() && m_keysPressed[SDLK_d]) direction.x -= 1;
 
     if (direction.x == 0 && direction.y == 0) return;
 

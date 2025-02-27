@@ -8,10 +8,10 @@ Map::Map() {
 }
 
 
-void Map::renderTiles(Renderer &ren) const {
+void Map::renderTiles(const Camera &cam, const Renderer &ren) const {
     for (const auto &row : m_tiles) {
         for (const auto &tile: row) {
-            tile.renderSelf(ren);
+            tile.renderSelf(cam, ren);
         }
     }
 }

@@ -21,8 +21,8 @@ public:
     void updateMap();
     void updateEntities();
 
-    void renderMap(Renderer &ren);
-    void renderEntities(Renderer &ren);
+    void renderMap(Renderer &ren) const;
+    void renderEntities(Renderer &ren) const;
 
     void addTile(SDL_Texture *texture);
 

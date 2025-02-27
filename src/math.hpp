@@ -3,10 +3,30 @@
 #include <glm/mat2x2.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
 #include "Constants.hpp"
+#include "Camera.hpp"
 
 // TODO: these transforms are not exactly
 
 namespace sle {
+// -------- Camera Offset ----------------
+inline glm::vec2 withCameraOffset(const Camera &cam, const glm::vec2 pos) {
+    const glm::vec2 camPos = cam.getPos();
+    return {camPos.x + pos.x, camPos.y + pos.y };
+}
+
+inline SDL_Rect withCameraOffset(const Camera &cam, const SDL_Rect &pos) {
+    const glm::vec2 camPos = cam.getPos();
+
+    return {
+        static_cast<int>(camPos.x + pos.x),
+        static_cast<int>(camPos.y + pos.y) ,
+        pos.w,
+        pos.h
+    };
+}
+
+
+// -------- Linear Algebra Math ----------------
 constexpr glm::mat3 gridToIsometricTransform {
     (0.5f * TILE_WIDTH), (0.25f * TILE_HEIGHT), 0.f,
     (-0.5f * TILE_HEIGHT), (0.25f * TILE_HEIGHT), 0.f,

@@ -3,6 +3,7 @@
 
 #include "Renderer.hpp"
 #include "slog.hpp"
+#include "Camera.hpp"
 
 namespace sle {
 class Tile {
@@ -13,7 +14,7 @@ private:
 public:
     Tile(const SDL_Rect pos, SDL_Texture *texture): m_pos(pos), m_texture(texture) {}
 
-    void renderSelf(const Renderer &ren) const;
+    void renderSelf(const Camera &cam, const Renderer &ren) const;
     void translate(glm::ivec2 t);
 
     SDL_Rect getRect() const;

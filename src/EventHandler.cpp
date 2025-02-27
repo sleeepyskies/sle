@@ -6,7 +6,7 @@ void EventHandler::enqueueEvent(SDL_Event &event) {
 }
 
 void EventHandler::processEvents(GameData &gameData) {
-    // ReSharper disable once CppJoinDeclarationAndAssignment
+    // ReSharper disable once CppJoinDeclarationAndAssignmentHW
     SDL_Event event;
 
     while (!m_eventQueue.empty()) {
@@ -15,6 +15,13 @@ void EventHandler::processEvents(GameData &gameData) {
         switch (event.type) {
             case SDL_MOUSEMOTION:
                 handleMouseMotion(event, gameData);
+                break;
+            case SDL_KEYDOWN:
+                // 0 if not a key repeat
+                if (event.key.repeat == 0) gameData.keyDown(event.key.keysym.sym);
+                break;
+            case SDL_KEYUP:
+                gameData.keyUp(event.key.keysym.sym);
                 break;
             default:
                 break;

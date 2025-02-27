@@ -41,6 +41,8 @@ add_executable(sle
         src/AssetLoader.cpp
         src/AssetLoader.hpp
         src/math.hpp
+        src/Camera.cpp
+        src/Camera.hpp
 )
 
 target_include_directories(sle PRIVATE ${slog_SOURCE_DIR})

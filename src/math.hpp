@@ -4,6 +4,8 @@
 #include <glm/gtc/matrix_inverse.hpp>
 #include "Constants.hpp"
 
+// TODO: these transforms are not exactly
+
 namespace sle {
 constexpr glm::mat3 gridToIsometricTransform {
     (0.5f * TILE_WIDTH), (0.25f * TILE_HEIGHT), 0.f,

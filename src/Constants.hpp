@@ -1,4 +1,6 @@
 #pragma once
+
+#include "Constants.hpp"
 #include <string>
 #include <glm/vec2.hpp>
 
@@ -15,6 +17,8 @@ constexpr int MAP_WIDTH = 10;
 
 constexpr glm::ivec2 HIGHLIGHT_TILE{0, -10};
 constexpr glm::ivec2 UN_HIGHLIGHT_TILE{0, 10};
+
+constexpr float CAMERA_SPEED = 10.f;
 
 
 } // namespace sle

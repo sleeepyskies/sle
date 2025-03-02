@@ -39,14 +39,14 @@ struct Chunk {
     Chunk(): m_tiles(CHUNK_SIZE * CHUNK_SIZE) {} // allocate enough memory upon construction
 
     /// @brief Returns a non const reference to the tile at this index.
-    Tile& operator[] (const int x, const int y) {
+    Tile& tile (const int x, const int y) {
         const int index = y * CHUNK_SIZE + x;
         assert(index < CHUNK_SIZE * CHUNK_SIZE);
         return m_tiles[index];
     }
 
     /// @brief Returns a const reference to the tile at this index.
-    Tile& operator[] (const int x, const int y) const {
+    const Tile& tile (const int x, const int y) const {
         const int index = y * CHUNK_SIZE + x;
         assert(index < CHUNK_SIZE * CHUNK_SIZE);
         return m_tiles[index];
@@ -63,6 +63,8 @@ struct Chunk {
  */
 class Map {
 private:
+    /// @brief The name of the map. Used for loading and saving.
+    std::string m_name;
     /// @brief The chunks of tiles that the map consists of.
     std::unordered_map<glm::i8vec2, Chunk> m_chunks;
     /// @brief The textures used by tiles. Store this way to avoid redundant copies.
@@ -71,13 +73,16 @@ private:
     std::vector<glm::i8vec2> m_chunkIndices;
 
 public:
-    Map();
+    explicit Map(const std::string &mapName): m_name(mapName) {} // NOLINT(*-pass-by-value)
     ~Map();
 
+    /// @brief Handles drawing the entire map to the window. Currently draws every chunk, even if not visible.
     void draw(const Camera &cam, const Renderer &ren) const;
 
-    bool save(const std::string &filePath) const;
-    bool load(const std::string &filePath);
+    /// @brief Saves the current map to disk using its name.
+    bool save() const;
+    /// @brief Loads either the provided map or the sle default map from disk.
+    bool load(const std::string &mapName = DEFAULT_MAP);
 };
 
 } // sle

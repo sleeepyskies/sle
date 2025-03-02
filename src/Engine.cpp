@@ -13,7 +13,7 @@ Engine::~Engine() {
 }
 
 void Engine::init() {
-    const std::string filePath = "../assets/textures/map/Blue-Iso-Tile.png";
+    const std::string filePath = "../assets/textures/map/BasicBlue.png";
     SDL_Texture* blueCubeTexture = AssetLoader::loadTexture(m_renderer.getRenderer(), filePath);
     for (int i = 0; i < MAP_WIDTH; i++) {
         for (int j = 0; j < MAP_HEIGHT; j++) {

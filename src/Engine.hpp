@@ -21,7 +21,6 @@ private:
 
 public:
     Engine();
-    ~Engine();
 
     void init();
 

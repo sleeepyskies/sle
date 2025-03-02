@@ -6,12 +6,6 @@ Engine::Engine(): m_renderer(), m_gameData(), m_eventHandler() {
     run();
 }
 
-Engine::~Engine() {
-    SDL_Quit();
-    IMG_Quit();
-    nfo("Engine has shutdown.");
-}
-
 void Engine::init() {
     const std::string filePath = "../assets/textures/map/BasicBlue.png";
     SDL_Texture* blueCubeTexture = AssetLoader::loadTexture(m_renderer.getRenderer(), filePath);

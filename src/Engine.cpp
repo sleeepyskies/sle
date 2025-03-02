@@ -9,8 +9,8 @@ Engine::Engine(): m_renderer(), m_gameData(), m_eventHandler() {
 void Engine::init() {
     const std::string filePath = "../assets/textures/map/BasicBlue.png";
     SDL_Texture* blueCubeTexture = AssetLoader::loadTexture(m_renderer.getRenderer(), filePath);
-    for (int i = 0; i < MAP_WIDTH; i++) {
-        for (int j = 0; j < MAP_HEIGHT; j++) {
+    for (int i = 0; i < CHUNK_SIZE; i++) {
+        for (int j = 0; j < CHUNK_SIZE; j++) {
             m_gameData.addTile(blueCubeTexture);
         }
     }
@@ -41,21 +41,10 @@ void Engine::update() {
 
 // TODO
 void Engine::render() {
-    // clear screen
     m_renderer.clear();
-
-    // render map
     m_gameData.renderMap(m_renderer);
-
-    // render entities
     m_gameData.renderEntities(m_renderer);
-
-    // render ui
-    // skip
-
-    // swap buffers - present frame
     m_renderer.present();
 }
-
 
 } // namespace sle

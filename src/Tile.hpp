@@ -17,7 +17,7 @@ public:
     void renderSelf(const Camera &cam, const Renderer &ren) const;
     void translate(glm::ivec2 t);
 
-    SDL_Rect getRect() const;
+    SDL_Rect getPos() const { return m_pos; }
 };
 
 } // namespace sle

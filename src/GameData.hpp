@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <vector>
 #include "Entity.hpp"
-#include "Chunk.hpp"
+#include "Map.hpp"
 #include "Renderer.hpp"
 #include "Camera.hpp"
 
@@ -12,7 +12,7 @@ class GameData {
 private:
     bool m_running = true;
     Camera m_camera;
-    Chunk m_map{};
+    Map m_map{};
     std::vector<Entity> m_entities{};
     glm::ivec2 m_mousePos{};
     std::unordered_map<SDL_Keycode, bool> m_keysPressed{};
@@ -26,7 +26,7 @@ public:
     void updateMap();
     void updateEntities();
 
-    void renderMap(Renderer &ren) const;
+    void renderMap(const Renderer &ren) const;
     void renderEntities(Renderer &ren) const;
 
     void addTile(SDL_Texture *texture);

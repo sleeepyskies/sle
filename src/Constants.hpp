@@ -17,8 +17,7 @@ constexpr float HALF_TILE_WIDTH = TILE_WIDTH / 2.f;
 constexpr float QUARTER_TILE_HEIGHT = TILE_HEIGHT / 4.f;
 constexpr float QUARTER_TILE_WIDTH = TILE_WIDTH / 4.f;
 
-constexpr int MAP_HEIGHT = 10;
-constexpr int MAP_WIDTH = 10;
+constexpr int CHUNK_SIZE = 16;
 
 constexpr glm::ivec2 HIGHLIGHT_TILE{0, -10};
 constexpr glm::ivec2 UN_HIGHLIGHT_TILE{0, 10};

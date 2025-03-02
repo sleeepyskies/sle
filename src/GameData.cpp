@@ -1,8 +1,8 @@
 #include "GameData.hpp"
 
 namespace sle {
-void GameData::renderMap(Renderer &ren) const {
-    m_map.renderTiles(m_camera, ren);
+void GameData::renderMap(const Renderer &ren) const {
+    m_map.draw(m_camera, ren);
 }
 
 void GameData::renderEntities(Renderer &ren) const {
@@ -53,9 +53,4 @@ void GameData::keyUp(const SDL_Keycode key) {
     dbg("Key {} released", key);
 }
 
-
-void GameData::addTile(SDL_Texture* texture) {
-    trc("Adding tile to map");
-    m_map.addTile(texture);
-}
 } // namespace sle

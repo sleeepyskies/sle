@@ -4,7 +4,7 @@
 
 namespace sle {
 Chunk::Chunk() {
-    m_tiles.resize(MAP_WIDTH);
+    m_tiles.resize(CHUNK_SIZE);
 }
 
 
@@ -42,8 +42,8 @@ void Chunk::updateTiles(const Camera &cam, const glm::ivec2 mousePos)  {
 }
 
 void Chunk::addTile(SDL_Texture* texture) {
-    for (int rowIndex = 0; rowIndex < MAP_WIDTH; rowIndex++) {
-        if (m_tiles[rowIndex].size() >= MAP_HEIGHT) continue;
+    for (int rowIndex = 0; rowIndex < CHUNK_SIZE; rowIndex++) {
+        if (m_tiles[rowIndex].size() >= CHUNK_SIZE) continue;
 
         const glm::ivec2 position = tileToScreen({ rowIndex, (m_tiles[rowIndex].size()) });
 

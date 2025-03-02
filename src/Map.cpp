@@ -25,12 +25,12 @@ bool Map::load(const std::string &mapName) {
 
 void Map::draw(const Camera &cam, const Renderer &ren) const {
     for (const auto cIndex : m_chunkIndices) {
-        const auto chunk = m_chunks[cIndex];
+        const auto &chunk = m_chunks.at(cIndex);
 
         for (int y = 0; y < CHUNK_SIZE; y++) {
             for (int x = 0; x < CHUNK_SIZE; x++) {
-                const auto texture = m_tileTextures[chunk.tile(x, y)];
-                if (texture == 0xFF) continue; // dead tile
+                const auto textureIndex = chunk.tile(x, y).textureIndex();
+                if (textureIndex == 0xFF) continue; // dead tile
                 const SDL_Rect pos = withCameraOffset(
                     cam,
                     SDL_Rect{
@@ -40,7 +40,7 @@ void Map::draw(const Camera &cam, const Renderer &ren) const {
                         TILE_HEIGHT
                     }
                 );
-                SDL_RenderCopy(ren.getRenderer(), texture, nullptr, &pos);
+                SDL_RenderCopy(ren.getRenderer(), m_tileTextures[textureIndex], nullptr, &pos);
             }
         }
     }

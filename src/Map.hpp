@@ -1,8 +1,13 @@
 #pragma once
-#include <unordered_map>
 
-#include "Chunk.hpp"
+#include <unordered_map>
+#include <algorithm>
 #include "Constants.hpp"
+#include "MapSerializer.hpp"
+#include <glm/vec2.hpp>
+#include <SDL.h>
+#include "math.hpp"
+#include "Renderer.hpp"
 
 namespace sle {
 
@@ -16,7 +21,7 @@ namespace sle {
 struct Tile {
 private:
     /// @brief The index into the texture array stored in @ref GameData. uint8 is used here,
-    /// since this allows for up to 256 unique textures.
+    /// since this allows for up to 256 unique textures. Note that 0xFF is reserved for empty tiles.
     uint8_t m_textureIndex;
 
 public:
@@ -78,8 +83,10 @@ public:
 
     /// @brief Handles drawing the entire map to the window. Currently draws every chunk, even if not visible.
     void draw(const Camera &cam, const Renderer &ren) const;
+    /// @brief Calculates and determines the location of the tile the cursor is over.
+    std::optional<SDL_Rect> findCursorTile(const Camera &cam, glm::ivec2 mousePos);
 
-    /// @brief Saves the current map to disk using its name.
+    /// @brief Saves the current map to disk.
     bool save() const;
     /// @brief Loads either the provided map or the sle default map from disk.
     bool load(const std::string &mapName = DEFAULT_MAP);

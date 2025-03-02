@@ -34,10 +34,6 @@ add_executable(sle
         src/Constants.hpp
         src/Entity.cpp
         src/Entity.hpp
-        src/Chunk.cpp
-        src/Chunk.hpp
-        src/Tile.cpp
-        src/Tile.hpp
         src/AssetLoader.cpp
         src/AssetLoader.hpp
         src/math.hpp

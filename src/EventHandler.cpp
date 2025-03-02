@@ -1,18 +1,15 @@
 #include "EventHandler.hpp"
 
 namespace sle {
-void EventHandler::enqueueEvent(SDL_Event &event) {
-    m_eventQueue.emplace(event);
-}
-
-void EventHandler::processEvents(GameData &gameData) {
-    // ReSharper disable once CppJoinDeclarationAndAssignmentHW
+// TODO: Remove input phase from Game loop and just place here
+void EventHandler::processEvents(GameData &gameData) const {
     SDL_Event event;
 
-    while (!m_eventQueue.empty()) {
-        event = m_eventQueue.front();
-
+    while (SDL_PollEvent(&event)) {
         switch (event.type) {
+            case SDL_QUIT:
+                gameData.stop();
+                break;
             case SDL_MOUSEMOTION:
                 handleMouseMotion(event, gameData);
                 break;
@@ -26,8 +23,6 @@ void EventHandler::processEvents(GameData &gameData) {
             default:
                 break;
         }
-
-        m_eventQueue.pop();
     }
 }
 

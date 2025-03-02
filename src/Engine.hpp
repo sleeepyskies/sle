@@ -15,9 +15,7 @@ private:
     Renderer m_renderer;
     GameData m_gameData;
     EventHandler m_eventHandler;
-    bool m_running = true;
 
-    void readInput();
     void update();
     void render();
 

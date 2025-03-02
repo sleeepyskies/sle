@@ -29,9 +29,13 @@ void GameData::updateCamera() {
     m_camera.move(direction);
 }
 
+void GameData::updateRunning() {
+    const auto gotEsc = m_keysPressed.find(SDLK_ESCAPE);
+    if (gotEsc != m_keysPressed.end() && m_keysPressed[SDLK_ESCAPE]) m_running = false;
+}
 
 void GameData::updateMap() {
-    m_map.updateTiles(m_mousePos);
+    m_map.updateTiles(m_camera, m_mousePos);
 }
 
 void GameData::updateEntities() {

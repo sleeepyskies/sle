@@ -10,6 +10,7 @@
 namespace sle {
 class GameData {
 private:
+    bool m_running = true;
     Camera m_camera;
     Map m_map{};
     std::vector<Entity> m_entities{};
@@ -17,6 +18,10 @@ private:
     std::unordered_map<SDL_Keycode, bool> m_keysPressed{};
 
 public:
+    void stop() { m_running = false; }
+    bool running() const { return m_running; }
+
+    void updateRunning();
     void updateCamera();
     void updateMap();
     void updateEntities();

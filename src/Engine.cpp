@@ -28,30 +28,18 @@ void Engine::init() {
 void Engine::run() {
     // still need to handle cycle length properly to get desired FPS, this has been
     // done for now with SDL_RENDERER_PRESENTVSYNC flag in the SDL_Renderer
-    while (m_running) {
-        readInput();
+    while (m_gameData.running()) {
+        m_eventHandler.processEvents(m_gameData);
         update();
         render();
     }
 }
 
-// TODO
-void Engine::readInput() {
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT) {
-            m_running = false;
-            break;
-        }
-        m_eventHandler.enqueueEvent(event);
-    }
-}
-
-// TODO
 void Engine::update() {
     m_eventHandler.processEvents(m_gameData);
 
     // still need to do updates on everything else in the game such as camera and entities
+    m_gameData.updateRunning();
     m_gameData.updateCamera();
     m_gameData.updateMap();
     m_gameData.updateEntities();

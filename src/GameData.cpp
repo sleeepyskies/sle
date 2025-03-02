@@ -1,36 +1,21 @@
 #include "GameData.hpp"
 
 namespace sle {
-void GameData::drawMap(const Renderer &ren) const {
+void GameData::draw(const Renderer &ren) const {
     m_map.draw(m_camera, ren);
+    // draw entities
 }
 
-void GameData::updateCamera() {
-    glm::vec2 direction{};
-
-    const auto gotW = m_keysPressed.find(SDLK_w);
-    const auto gotA = m_keysPressed.find(SDLK_a);
-    const auto gotS = m_keysPressed.find(SDLK_s);
-    const auto gotD = m_keysPressed.find(SDLK_d);
-
-    if (gotW != m_keysPressed.end() && m_keysPressed[SDLK_w]) direction.y += 1;
-    if (gotA != m_keysPressed.end() && m_keysPressed[SDLK_a]) direction.x += 1;
-    if (gotS != m_keysPressed.end() && m_keysPressed[SDLK_s]) direction.y -= 1;
-    if (gotD != m_keysPressed.end() && m_keysPressed[SDLK_d]) direction.x -= 1;
-
-    if (direction.x == 0 && direction.y == 0) return;
-
-    m_camera.move(direction);
+void GameData::update() {
+    updateRunning();
+    m_camera.update(m_keysPressed);
+    m_map.findCursorTile(m_camera, m_mousePos);
+    // update entities
 }
 
 void GameData::updateRunning() {
     const auto gotEsc = m_keysPressed.find(SDLK_ESCAPE);
     if (gotEsc != m_keysPressed.end() && m_keysPressed[SDLK_ESCAPE]) m_running = false;
-}
-
-void GameData::updateEntities() {
-    // TODO: add sumn here when i add entities
-    return;
 }
 
 void GameData::keyDown(const SDL_Keycode key) {

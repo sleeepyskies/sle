@@ -1,13 +1,15 @@
 #pragma once
 
-#include <array>
 #include <string>
 #include <vector>
-#include "Map.hpp"
 #include <unordered_map>
 #include <glm/vec2.hpp>
+#include <SDL.h>
+#include <optional>
 
 namespace sle {
+
+class Chunk;
 
 /**
  * @brief Used to encapsulate the result of parsing a .slemap file.

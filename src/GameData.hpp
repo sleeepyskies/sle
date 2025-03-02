@@ -17,16 +17,15 @@ private:
     glm::ivec2 m_mousePos{};
     std::unordered_map<SDL_Keycode, bool> m_keysPressed{};
 
+    void updateRunning();
+
 public:
     void stop() { m_running = false; }
     bool running() const { return m_running; }
 
-    void updateRunning();
-    void updateCamera();
-    void updateMap();
-    void updateEntities();
+    void update();
 
-    void drawMap(const Renderer &ren) const;
+    void draw(const Renderer &ren) const;
 
     void setMousePos(const int x, const int y) { m_mousePos.x = x; m_mousePos.y = y; };
     void keyDown(SDL_Keycode key);

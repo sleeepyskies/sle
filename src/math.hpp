@@ -9,53 +9,59 @@
 
 namespace sle {
 // -------- Camera Offset ----------------
-inline glm::vec2 withCameraOffset(const Camera &cam, const glm::vec2 pos) {
-    const glm::vec2 camPos = cam.getPos();
-    return {camPos.x + pos.x, camPos.y + pos.y };
+
+/// @brief Finds the position relative to the cameras current offset.
+/// @param cam The camera to use the position of.
+/// @param pos The position to offset as a 2D vector.
+/// @returns An offset glm::vec2.
+inline glm::ivec2 withCameraOffset(const Camera &cam, const glm::ivec2 pos) {
+    return pos - cam.getPos();
 }
 
+/// @brief Finds the position relative to the cameras current offset.
+/// @param cam The camera to use the position of.
+/// @param pos The position to offset as a SDL_Rect.
+/// @returns An offset SDL_Rect.
 inline SDL_Rect withCameraOffset(const Camera &cam, const SDL_Rect &pos) {
-    const glm::vec2 camPos = cam.getPos();
-
+    const glm::ivec2 camPos = cam.getPos();
     return {
-        static_cast<int>(camPos.x + pos.x),
-        static_cast<int>(camPos.y + pos.y) ,
+        (camPos.x + pos.x),
+        (camPos.y + pos.y) ,
         pos.w,
         pos.h
     };
 }
 
-
 // -------- Linear Algebra Math ----------------
-constexpr glm::mat3 gridToIsometricTransform {
-    (0.5f * TILE_WIDTH), (0.25f * TILE_HEIGHT), 0.f,
-    (-0.5f * TILE_HEIGHT), (0.25f * TILE_HEIGHT), 0.f,
-    (WIDTH / 2.f) - (TILE_WIDTH / 2.f), 0.f, 1.f
+
+/// @brief This matrix transform goes from tile indices to screen coordinates. Can be used for
+/// finding the position to render a sprite given its position in storage.
+constexpr glm::mat2 tileToScreenM {
+   TILE_WIDTH * 0.5f, 0.25f * TILE_HEIGHT,
+    - TILE_WIDTH * 0.5f, 0.25f * TILE_HEIGHT
 };
 
-const glm::mat2 inv = glm::inverse(glm::mat2{gridToIsometricTransform});
-const glm::vec2 invTranslation = -(inv * glm::vec2{gridToIsometricTransform[2]});
-
-const glm::mat3 isometricToGridTransform {
-    inv[0][0], inv[0][1], 0.f,
-    inv[1][0], inv[1][1], 0.f,
-    invTranslation.x, invTranslation.y, 1.f
+/// @brief This matrix transform goes from screen coordinates to the tile index. It however does not
+/// include any shearing to account for the rotated tiles. For this, subtract half of the
+/// TILE_HEIGHT from x before using.
+constexpr glm::mat2 screenToTileM {
+    1.f / HALF_TILE_WIDTH / 2.f, 1.f / -HALF_TILE_WIDTH / 2.f,
+   1.f / QUARTER_TILE_HEIGHT / 2.f, 1.f / QUARTER_TILE_HEIGHT / 2.f
 };
 
-inline glm::vec2 toIsometric(const int x, const int y) {
-    return gridToIsometricTransform * glm::vec3(x, y, 1.f);
+/// @brief Takes a tiles indices in a 2D std::vector, and outputs its corresponding coordinates
+/// on the screen.
+inline glm::vec2 tileToScreen(const glm::ivec2 pos) {
+    return { tileToScreenM * pos };
 }
 
-inline glm::vec2 toIsometric(const glm::ivec2 pos) {
-    return toIsometric(pos.x, pos.y);
+/// @brief Takes a position on the screen, and outputs the tile indices that this position corresponds to.
+/// @warning The function may output negative indices or out of bound indices. This is not checked here.
+inline glm::ivec2 screenToTile(const glm::ivec2& pos) {
+    return { screenToTileM * glm::vec2{ pos.x - HALF_TILE_HEIGHT, pos.y} };
 }
 
-inline glm::vec2 toGrid(const int x, const int y) {
-    return isometricToGridTransform * glm::vec3(x, y, 1.f);
-}
 
-inline glm::vec2 toGrid(const glm::ivec2 pos) {
-    return toGrid(pos.x, pos.y);
-}
+
 
 } // namespace sle

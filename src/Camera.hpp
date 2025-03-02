@@ -12,9 +12,9 @@ private:
     glm::ivec2 m_pos{0, 0};
 
 public:
-    glm::vec2 getPos() const { return m_pos; }
+    glm::ivec2 getPos() const { return m_pos; }
 
-    void move(glm::vec2 direction);
+    void move(glm::ivec2 direction);
 
 };
 

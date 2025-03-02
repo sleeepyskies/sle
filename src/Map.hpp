@@ -19,7 +19,7 @@ public:
     Map();
 
     void renderTiles(const Camera &cam, const Renderer &ren) const;
-    void updateTiles(glm::ivec2 mousePos);
+    void updateTiles(const Camera &cam, glm::ivec2 mousePos);
     void addTile(SDL_Texture *texture);
 };
 

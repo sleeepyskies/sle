@@ -7,31 +7,20 @@ Engine::Engine(): m_renderer(), m_gameData(), m_eventHandler() {
 }
 
 void Engine::init() {
-    const std::string filePath = "../assets/textures/map/BasicBlue.png";
-    SDL_Texture* blueCubeTexture = AssetLoader::loadTexture(m_renderer.getRenderer(), filePath);
-    for (int i = 0; i < CHUNK_SIZE; i++) {
-        for (int j = 0; j < CHUNK_SIZE; j++) {
-            m_gameData.addTile(blueCubeTexture);
-        }
-    }
-
     nfo("Engine initialised successfully");
 }
 
-// TODO
 void Engine::run() {
     // still need to handle cycle length properly to get desired FPS, this has been
     // done for now with SDL_RENDERER_PRESENTVSYNC flag in the SDL_Renderer
     while (m_gameData.running()) {
-        m_eventHandler.processEvents(m_gameData);
+        m_eventHandler.input(m_gameData);
         update();
         render();
     }
 }
 
 void Engine::update() {
-    m_eventHandler.processEvents(m_gameData);
-
     // still need to do updates on everything else in the game such as camera and entities
     m_gameData.updateRunning();
     m_gameData.updateCamera();
@@ -39,11 +28,9 @@ void Engine::update() {
     m_gameData.updateEntities();
 }
 
-// TODO
-void Engine::render() {
+void Engine::render() const {
     m_renderer.clear();
-    m_gameData.renderMap(m_renderer);
-    m_gameData.renderEntities(m_renderer);
+    m_gameData.drawMap(m_renderer);
     m_renderer.present();
 }
 

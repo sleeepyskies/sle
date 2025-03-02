@@ -12,7 +12,7 @@ private:
     static void handleMouseMotion(const SDL_Event &event, GameData &gameData);
 
 public:
-    void processEvents(GameData &gameData) const;
+    void input(GameData &gameData) const;
 };
 
 } // namespace sle

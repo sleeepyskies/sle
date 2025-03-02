@@ -5,7 +5,6 @@
 #include <string>
 #include "slog.hpp"
 #include "Renderer.hpp"
-#include "Tile.hpp"
 
 namespace sle {
 class AssetLoader {

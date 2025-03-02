@@ -12,10 +12,10 @@ bool Map::save() const {
     return MapSerializer::save(m_name, m_chunks, m_tileTextures);
 }
 
-bool Map::load(const std::string &mapName) {
+bool Map::load(const std::string_view mapName) {
     if (const auto success = MapSerializer::load(mapName)) {
         m_name = mapName;
-        m_chunks = success.value().m_chunks;
+        m_chunks = success.value().chunks;
         m_tileTextures = success.value().textures;
         m_chunkIndices = success.value().indices;
         return true;

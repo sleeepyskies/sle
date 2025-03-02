@@ -2,7 +2,7 @@
 
 namespace sle {
 // TODO: Remove input phase from Game loop and just place here
-void EventHandler::processEvents(GameData &gameData) const {
+void EventHandler::input(GameData &gameData) const {
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {

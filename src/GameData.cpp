@@ -1,14 +1,8 @@
 #include "GameData.hpp"
 
 namespace sle {
-void GameData::renderMap(const Renderer &ren) const {
+void GameData::drawMap(const Renderer &ren) const {
     m_map.draw(m_camera, ren);
-}
-
-void GameData::renderEntities(Renderer &ren) const {
-    for (auto e : m_entities) {
-        e.renderSelf(ren);
-    }
 }
 
 void GameData::updateCamera() {
@@ -32,10 +26,6 @@ void GameData::updateCamera() {
 void GameData::updateRunning() {
     const auto gotEsc = m_keysPressed.find(SDLK_ESCAPE);
     if (gotEsc != m_keysPressed.end() && m_keysPressed[SDLK_ESCAPE]) m_running = false;
-}
-
-void GameData::updateMap() {
-    m_map.updateTiles(m_camera, m_mousePos);
 }
 
 void GameData::updateEntities() {

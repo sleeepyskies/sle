@@ -4,20 +4,24 @@
 #include <string>
 #include <vector>
 #include "Map.hpp"
-#include "Chunk.hpp"
-#include "Tile.hpp"
+#include <unordered_map>
+#include <glm/vec2.hpp>
 
 namespace sle {
 
+/**
+ * @brief Used to encapsulate the result of parsing a .slemap file.
+ */
 struct MapResult {
     std::unordered_map<glm::i8vec2, Chunk> chunks;
     std::vector<SDL_Texture*> textures;
     std::vector<glm::i8vec2> indices;
 };
 
-/// @brief This static class is used for loading map data from files and writing map data to files. sle
-/// uses a custom binary format for storing map data. The format for the .map files used is as follows:
-///
+/**
+ * @brief This static class is used for loading map data from files and writing map data to files. sle
+ * uses a custom binary format for storing map data. The format for the .map files used is as follows:
+*/
 class MapSerializer {
 public:
     MapSerializer() = delete;

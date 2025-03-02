@@ -17,7 +17,7 @@ private:
     EventHandler m_eventHandler;
 
     void update();
-    void render();
+    void render() const;
 
 public:
     Engine();

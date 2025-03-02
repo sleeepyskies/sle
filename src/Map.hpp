@@ -78,7 +78,7 @@ private:
     std::vector<glm::i8vec2> m_chunkIndices;
 
 public:
-    explicit Map(const std::string &mapName): m_name(mapName) {} // NOLINT(*-pass-by-value)
+    explicit Map(const std::string &mapName): m_name(mapName), m_chunks() {} // NOLINT(*-pass-by-value)
     ~Map();
 
     /// @brief Handles drawing the entire map to the window. Currently draws every chunk, even if not visible.
@@ -89,7 +89,7 @@ public:
     /// @brief Saves the current map to disk.
     bool save() const;
     /// @brief Loads either the provided map or the sle default map from disk.
-    bool load(const std::string &mapName = DEFAULT_MAP);
+    bool load(std::string_view mapName = DEFAULT_MAP);
 };
 
 } // sle

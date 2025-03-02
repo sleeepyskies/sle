@@ -12,7 +12,7 @@ class GameData {
 private:
     bool m_running = true;
     Camera m_camera;
-    Map m_map{};
+    Map m_map;
     std::vector<Entity> m_entities{};
     glm::ivec2 m_mousePos{};
     std::unordered_map<SDL_Keycode, bool> m_keysPressed{};
@@ -26,10 +26,7 @@ public:
     void updateMap();
     void updateEntities();
 
-    void renderMap(const Renderer &ren) const;
-    void renderEntities(Renderer &ren) const;
-
-    void addTile(SDL_Texture *texture);
+    void drawMap(const Renderer &ren) const;
 
     void setMousePos(const int x, const int y) { m_mousePos.x = x; m_mousePos.y = y; };
     void keyDown(SDL_Keycode key);

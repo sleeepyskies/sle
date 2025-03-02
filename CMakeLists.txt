@@ -34,8 +34,8 @@ add_executable(sle
         src/Constants.hpp
         src/Entity.cpp
         src/Entity.hpp
-        src/Map.cpp
-        src/Map.hpp
+        src/Chunk.cpp
+        src/Chunk.hpp
         src/Tile.cpp
         src/Tile.hpp
         src/AssetLoader.cpp
@@ -43,6 +43,10 @@ add_executable(sle
         src/math.hpp
         src/Camera.cpp
         src/Camera.hpp
+        src/MapSerializer.cpp
+        src/MapSerializer.hpp
+        src/Map.cpp
+        src/Map.hpp
 )
 
 target_include_directories(sle PRIVATE ${slog_SOURCE_DIR})

@@ -20,6 +20,7 @@ private:
     void updateRunning();
 
 public:
+    void init();
     void stop() { m_running = false; }
     bool running() const { return m_running; }
 

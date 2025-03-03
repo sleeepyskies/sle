@@ -25,7 +25,5 @@ constexpr glm::ivec2 UN_HIGHLIGHT_TILE{0, 10};
 constexpr float CAMERA_SPEED = 10.f;
 
 const std::string DEFAULT_MAP = "default";
-// TODO: use path objects for better path handling.
-const std::string MAP_FILE_PATH = "../assets/map-files";
 
 } // namespace sle

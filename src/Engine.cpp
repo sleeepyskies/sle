@@ -2,8 +2,9 @@
 
 namespace sle {
 
-Engine::Engine(): m_renderer(), m_gameData() {
+Engine::Engine() {
     nfo("Engine successfully initialised.");
+    m_gameData.init();
     run();
 }
 

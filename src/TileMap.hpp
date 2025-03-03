@@ -60,7 +60,7 @@ struct Chunk {
 };
 
 /**
- * @brief A tilemap in sle is a mapping of Chunk location to chunk, as well as an array of all textures
+ * @brief A tile map in sle is a mapping of Chunk location to chunk, as well as an array of all textures
  * used by tiles to avoid redundancy. Map is constructed without any map loaded.
  *
  * Note that a map can have up to 256x256 chunks. This class may not be fully necessary for now, as

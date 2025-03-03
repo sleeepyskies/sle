@@ -3,6 +3,9 @@ project(sle) # set project name
 
 set(CMAKE_CXX_STANDARD 20)
 
+# generate config.h
+include(cmake/config.cmake)
+
 # slog is my own lightweight header only logging library used throughout this project
 include(FetchContent)
 FetchContent_Declare(

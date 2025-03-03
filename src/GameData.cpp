@@ -1,6 +1,11 @@
 #include "GameData.hpp"
 
 namespace sle {
+
+void GameData::init() {
+    m_map.load();
+}
+
 void GameData::draw(const Renderer &ren) const {
     m_map.draw(m_camera, ren);
     // draw entities

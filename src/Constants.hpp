@@ -6,7 +6,7 @@
 
 namespace sle {
 
-constexpr std::string WINDOW_NAME = "sle";
+const std::string WINDOW_NAME = "sle";
 constexpr int WIDTH = 1600;
 constexpr int HEIGHT = 850;
 
@@ -24,8 +24,8 @@ constexpr glm::ivec2 UN_HIGHLIGHT_TILE{0, 10};
 
 constexpr float CAMERA_SPEED = 10.f;
 
-constexpr std::string_view DEFAULT_MAP = "default";
+const std::string DEFAULT_MAP = "default";
 // TODO: use path objects for better path handling.
-constexpr std::string_view MAP_FILE_PATH = "../assets/map-files";
+const std::string MAP_FILE_PATH = "../assets/map-files";
 
 } // namespace sle

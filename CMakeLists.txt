@@ -41,8 +41,8 @@ add_executable(sle
         src/Camera.hpp
         src/MapSerializer.cpp
         src/MapSerializer.hpp
-        src/Map.cpp
-        src/Map.hpp
+        src/TileMap.cpp
+        src/TileMap.hpp
 )
 
 target_include_directories(sle PRIVATE ${slog_SOURCE_DIR})

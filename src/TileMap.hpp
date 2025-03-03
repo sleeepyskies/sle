@@ -25,7 +25,8 @@ private:
     uint8_t m_textureIndex;
 
 public:
-    explicit Tile(const uint8_t textureIndex): m_textureIndex(textureIndex) {} // block type conversion
+    /// @brief Defaults to empty/invalid tile texture index indicator if no argument is given.
+    explicit Tile(const uint8_t textureIndex = 0xFF): m_textureIndex(textureIndex) {} // block type conversion
 
     uint8_t textureIndex() const { return m_textureIndex; } // getter
     uint8_t& textureIndex() { return m_textureIndex; } // setter
@@ -59,14 +60,14 @@ struct Chunk {
 };
 
 /**
- * @brief A map in sle is a mapping of Chunk location to chunk, as well as an array of all textures
+ * @brief A tilemap in sle is a mapping of Chunk location to chunk, as well as an array of all textures
  * used by tiles to avoid redundancy. Map is constructed without any map loaded.
  *
  * Note that a map can have up to 256x256 chunks. This class may not be fully necessary for now, as
  * it could be combined into GameData, but I have decided on giving it its own class in case of future
  * expansions to sle.
  */
-class Map {
+class TileMap {
 private:
     /// @brief The name of the map. Used for loading and saving.
     std::string m_name;
@@ -77,9 +78,12 @@ private:
     /// @brief A sorted list of chunk indices. Order must be maintained when inserting.
     std::vector<glm::i8vec2> m_chunkIndices;
 
+    /// @brief Removes all data held in the map currently.
+    void clear();
+
 public:
-    explicit Map(const std::string &mapName): m_name(mapName), m_chunks() {} // NOLINT(*-pass-by-value)
-    ~Map();
+    TileMap() = default; // must call load() on TileMap after creating.
+    ~TileMap();
 
     /// @brief Handles drawing the entire map to the window. Currently draws every chunk, even if not visible.
     void draw(const Camera &cam, const Renderer &ren) const;
@@ -89,7 +93,7 @@ public:
     /// @brief Saves the current map to disk.
     bool save() const;
     /// @brief Loads either the provided map or the sle default map from disk.
-    bool load(std::string_view mapName = DEFAULT_MAP);
+    bool load(const std::string &mapName = DEFAULT_MAP);
 };
 
 } // sle

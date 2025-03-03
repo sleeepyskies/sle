@@ -1,21 +1,21 @@
 #pragma once
-#include <SDL_keyboard.h>
 #include <unordered_map>
 #include <vector>
 #include "Entity.hpp"
-#include "Map.hpp"
+#include "TileMap.hpp"
 #include "Renderer.hpp"
 #include "Camera.hpp"
+#include <SDL.h>
 
 namespace sle {
 class GameData {
 private:
     bool m_running = true;
     Camera m_camera;
-    Map m_map;
-    std::vector<Entity> m_entities{};
-    glm::ivec2 m_mousePos{};
-    std::unordered_map<SDL_Keycode, bool> m_keysPressed{};
+    TileMap m_map;
+    std::vector<Entity> m_entities {};
+    glm::ivec2 m_mousePos {};
+    std::unordered_map<SDL_Keycode, bool> m_keysPressed {};
 
     void updateRunning();
 

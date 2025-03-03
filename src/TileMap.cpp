@@ -1,29 +1,35 @@
-#include "Map.hpp"
+#include "TileMap.hpp"
 
 namespace sle {
 
-Map::~Map() {
+TileMap::~TileMap() {
+    clear();
+}
+
+void TileMap::clear() {
+    // only need to clean up SDL_Textures, since all other members are reassigned when loading.
     for (const auto texture: m_tileTextures)
         SDL_DestroyTexture(texture);
 }
 
+
 // ReSharper disable once CppMemberFunctionMayBeStatic
-bool Map::save() const {
+bool TileMap::save() const {
     return MapSerializer::save(m_name, m_chunks, m_tileTextures);
 }
 
-bool Map::load(const std::string_view mapName) {
-    if (const auto success = MapSerializer::load(mapName)) {
+bool TileMap::load(const std::string &mapName) {
+    if (const auto result = MapSerializer::load(mapName)) {
         m_name = mapName;
-        m_chunks = success.value().chunks;
-        m_tileTextures = success.value().textures;
-        m_chunkIndices = success.value().indices;
+        m_chunks = result->chunks;
+        m_tileTextures = result->tileTextures;
+        m_chunkIndices = result->chunkIndices;
         return true;
     }
     return false;
 }
 
-void Map::draw(const Camera &cam, const Renderer &ren) const {
+void TileMap::draw(const Camera &cam, const Renderer &ren) const {
     for (const auto cIndex : m_chunkIndices) {
         const auto &chunk = m_chunks.at(cIndex);
 
@@ -46,7 +52,7 @@ void Map::draw(const Camera &cam, const Renderer &ren) const {
     }
 }
 
-std::optional<SDL_Rect> Map::findCursorTile(const Camera &cam, const glm::ivec2 mousePos)  {
+std::optional<SDL_Rect> TileMap::findCursorTile(const Camera &cam, const glm::ivec2 mousePos)  {
     const glm::ivec2 mouseTileIndex = screenToTile(withCameraOffset(cam, mousePos));
     const glm::ivec2 mouseChunkIndex = mouseTileIndex / CHUNK_SIZE;
 

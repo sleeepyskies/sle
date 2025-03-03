@@ -1,7 +1,10 @@
 #pragma once
 
+#define GLM_ENABLE_EXPERIMENTAL // used for enabling hashing of glm::ivec2
+
 #include <string>
 #include <vector>
+#include "glm/gtx/hash.hpp"
 #include <unordered_map>
 #include <glm/vec2.hpp>
 #include <SDL.h>
@@ -9,15 +12,15 @@
 
 namespace sle {
 
-class Chunk;
+struct Chunk; // Forward declaration due to circular imports
 
 /**
  * @brief Used to encapsulate the result of parsing a .slemap file.
  */
-struct MapResult {
+struct TileMapResult {
     std::unordered_map<glm::i8vec2, Chunk> chunks;
-    std::vector<SDL_Texture*> textures;
-    std::vector<glm::i8vec2> indices;
+    std::vector<SDL_Texture*> tileTextures;
+    std::vector<glm::i8vec2> chunkIndices;
 };
 
 /**
@@ -30,12 +33,12 @@ public:
     ~MapSerializer() = delete;
 
     /// @brief Loads the map of the given name. Looks for this map in the default map location.
-    static std::optional<std::vector<Chunk>> load(const std::string &mapName);
+    static std::optional<TileMapResult> load(const std::string &mapName);
     /// @brief Saves the given map to disk at the default map location.
     static bool save(
         const std::string &mapName,
         const std::unordered_map<glm::i8vec2, Chunk> &chunks,
-        std::vector<SDL_Texture*> &textures
+        const std::vector<SDL_Texture*> &textures
     );
 };
 

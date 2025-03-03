@@ -14,15 +14,11 @@ class Engine {
 private:
     Renderer m_renderer;
     GameData m_gameData;
-    EventHandler m_eventHandler;
 
-    void update();
     void render() const;
 
 public:
     Engine();
-
-    void init();
 
     void run();
 

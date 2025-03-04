@@ -2,17 +2,6 @@
 
 namespace sle {
 
-TileMap::~TileMap() {
-    clear();
-}
-
-void TileMap::clear() {
-    // only need to clean up SDL_Textures, since all other members are reassigned when loading.
-    for (const auto texture: m_tileTextures)
-        SDL_DestroyTexture(texture);
-}
-
-
 // ReSharper disable once CppMemberFunctionMayBeStatic
 bool TileMap::save() const {
     return MapSerializer::save(m_name, m_chunks, m_tileTextures);
@@ -46,7 +35,7 @@ void TileMap::draw(const Camera &cam, const Renderer &ren) const {
                         TILE_HEIGHT
                     }
                 );
-                SDL_RenderCopy(ren.getRenderer(), m_tileTextures[textureIndex], nullptr, &pos);
+                SDL_RenderCopy(ren.getRenderer(), m_tileTextures[textureIndex]->texture(), nullptr, &pos);
             }
         }
     }

@@ -13,7 +13,7 @@
 
 namespace sle {
 
-constexpr std::filesystem::path MISSING_TEXTURE = "--missing-texture--";
+const std::filesystem::path MISSING_TEXTURE = "--missing-texture--";
 
 /**
  * @brief This class is responsible for loading and handling all assets used in sle.

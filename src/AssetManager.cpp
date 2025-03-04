@@ -6,14 +6,14 @@ AssetManager::AssetManager(const cref<Renderer> &ren) {
     SDL_Surface* tempSurface = SDL_CreateRGBSurface(0,1,1,32,0,0,0,0);;
     if (!tempSurface) {
         wrn("Could not create surface for fallback texture. {}", SDL_GetError());
-        throw std::runtime_error("AssetManager construction failed");
+        throw std::runtime_error("AssetManager construction failed!");
     }
 
     SDL_Texture* texture = SDL_CreateTextureFromSurface(ren->getRenderer(), tempSurface);
     if (!texture) {
         SDL_FreeSurface(tempSurface);
         wrn("Could not create fallback texture from surface. {}", SDL_GetError());
-        throw std::runtime_error("AssetManager construction failed");
+        throw std::runtime_error("AssetManager construction failed!");
     }
 
     m_renderer = ren;
@@ -41,7 +41,7 @@ ref<Texture> AssetManager::texture(const std::filesystem::path &filePath) {
     ref<Texture> texture = std::make_shared<Texture>(sdlTexture);
     m_textures[filePath] = texture;
     SDL_FreeSurface(tempSurface);
-    dbg("Texture loaded successfully {}", filePath);
+    dbg("Texture loaded successfully {}", filePath.string());
 
     return texture;
 }

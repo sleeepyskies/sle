@@ -35,7 +35,7 @@ public:
     }
 
     /// @brief Getter method for the SDL_Texture*
-    SDL_Texture* get() const { return m_texture; }
+    SDL_Texture* texture() const { return m_texture; }
 
     /// @brief Allow checking if the texture is still valid
     explicit operator bool() const { return m_texture != nullptr; }

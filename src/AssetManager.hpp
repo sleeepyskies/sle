@@ -13,6 +13,8 @@
 
 namespace sle {
 
+constexpr std::filesystem::path MISSING_TEXTURE = "--missing-texture--";
+
 /**
  * @brief This class is responsible for loading and handling all assets used in sle.
  *
@@ -25,10 +27,10 @@ private:
     /// @brief A mapping of file path to Texture wref.
     std::unordered_map<std::filesystem::path, wref<Texture>> m_textures;
 
-    /// @brief Creates a default texture to avoid unloaded textures on fail.
-    ref<Texture> getDefaultTexture();
+    /// @ref A pointer to the current renderer/window.
+    cref<Renderer> m_renderer;
 public:
-    AssetManager() = default;
+    AssetManager(const cref<Renderer> &ren);
     ~AssetManager() = default;
 
     /**
@@ -36,11 +38,13 @@ public:
      * not been loaded yet, it will create this @ref Texture and keep a wref for itself. The caller
      * then has ownership of the texture.
      *
+     * @attention If a texture cannot be loaded, a default texture will be returned.
+     *
      * @param ren The current Renderer, since it is required by SDL to make an SDL_Texture.
      * @param filePath The filepath to the texture to be loaded.
      * @return A cref to the texture.
      */
-    ref<Texture> texture(const Renderer &ren, const std::filesystem::path &filePath);
+    ref<Texture> texture(const std::filesystem::path &filePath);
 
 };
 

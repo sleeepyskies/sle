@@ -7,7 +7,7 @@
 #include "Renderer.hpp"
 #include "GameData.hpp"
 #include "EventHandler.hpp"
-#include "AssetLoader.hpp"
+#include "AssetManager.hpp"
 
 namespace sle {
 class Engine {

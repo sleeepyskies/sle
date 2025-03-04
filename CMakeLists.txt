@@ -37,8 +37,8 @@ add_executable(sle
         src/Constants.hpp
         src/Entity.cpp
         src/Entity.hpp
-        src/AssetLoader.cpp
-        src/AssetLoader.hpp
+        src/AssetManager.cpp
+        src/AssetManager.hpp
         src/math.hpp
         src/Camera.cpp
         src/Camera.hpp
@@ -46,6 +46,8 @@ add_executable(sle
         src/MapSerializer.hpp
         src/TileMap.cpp
         src/TileMap.hpp
+        src/Texture.hpp
+        src/core.hpp
 )
 
 target_include_directories(sle PRIVATE ${slog_SOURCE_DIR})

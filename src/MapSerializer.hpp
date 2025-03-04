@@ -11,6 +11,8 @@
 #include <SDL.h>
 #include <optional>
 #include "config.h"
+#include "Texture.hpp"
+#include "core.hpp"
 
 namespace sle {
 
@@ -21,7 +23,7 @@ struct Chunk; // Forward declaration due to circular imports
  */
 struct TileMapResult {
     std::unordered_map<glm::i8vec2, Chunk> chunks;
-    std::vector<SDL_Texture*> tileTextures;
+    std::vector<cref<Texture>> tileTextures;
     std::vector<glm::i8vec2> chunkIndices;
 };
 
@@ -34,6 +36,8 @@ struct TileMapResult {
  *	This repeats for as many chunks as there are.
 */
 class MapSerializer {
+private:
+
 public:
     MapSerializer() = delete;
     ~MapSerializer() = delete;
@@ -45,7 +49,7 @@ public:
     static bool save(
         const std::string &mapName,
         const std::unordered_map<glm::i8vec2, Chunk> &chunks,
-        const std::vector<SDL_Texture*> &textures
+        const std::vector<cref<Texture>> &textures
     );
 };
 

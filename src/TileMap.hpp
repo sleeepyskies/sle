@@ -74,16 +74,13 @@ private:
     /// @brief The chunks of tiles that the map consists of.
     std::unordered_map<glm::i8vec2, Chunk> m_chunks;
     /// @brief The textures used by tiles. Store this way to avoid redundant copies.
-    std::vector<SDL_Texture*> m_tileTextures;
+    std::vector<cref<Texture>> m_tileTextures;
     /// @brief A sorted list of chunk indices. Order must be maintained when inserting.
     std::vector<glm::i8vec2> m_chunkIndices;
 
-    /// @brief Removes all data held in the map currently.
-    void clear();
-
 public:
     TileMap() = default; // must call load() on TileMap after creating.
-    ~TileMap();
+    ~TileMap() = default;
 
     /// @brief Handles drawing the entire map to the window. Currently draws every chunk, even if not visible.
     void draw(const Camera &cam, const Renderer &ren) const;

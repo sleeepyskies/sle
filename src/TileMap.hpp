@@ -1,13 +1,13 @@
 #pragma once
 
-#include <unordered_map>
-#include <algorithm>
 #include "Constants.hpp"
 #include "MapSerializer.hpp"
-#include <glm/vec2.hpp>
-#include <SDL.h>
-#include "math.hpp"
 #include "Renderer.hpp"
+#include "math.hpp"
+#include <SDL.h>
+#include <algorithm>
+#include <glm/vec2.hpp>
+#include <unordered_map>
 
 namespace sle {
 
@@ -26,10 +26,10 @@ private:
 
 public:
     /// @brief Defaults to empty/invalid tile texture index indicator if no argument is given.
-    explicit Tile(const uint8_t textureIndex = 0xFF): m_textureIndex(textureIndex) {} // block type conversion
+    explicit Tile(const uint8_t textureIndex = 0xFF) : m_textureIndex(textureIndex) {} // block type conversion
 
     uint8_t textureIndex() const { return m_textureIndex; } // getter
-    uint8_t& textureIndex() { return m_textureIndex; } // setter
+    uint8_t &textureIndex() { return m_textureIndex; }      // setter
 };
 
 /**
@@ -42,34 +42,33 @@ struct Chunk {
     /// @brief The 16x16 grid of tiles that represent this chunk.
     std::vector<Tile> m_tiles;
 
-    Chunk(): m_tiles(CHUNK_SIZE * CHUNK_SIZE) {} // allocate enough memory upon construction
+    Chunk() : m_tiles(CHUNK_SIZE * CHUNK_SIZE) {} // allocate enough memory upon construction
 
     /// @brief Returns a non const reference to the tile at this index.
-    Tile& tile (const int x, const int y) {
+    Tile &tile(const int x, const int y) {
         const int index = y * CHUNK_SIZE + x;
         assert(index < CHUNK_SIZE * CHUNK_SIZE);
         return m_tiles[index];
     }
 
     /// @brief Returns a const reference to the tile at this index.
-    const Tile& tile (const int x, const int y) const {
+    const Tile &tile(const int x, const int y) const {
         const int index = y * CHUNK_SIZE + x;
         assert(index < CHUNK_SIZE * CHUNK_SIZE);
         return m_tiles[index];
     }
 
     /// @brief Returns a non const reference to the tile at this index.
-    Tile& tile (const int i) {
+    Tile &tile(const int i) {
         assert(i < CHUNK_SIZE * CHUNK_SIZE);
         return m_tiles[i];
     }
 
     /// @brief Returns a const reference to the tile at this index.
-    const Tile& tile (const int i) const {
+    const Tile &tile(const int i) const {
         assert(i < CHUNK_SIZE * CHUNK_SIZE);
         return m_tiles[i];
     }
-
 };
 
 /**
@@ -92,7 +91,7 @@ private:
     std::vector<glm::i8vec2> m_chunkIndices;
 
 public:
-    TileMap() = default; // must call load() on TileMap after creating.
+    TileMap()  = default; // must call load() on TileMap after creating.
     ~TileMap() = default;
 
     /// @brief Handles drawing the entire map to the window. Currently draws every chunk, even if not visible.
@@ -106,4 +105,4 @@ public:
     bool load(const std::string &mapName = DEFAULT_MAP);
 };
 
-} // sle
+} // namespace sle

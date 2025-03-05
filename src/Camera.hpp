@@ -1,19 +1,20 @@
 #pragma once
 
-#include <SDL_keycode.h>
-#include <unordered_map>
-#include <glm/vec2.hpp>
-#include <glm/geometric.hpp>
 #include "Constants.hpp"
 #include "slog.hpp"
+#include <SDL_keycode.h>
+#include <glm/geometric.hpp>
+#include <glm/vec2.hpp>
+#include <unordered_map>
 
 namespace sle {
 
 class Camera {
 private:
-    glm::ivec2 m_pos{0, 0};
+    glm::ivec2 m_pos{ 0, 0 };
 
     void move(glm::ivec2 direction);
+
 public:
     glm::ivec2 getPos() const { return m_pos; }
 

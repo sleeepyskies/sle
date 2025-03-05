@@ -7,21 +7,22 @@ void EventHandler::input(GameData &gameData) {
 
     while (SDL_PollEvent(&event)) {
         switch (event.type) {
-            case SDL_QUIT:
-                gameData.stop();
-                break;
-            case SDL_MOUSEMOTION:
-                handleMouseMotion(event, gameData);
-                break;
-            case SDL_KEYDOWN:
-                // 0 if not a key repeat
-                if (event.key.repeat == 0) gameData.keyDown(event.key.keysym.sym);
-                break;
-            case SDL_KEYUP:
-                gameData.keyUp(event.key.keysym.sym);
-                break;
-            default:
-                break;
+        case SDL_QUIT:
+            gameData.stop();
+            break;
+        case SDL_MOUSEMOTION:
+            handleMouseMotion(event, gameData);
+            break;
+        case SDL_KEYDOWN:
+            // 0 if not a key repeat
+            if (event.key.repeat == 0)
+                gameData.keyDown(event.key.keysym.sym);
+            break;
+        case SDL_KEYUP:
+            gameData.keyUp(event.key.keysym.sym);
+            break;
+        default:
+            break;
         }
     }
 }

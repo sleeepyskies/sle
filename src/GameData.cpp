@@ -2,9 +2,7 @@
 
 namespace sle {
 
-void GameData::init() {
-    m_map.load();
-}
+void GameData::init() { m_map.load(); }
 
 void GameData::draw(const Renderer &ren) const {
     m_map.draw(m_camera, ren);
@@ -20,7 +18,8 @@ void GameData::update() {
 
 void GameData::updateRunning() {
     const auto gotEsc = m_keysPressed.find(SDLK_ESCAPE);
-    if (gotEsc != m_keysPressed.end() && m_keysPressed[SDLK_ESCAPE]) m_running = false;
+    if (gotEsc != m_keysPressed.end() && m_keysPressed[SDLK_ESCAPE])
+        m_running = false;
 }
 
 void GameData::keyDown(const SDL_Keycode key) {

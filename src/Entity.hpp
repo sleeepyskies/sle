@@ -12,9 +12,8 @@ private:
     SDL_Texture *m_texture;
 
 public:
-    Entity(const unsigned int id, const SDL_Rect pos, SDL_Texture *texture): m_id(id), m_pos(pos),
-        m_texture(texture) {
-    }
+    Entity(const unsigned int id, const SDL_Rect pos, SDL_Texture *texture)
+        : m_id(id), m_pos(pos), m_texture(texture) {}
 
     void renderSelf(Renderer &ren) const;
 };

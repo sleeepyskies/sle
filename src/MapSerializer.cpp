@@ -1,9 +1,5 @@
 #include "MapSerializer.hpp"
 
-#include <bits/fs_path.h>
-
-#include "TileMap.hpp"
-
 namespace sle {
 
 std::optional<TileMapResult> MapSerializer::load(const std::string &mapName) {
@@ -29,13 +25,7 @@ std::optional<TileMapResult> MapSerializer::load(const std::string &mapName) {
         glm::i8vec2 coords; // chunk coords in terms of chunks, not tiles
         inFile >> coords.x;
         inFile >> coords.y;
-        for (int i = 0; i < tileAmount; i++) {
-            std::string type;
-            inFile >> type;
-            Tile tile{ typeToTexture(type) };
-            chunk.m_tiles[i] = tile;
-        }
-
+        chunkIndices[coords] = chunk;
     }
 
     inFile.close();

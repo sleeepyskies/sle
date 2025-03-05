@@ -1,8 +1,8 @@
 #pragma once
-#include <queue>
-#include <SDL_events.h>
-#include "slog.hpp"
 #include "math.hpp"
+#include "slog.hpp"
+#include <SDL_events.h>
+#include <queue>
 
 #include "GameData.hpp"
 

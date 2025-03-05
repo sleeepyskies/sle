@@ -11,4 +11,4 @@ template <typename T> using cref = std::shared_ptr<const T>;
 
 /// @brief A weak pointer for a given type.
 template <typename T> using wref = std::weak_ptr<T>;
-}
+} // namespace sle

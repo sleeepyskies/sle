@@ -2,6 +2,10 @@
 #include "Engine.hpp"
 #include "slog.hpp"
 
+// Engine engine{};
+// engine.init();
+// engine.shutdown();
+
 int main() {
     // slog::logLevel = slog::Level::TRACE;
     try {

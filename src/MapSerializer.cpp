@@ -1,7 +1,6 @@
 #include "MapSerializer.hpp"
 
 namespace sle {
-
 namespace fs = std::filesystem;
 
 std::optional<TileMapResult> MapSerializer::load(AssetManager &am, const std::string &mapName) {
@@ -30,10 +29,11 @@ std::optional<TileMapResult> MapSerializer::load(AssetManager &am, const std::st
             std::string tileIndicator;
             inFile >> tileIndicator;
             const std::filesystem::path texturePath = fetchTileTexture(tileIndicator);
-            ref<Texture> texture = am.texture(texturePath);
-            auto indexResult = getIndex(tileTextures, texture);
+            ref<Texture> texture                    = am.texture(texturePath);
+            auto indexResult                        = getIndex(tileTextures, texture);
             Tile tile{ indexResult.value_or(tileTextures.size()) };
-            if (indexResult) tileTextures.push_back(texture);
+            if (indexResult)
+                tileTextures.push_back(texture);
             chunk.tile(i) = tile;
         }
 
@@ -46,16 +46,16 @@ std::optional<TileMapResult> MapSerializer::load(AssetManager &am, const std::st
 }
 
 // TODO: Implement actual logic here!
-bool MapSerializer::save(const std::string &mapName, const std::unordered_map<glm::i8vec2, Chunk> &chunks, const std::vector<ref<Texture>> &textures) {
+bool MapSerializer::save(const std::string &mapName, const std::unordered_map<glm::i8vec2, Chunk> &chunks,
+                         const std::vector<ref<Texture>> &textures) {
     return true;
 }
 
 std::optional<uint8_t> MapSerializer::getIndex(const std::vector<ref<Texture>> &vec, const ref<Texture> &tex) {
     for (int i = 0; i < vec.size(); i++) {
-        if (vec[i]->texture() == tex->texture()) return i;
+        if (vec[i]->texture() == tex->texture())
+            return i;
     }
     return {};
 }
-
-
-} // sle
+} // namespace sle

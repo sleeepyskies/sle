@@ -1,15 +1,15 @@
 #pragma once
 
-#include <SDL_render.h>
-#include <SDL_image.h>
-#include <string>
-#include <unordered_map>
+#include "Renderer.hpp"
+#include "Texture.hpp"
 #include "core.hpp"
 #include "slog.hpp"
-#include "Texture.hpp"
-#include "Renderer.hpp"
+#include <SDL_image.h>
+#include <SDL_render.h>
 #include <filesystem>
 #include <memory>
+#include <string>
+#include <unordered_map>
 
 namespace sle {
 
@@ -32,6 +32,7 @@ private:
 
     /// @brief A helper function to create a texture
     std::optional<Texture> createTexture(const std::filesystem::path &filePath);
+
 public:
     AssetManager(const cref<Renderer> &ren); // NOLINT(*-explicit-constructor)
     ~AssetManager() = default;
@@ -45,7 +46,6 @@ public:
      * @return A ref to the created @ref Texture
      */
     ref<Texture> texture(const std::filesystem::path &filePath);
-
 };
 
 } // namespace sle

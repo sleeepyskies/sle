@@ -3,3 +3,4 @@
 /.idea
 Doxyfile
 /docs
+.clang-format

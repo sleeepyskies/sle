@@ -9,7 +9,7 @@ AssetManager::AssetManager(const cref<Renderer> &ren) {
         throw std::runtime_error("AssetManager construction failed!");
     }
 
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(ren->getRenderer(), tempSurface);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(ren->renderer(), tempSurface);
     if (!texture) {
         SDL_FreeSurface(tempSurface);
         wrn("Could not create fallback texture from surface. {}", SDL_GetError());
@@ -27,7 +27,7 @@ std::optional<Texture> AssetManager::createTexture(const std::filesystem::path &
         return {};
     }
 
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer->getRenderer(), tempSurface);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer->renderer(), tempSurface);
     if (!texture) {
         SDL_FreeSurface(tempSurface);
         wrn("Could not create texture from surface. {}", SDL_GetError());

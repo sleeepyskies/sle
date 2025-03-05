@@ -1,8 +1,8 @@
 #pragma once
 
-#include <SDL.h>
 #include "core.hpp"
 #include "slog.hpp"
+#include <SDL.h>
 
 namespace sle {
 
@@ -12,27 +12,24 @@ namespace sle {
 class Texture {
 private:
     /// @brief The underlying texture from the SDL library.
-    SDL_Texture* m_texture;
+    SDL_Texture *m_texture;
 
 public:
     /// @brief Make sure we cannot use the default constructor
     Texture() = delete;
     /// @brief Make sure we cannot use the copy constructor
-    Texture(const Texture&) = delete;
+    Texture(const Texture &) = delete;
     /// @brief Make sure we cannot use copy assignment
-    Texture& operator=(const Texture&) = delete;
+    Texture &operator=(const Texture &) = delete;
 
     /// @brief Make sure we must construct Texture explicitly
-    explicit Texture(SDL_Texture* texture): m_texture(texture) {}
+    explicit Texture(SDL_Texture *texture) : m_texture(texture) {}
 
     /// @brief Define a move constructor
-    Texture(Texture&& other) noexcept
-        : m_texture(other.m_texture) {
-        other.m_texture = nullptr;
-    }
+    Texture(Texture &&other) noexcept : m_texture(other.m_texture) { other.m_texture = nullptr; }
 
     /// @brief Define move assignment operator
-    Texture& operator=(Texture&& other) noexcept {
+    Texture &operator=(Texture &&other) noexcept {
         if (this != &other) {
             SDL_DestroyTexture(this->m_texture);
             this->m_texture = other.m_texture;
@@ -42,14 +39,16 @@ public:
     }
 
     /// @brief Make sure to clean up the underlying SDL_Texture* when destructing. Only perform if not nullptr
-    ~Texture() { if (m_texture) SDL_DestroyTexture(m_texture); }
+    ~Texture() {
+        if (m_texture)
+            SDL_DestroyTexture(m_texture);
+    }
 
     /// @brief Getter method for the SDL_Texture*
-    SDL_Texture* texture() const { return m_texture; }
+    SDL_Texture *texture() const { return m_texture; }
 
     /// @brief Allow checking if the texture is still valid
     explicit operator bool() const { return m_texture != nullptr; }
-
 };
 
 } // namespace sle

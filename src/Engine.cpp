@@ -2,11 +2,9 @@
 
 namespace sle {
 
-Engine::Engine() {
-    nfo("Engine successfully initialised.");
-    m_gameData.init();
-    run();
-}
+void Engine::init() {}
+
+void Engine::shutdown() {}
 
 void Engine::run() {
     // still need to handle cycle length properly to get desired FPS, this has been

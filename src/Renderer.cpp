@@ -9,20 +9,14 @@ Renderer::Renderer() {
     nfo("SDL initialised successfully");
 
     // 0 on failure
-    if (IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG ) == 0 ) {
+    if (IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) == 0) {
         SDL_Quit();
         throw std::runtime_error(IMG_GetError());
     }
     nfo("IMG initialised successfully");
 
     m_window = SDL_CreateWindow(
-        WINDOW_NAME.c_str(),
-        SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED,
-        WIDTH,
-        HEIGHT,
-        SDL_WINDOW_RESIZABLE
-        );
+        WINDOW_NAME.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_RESIZABLE);
 
     if (m_window == nullptr) {
         const auto err = SDL_GetError();
@@ -63,10 +57,6 @@ void Renderer::clear() const {
     }
 }
 
-void Renderer::present() const {
-    SDL_RenderPresent(m_renderer);
-}
-
-
+void Renderer::present() const { SDL_RenderPresent(m_renderer); }
 
 } // namespace sle

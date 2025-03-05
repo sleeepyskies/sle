@@ -48,6 +48,7 @@ add_executable(sle
         src/TileMap.hpp
         src/Texture.hpp
         src/core.hpp
+        src/utils.hpp
 )
 
 target_include_directories(sle PRIVATE ${slog_SOURCE_DIR})

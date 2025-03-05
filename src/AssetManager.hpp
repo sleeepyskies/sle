@@ -37,14 +37,12 @@ public:
     ~AssetManager() = default;
 
     /**
-     * This function will first check if an asset has already been loaded and return it. If it has
+     * @brief This function will first check if an asset has already been loaded and return it. If it has
      * not been loaded yet, it will create this @ref Texture and keep a wref for itself. The caller
      * then has ownership of the texture.
      *
-     * @attention If a texture cannot be loaded, a default texture will be returned.
-     *
      * @param filePath The filepath to the texture to be loaded.
-     * @return A cref to the texture.
+     * @return A ref to the created @ref Texture
      */
     ref<Texture> texture(const std::filesystem::path &filePath);
 

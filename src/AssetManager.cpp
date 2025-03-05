@@ -40,18 +40,21 @@ std::optional<Texture> AssetManager::createTexture(const std::filesystem::path &
 }
 
 ref<Texture> AssetManager::texture(const std::filesystem::path &filePath) {
-    // Texture already exists, just return it
+    // Texture already exists, return it
     if (m_textures.contains(filePath) && !m_textures[filePath].expired()) { // short circuit eval :)
-        return m_textures[filePath].lock();
+        return  m_textures[filePath].lock() ;
     }
 
-    Texture texture{ (std::move(createTexture(filePath))->texture()) };
-    if (!texture) return m_textures[MISSING_TEXTURE].lock();
+    auto textureResult = createTexture(filePath);
+    if (!textureResult) return  m_textures[MISSING_TEXTURE].lock() ; // could not create, return default texture
 
-    wref<Texture> textureRef = std::make_shared<Texture>(std::move(texture));
-    m_textures[filePath] = wref<Texture>(textureRef);
+    Texture texture{ (std::move(textureResult->texture())) };
 
-    return textureRef.lock();
+    ref<Texture> textureRef = std::make_shared<Texture>(std::move(texture));
+    wref<Texture> textureWref = textureRef;
+    m_textures[filePath] = textureWref;
+
+    return  textureRef; // nice, success :)
 }
 
 } // namespace sle

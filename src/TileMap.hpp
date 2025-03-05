@@ -57,6 +57,19 @@ struct Chunk {
         assert(index < CHUNK_SIZE * CHUNK_SIZE);
         return m_tiles[index];
     }
+
+    /// @brief Returns a non const reference to the tile at this index.
+    Tile& tile (const int i) {
+        assert(i < CHUNK_SIZE * CHUNK_SIZE);
+        return m_tiles[i];
+    }
+
+    /// @brief Returns a const reference to the tile at this index.
+    const Tile& tile (const int i) const {
+        assert(i < CHUNK_SIZE * CHUNK_SIZE);
+        return m_tiles[i];
+    }
+
 };
 
 /**

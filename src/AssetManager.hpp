@@ -29,8 +29,11 @@ private:
 
     /// @ref A pointer to the current renderer/window.
     cref<Renderer> m_renderer;
+
+    /// @brief A helper function to create a texture
+    std::optional<Texture> createTexture(const std::filesystem::path &filePath);
 public:
-    AssetManager(const cref<Renderer> &ren);
+    AssetManager(const cref<Renderer> &ren); // NOLINT(*-explicit-constructor)
     ~AssetManager() = default;
 
     /**

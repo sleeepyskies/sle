@@ -31,7 +31,7 @@ namespace sle {
      * @brief This static class is used for loading map data from files and writing map data to files. sle
      * uses a custom text format for storing map data. The format for the .map files used is as follows:
      * [Chunk location given as x y]:
-     * [blue | gray | green | red] x CHUNK_SIZE * CHUNK_SIZE
+     * [blue | gray | green | red | empty] x CHUNK_SIZE * CHUNK_SIZE
      *
      *	This repeats for as many chunks as there are.
     */

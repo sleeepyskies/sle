@@ -23,7 +23,7 @@ struct Chunk; // Forward declaration due to circular imports
  */
 struct TileMapResult {
     std::unordered_map<glm::i8vec2, Chunk> chunks;
-    std::vector<cref<Texture>> tileTextures;
+    std::vector<ref<Texture>> tileTextures;
     std::vector<glm::i8vec2> chunkIndices;
 };
 
@@ -49,7 +49,7 @@ public:
     static bool save(
         const std::string &mapName,
         const std::unordered_map<glm::i8vec2, Chunk> &chunks,
-        const std::vector<cref<Texture>> &textures
+        const std::vector<ref<Texture>> &textures
     );
 };
 

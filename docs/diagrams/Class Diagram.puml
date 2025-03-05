@@ -7,87 +7,104 @@ class main {
     + int main()
 }
 
-object AssetLoader {
-    + SDL_Texture* loadTexture(string filePath)
-}
-
-object Constants {
-    + std::string WINDOW_NAME
-    + int WIDTH
-    + int HEIGHT
-    + int TILE_HEIGHT
-    + int TILE_WIDTH
-    + int MAP_HEIGHT
-    + int MAP_WIDTH
-}
-
 class Engine {
     - Renderer m_renderer
     - GameData m_gameData
     - EventHandler m_eventHandler
-    - bool m_running = true
 
     + Engine()
-    + ~Engine()
-    - void init()
     + void run()
-    - void readInput()
-    - void update()
     - void render()
 }
 
-class EventHandler {
-    - queue<pair<SDL_Event, SDL_EventType>> m_eventQueue
-
-    + void enqueueEvent(SDL_Event &event, SDL_EventType eventType)
-    + void processEvents(GameData &gameData)
+object EventHandler {
+    - static void handleMouseMotion(const SDL_Event &event, GameData &gameData)
+    + static void input(GameData &gameData)
 }
 
 class Renderer {
     - SDL_Window *m_window
     - SDL_Renderer *m_renderer
 
-    + Renderer()
+    + Renderer() // inits SDL here
     + ~Renderer()
     + void clear()
     + void present()
     + SDL_Renderer* getRenderer()
 }
 
-struct GameData {
-    + Map m_map
-    + vector<Entity> m_entities
+class GameData {
+    - bool m_running = true
+    - Camera m_camera
+    - TileMap m_map
+    - glm::ivec2 m_mousePos
+    - std::unordered_map<SDL_Keycode, bool> m_keysPressed
 
-    + void renderMap(Renderer &ren)
-    + void renderEntities(Renderer &ren)
-    + void addTile(SDL_Texture* texture)
+    - void updateRunning()
+
+    + void init()
+    + void stop()
+    + bool running() const
+    + void update()
+    + void draw(const Renderer &ren)
+    + void setMousePos()
+    + void keyDown(SDL_Keycode key)
+    + void keyUp(SDL_Keycode key)
 }
 
-struct Map {
-    + vector<vector<Tile>> m_tiles
+class TileMap {
+    - std::string m_name
+    - std::unordered_map<glm::i8vec2, Chunk> m_chunks
+    - std::vector<ref<Texture>> m_tileTextures
+    - std::vector<glm::i8vec2> m_chunkIndices
 
-    + void renderTiles(Renderer &ren)
-    + void addTile(SDL_Texture* texture)
+    + TileMap() = default
+    + ~TileMap() = default
+    + void draw(const Camera &cam, const Renderer &ren) const
+    + std::optional<SDL_Rect> findCursorTile(const Camera &cam, glm::ivec2 mousePos)
+    + bool save() const
+    + bool load(const std::string &mapName = DEFAULT_MAP)
+}
+
+struct Chunk {
+    + std::vector<Tile> m_tiles
+
+    + Chunk() // allocate space for 16 x 16 tiles
+    + Tile& tile(const int x, const int y)
+    + Tile& tile(const int x, const int y) const
 }
 
 struct Tile {
-    + SDL_Texture m_texture
-    + SDL_Rect m_posRect
+    - uint8_t m_textureIndex
 
-    + void renderSelf(Renderer &ren)
+    + explicit Tile(const uint8_t textureIndex = 0xFF)
+    + uint8_t textureIndex()
+    + uint8_t& textureIndex()
 }
 
-class Entity {
-    - unsigned int m_id
-    + SDL_Texture m_texture
-    + SDL_Rect m_posRect
+class Texture {
+    - SDL_Texture* m_texture
 
-    + void renderSelf(Renderer &ren)
+    + Texture() = delete
+    + Texture(const Texture&) = delete
+    + Texture& operator= (const Texture&) = delete
+    + explicit Texture(SDL_Texture* texture)
+    + ~Texture()
+    + SDL_Texture* texture()
+    + explicit operator bool()
 }
 
+class AssetManager {
+    - std::unordered_map<fs::path>, wref<Texture>> m_textures
+    - cref<Renderer> m_renderer
 
+    + AssetManager(const cref<Renderer> &ren)
+    + ~AssetManager() = default
+    + ref<Texture> texture(const fs::path &filePath)
+}
 
-
+AssetManager *-- Renderer
+AssetManager *-- Texture
 
 main <-- Engine : calls constructor
 
@@ -95,9 +112,10 @@ Engine *-- Renderer
 Engine *-- GameData
 Engine *-- EventHandler
 
-GameData *-- Map
-GameData *-- Entity
+GameData *-- TileMap
 
-Map *-- Tile
+TileMap *-- Chunk
+TileMap *-- Texture
+Chunk *-- Tile
 
 @enduml

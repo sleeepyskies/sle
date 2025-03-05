@@ -74,7 +74,7 @@ private:
     /// @brief The chunks of tiles that the map consists of.
     std::unordered_map<glm::i8vec2, Chunk> m_chunks;
     /// @brief The textures used by tiles. Store this way to avoid redundant copies.
-    std::vector<cref<Texture>> m_tileTextures;
+    std::vector<ref<Texture>> m_tileTextures;
     /// @brief A sorted list of chunk indices. Order must be maintained when inserting.
     std::vector<glm::i8vec2> m_chunkIndices;
 

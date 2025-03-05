@@ -40,7 +40,6 @@ public:
      *
      * @attention If a texture cannot be loaded, a default texture will be returned.
      *
-     * @param ren The current Renderer, since it is required by SDL to make an SDL_Texture.
      * @param filePath The filepath to the texture to be loaded.
      * @return A cref to the texture.
      */

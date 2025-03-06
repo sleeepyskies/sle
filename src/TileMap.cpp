@@ -2,21 +2,13 @@
 
 namespace sle {
 
-// ReSharper disable once CppMemberFunctionMayBeStatic
-bool TileMap::save() const { return MapSerializer::save(m_name, m_chunks, m_tileTextures); }
-
-bool TileMap::load(AssetManager &am, const std::string &mapName) {
-    if (const auto result = MapSerializer::load(am, mapName)) {
-        m_name         = mapName;
-        m_chunks       = result->chunks;
-        m_tileTextures = result->tileTextures;
-        m_chunkIndices = result->chunkIndices;
-        return true;
-    }
-    return false;
+void TileMap::load(const TileMapResult &tmRes) {
+    m_chunks       = tmRes.chunks;
+    m_tileTextures = tmRes.tileTextures;
+    m_chunkIndices = tmRes.chunkIndices;
 }
 
-void TileMap::draw(const Camera &cam, const wref<Renderer> &ren) const {
+void TileMap::draw(const Camera &cam, const ref<Renderer> &ren) const {
     for (const auto cIndex : m_chunkIndices) {
         const auto &chunk = m_chunks.at(cIndex);
 
@@ -25,9 +17,21 @@ void TileMap::draw(const Camera &cam, const wref<Renderer> &ren) const {
                 const auto textureIndex = chunk.tile(x, y).textureIndex();
                 if (textureIndex == 0xFF)
                     continue; // dead tile
-                const SDL_Rect pos = withCameraOffset(
-                    cam, SDL_Rect{ (cIndex.x * CHUNK_SIZE) + x, (cIndex.y * CHUNK_SIZE) + y, TILE_WIDTH, TILE_HEIGHT });
-                SDL_RenderCopy(ren.renderer(), m_tileTextures[textureIndex]->texture(), nullptr, &pos);
+                const glm::ivec2 screenPosition =
+                    tileToScreen(glm::ivec2{ (cIndex.x * CHUNK_SIZE) + x, (cIndex.y * CHUNK_SIZE) + y });
+                const SDL_Rect pos =
+                    withCameraOffset(cam, SDL_Rect{ screenPosition.x, screenPosition.y, TILE_WIDTH, TILE_HEIGHT });
+
+                auto textureDBG = m_tileTextures[textureIndex]->texture();
+
+                if (SDL_RenderCopy(ren->renderer(), m_tileTextures[textureIndex]->texture(), nullptr, &pos) != 0) {
+                    dbg("Could not render tile ({}, {}) in chunk ({}, {}). SDL_Error: {}",
+                        x,
+                        y,
+                        cIndex.x,
+                        cIndex.y,
+                        SDL_GetError());
+                }
             }
         }
     }

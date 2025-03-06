@@ -3,7 +3,6 @@
 #define GLM_ENABLE_EXPERIMENTAL // used for enabling hashing of glm::ivec2
 #include "AssetManager.hpp"
 #include "Texture.hpp"
-#include "TileMap.hpp"
 #include "config.h"
 #include "core.hpp"
 #include "utils.hpp"
@@ -41,7 +40,7 @@ struct TileMapResult {
 class MapSerializer {
 private:
     /// @brief Finds the index of the texture in the texture array. There may not exist one.
-    static std::optional<uint8_t> getIndex(const std::vector<ref<Texture>> &vec, const ref<Texture> &tex);
+    std::optional<uint8_t> getIndex(const std::vector<ref<Texture>> &vec, const ref<Texture> &tex);
 
 public:
     MapSerializer()  = default;
@@ -55,7 +54,7 @@ public:
     std::optional<TileMapResult> load(AssetManager &am, const std::string &mapName);
 
     /// @brief Saves the given map to disk at the default map location.
-    static bool save(const std::string &mapName, const std::unordered_map<glm::i8vec2, Chunk> &chunks,
+    bool save(const std::string &mapName, const std::unordered_map<glm::i8vec2, Chunk> &chunks,
                      const std::vector<ref<Texture>> &textures);
 };
 

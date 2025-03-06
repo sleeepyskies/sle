@@ -10,8 +10,8 @@ void AssetManager::init(const ref<Renderer> &renderer) {
     }
 
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer->renderer(), tempSurface);
+    SDL_FreeSurface(tempSurface);
     if (!texture) {
-        SDL_FreeSurface(tempSurface);
         wrn("Could not create fallback texture from surface. {}", SDL_GetError());
         throw std::runtime_error("AssetManager construction failed!");
     }
@@ -21,22 +21,23 @@ void AssetManager::init(const ref<Renderer> &renderer) {
 }
 
 std::optional<Texture> AssetManager::createTexture(const std::filesystem::path &filePath) {
-    SDL_Surface *tempSurface = IMG_Load(filePath.string().c_str());
+    assert(m_renderer != nullptr);
+
+    SDL_Surface *tempSurface = IMG_Load(filePath.generic_string().c_str());
     if (!tempSurface) {
         wrn("Could not load img from given filePath. {}", IMG_GetError());
         return {};
     }
 
     SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer->renderer(), tempSurface);
+    SDL_FreeSurface(tempSurface);
     if (!texture) {
-        SDL_FreeSurface(tempSurface);
         wrn("Could not create texture from surface. {}", SDL_GetError());
         return {};
     }
 
-    SDL_FreeSurface(tempSurface);
     dbg("Texture loaded successfully {}", filePath.string());
-    return { Texture{ texture } };
+    return std::make_optional<Texture>(texture);
 }
 
 ref<Texture> AssetManager::texture(const std::filesystem::path &filePath) {
@@ -49,9 +50,7 @@ ref<Texture> AssetManager::texture(const std::filesystem::path &filePath) {
     if (!textureResult)
         return m_textures[MISSING_TEXTURE].lock(); // could not create, return default texture
 
-    Texture texture{ (std::move(textureResult->texture())) };
-
-    ref<Texture> textureRef   = std::make_shared<Texture>(std::move(texture));
+    ref<Texture> textureRef   = std::make_shared<Texture>(std::move(*textureResult));
     wref<Texture> textureWref = textureRef;
     m_textures[filePath]      = textureWref;
 

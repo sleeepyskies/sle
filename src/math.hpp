@@ -1,10 +1,10 @@
 #pragma once
 #include "Camera.hpp"
 #include "Constants.hpp"
+#include <SDL.h>
 #include <glm/gtc/matrix_inverse.hpp>
 #include <glm/mat2x2.hpp>
 #include <glm/vec2.hpp>
-#include <SDL.h>
 
 namespace sle {
 
@@ -60,6 +60,25 @@ inline glm::vec2 tileToScreen(const glm::ivec2 pos) { return { tileToScreenM * p
  */
 inline glm::ivec2 screenToTile(const glm::ivec2 &pos) {
     return { screenToTileM * glm::vec2{ pos.x - HALF_TILE_HEIGHT, pos.y } };
+}
+
+/**
+ * @brief Takes a tiles indices in a 2D std::vector, and outputs its corresponding coordinates on the screen.
+ */
+inline SDL_Rect tileToScreen(const SDL_Rect pos) {
+    glm::ivec2 posVec{ pos.x, pos.y };
+    glm::ivec2 resultVec = tileToScreenM * posVec;
+    return { resultVec.x, resultVec.y, pos.w, pos.h };
+}
+
+/**
+ * @brief Takes a position on the screen, and outputs the tile indices that this position corresponds to.
+ * @warning The function may output negative indices or out of bound indices. This is not checked here.
+ */
+inline SDL_Rect screenToTile(const SDL_Rect &pos) {
+    glm::ivec2 posVec{ pos.x - HALF_TILE_HEIGHT, pos.y };
+    glm::ivec2 resultVec = screenToTileM * posVec;
+    return { resultVec.x, resultVec.y, pos.w, pos.h };
 }
 
 } // namespace sle

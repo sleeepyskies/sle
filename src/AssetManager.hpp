@@ -34,7 +34,7 @@ private:
     std::optional<Texture> createTexture(const std::filesystem::path &filePath);
 
 public:
-    AssetManager() = default;
+    AssetManager()  = default;
     ~AssetManager() = default;
 
     /// @brief Must be called before attempting to create any textures.

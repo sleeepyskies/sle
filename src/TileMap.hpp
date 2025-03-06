@@ -6,6 +6,7 @@
 #include "math.hpp"
 #include <SDL.h>
 #include <algorithm>
+#include <vector>
 #include <glm/vec2.hpp>
 #include <unordered_map>
 #include "AssetManager.hpp"
@@ -82,8 +83,6 @@ struct Chunk {
  */
 class TileMap {
 private:
-    /// @brief The name of the map. Used for loading and saving.
-    std::string m_name;
     /// @brief The chunks of tiles that the map consists of.
     std::unordered_map<glm::i8vec2, Chunk> m_chunks;
     /// @brief The textures used by tiles. Store this way to avoid redundant copies.
@@ -96,14 +95,12 @@ public:
     ~TileMap() = default;
 
     /// @brief Handles drawing the entire map to the window. Currently draws every chunk, even if not visible.
-    void draw(const Camera &cam, const wref<Renderer> &ren) const;
+    void draw(const Camera &cam, const ref<Renderer> &ren) const;
     /// @brief Calculates and determines the location of the tile the cursor is over.
     std::optional<SDL_Rect> findCursorTile(const Camera &cam, glm::ivec2 mousePos);
 
-    /// @brief Saves the current map to disk.
-    bool save() const;
-    /// @brief Loads either the provided map or the sle default map from disk.
-    bool load(AssetManager &am, const std::string &mapName = DEFAULT_MAP);
+    /// @brief Sets this instances data using the given @ref TileMapResult struct.
+    void load(const TileMapResult &tmRes);
 };
 
 } // namespace sle

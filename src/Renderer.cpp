@@ -2,19 +2,6 @@
 
 namespace sle {
 Renderer::Renderer() {
-    // 0 on success
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-        throw std::runtime_error(SDL_GetError());
-    }
-    nfo("SDL initialised successfully");
-
-    // 0 on failure
-    if (IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) == 0) {
-        SDL_Quit();
-        throw std::runtime_error(IMG_GetError());
-    }
-    nfo("IMG initialised successfully");
-
     m_window = SDL_CreateWindow(
         WINDOW_NAME.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_RESIZABLE);
 
@@ -41,11 +28,8 @@ Renderer::Renderer() {
 Renderer::~Renderer() {
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_window);
-    SDL_Quit();
-    IMG_Quit();
 
     nfo("Engine renderer has been destroyed.");
-    nfo("Engine has shutdown.");
 }
 
 void Renderer::clear() const {

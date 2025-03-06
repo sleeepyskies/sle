@@ -20,13 +20,13 @@ private:
     void updateRunning();
 
 public:
-    void init();
+    void loadMap(const TileMapResult &tmRes);
     void stop() { m_running = false; }
     bool running() const { return m_running; }
 
     void update();
 
-    void draw(const wref<Renderer> &ren) const;
+    void draw(const ref<Renderer> &ren) const;
 
     void setMousePos(const int x, const int y) {
         m_mousePos.x = x;

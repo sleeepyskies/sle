@@ -19,7 +19,17 @@ void Engine::init() {
     m_renderer = std::make_shared<Renderer>();
     m_assetManager.init(m_renderer);
 
+    if (const auto tmRes = m_mapSerializer.load(m_assetManager, DEFAULT_MAP)) {
+        m_gameData.loadMap(*tmRes);
+    }
+
     nfo("Engine Renderer successfully initialised.");
+}
+
+void Engine::shutdown() {
+    SDL_Quit();
+    IMG_Quit();
+    nfo("Engine has shutdown.");
 }
 
 void Engine::run() {
@@ -34,8 +44,7 @@ void Engine::run() {
 
 void Engine::draw() const {
     m_renderer->clear();
-    const wref wRenderer = m_renderer;
-    m_gameData.draw(wRenderer);
+    m_gameData.draw(m_renderer);
     m_renderer->present();
 }
 

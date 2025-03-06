@@ -15,7 +15,7 @@ namespace sle {
 class Engine {
 private:
     /// @brief The @ref Window acts as a wrapper for SDL_Window and SDL_Renderer, but serves more as a window in sle.
-    Renderer m_renderer;
+    cref<Renderer> m_renderer = nullptr;
     /// @brief The @ref GameContext holds all of the games state.
     GameData m_gameData;
     /// @brief The @ref InputManager handles getting all user input and window events.
@@ -26,7 +26,7 @@ private:
     MapSerializer m_mapSerializer;
 
 public:
-    Engine()  = default;
+    Engine();
     ~Engine() = default;
 
     /// @brief Sets up the engine. Must be called before calling run().

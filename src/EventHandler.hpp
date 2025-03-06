@@ -9,10 +9,10 @@
 namespace sle {
 class EventHandler {
 private:
-    static void handleMouseMotion(const SDL_Event &event, GameData &gameData);
+    void handleMouseMotion(const SDL_Event &event, GameData &gameData);
 
 public:
-    static void input(GameData &gameData);
+    void input(GameData &gameData);
 };
 
 } // namespace sle

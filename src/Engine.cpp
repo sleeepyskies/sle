@@ -2,6 +2,8 @@
 
 namespace sle {
 
+Engine::Engine() : m_renderer() {}
+
 void Engine::init() {}
 
 void Engine::shutdown() {}

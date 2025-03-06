@@ -28,14 +28,17 @@ private:
     std::unordered_map<std::filesystem::path, wref<Texture>> m_textures;
 
     /// @ref A pointer to the current renderer/window.
-    cref<Renderer> m_renderer;
+    ref<Renderer> m_renderer = nullptr;
 
     /// @brief A helper function to create a texture
     std::optional<Texture> createTexture(const std::filesystem::path &filePath);
 
 public:
-    AssetManager(const cref<Renderer> &ren); // NOLINT(*-explicit-constructor)
+    AssetManager() = default;
     ~AssetManager() = default;
+
+    /// @brief Must be called before attempting to create any textures.
+    void init(const ref<Renderer> &renderer);
 
     /**
      * @brief This function will first check if an asset has already been loaded and return it. If it has

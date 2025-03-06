@@ -22,7 +22,7 @@ inline fs::path fetchTileTexture(const std::string &fileName, const std::string 
  * @param fileExtension The extension of the file to fetch. Defaults to .slemap. Do not pass '.' here.
  */
 inline fs::path fetchMapFile(const std::string &fileName, const std::string &fileExtension = "slemap") {
-    fs::path assetsDir = ASSETS_PATH / "map-files" / (fileName + "." + fileExtension);
+    return ASSETS_PATH / "map-files" / (fileName + "." + fileExtension);
 }
 
 } // namespace sle

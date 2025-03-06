@@ -2,22 +2,21 @@
 
 namespace sle {
 
-AssetManager::AssetManager(const cref<Renderer> &ren) {
+void AssetManager::init(const ref<Renderer> &renderer) {
     SDL_Surface *tempSurface = SDL_CreateRGBSurface(0, 1, 1, 32, 0, 0, 0, 0);
-    ;
     if (!tempSurface) {
         wrn("Could not create surface for fallback texture. {}", SDL_GetError());
         throw std::runtime_error("AssetManager construction failed!");
     }
 
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(ren->renderer(), tempSurface);
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer->renderer(), tempSurface);
     if (!texture) {
         SDL_FreeSurface(tempSurface);
         wrn("Could not create fallback texture from surface. {}", SDL_GetError());
         throw std::runtime_error("AssetManager construction failed!");
     }
 
-    m_renderer                  = ren;
+    m_renderer                  = renderer;
     m_textures[MISSING_TEXTURE] = std::make_shared<Texture>(texture);
 }
 

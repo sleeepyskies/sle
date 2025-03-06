@@ -4,6 +4,7 @@
 #include <glm/gtc/matrix_inverse.hpp>
 #include <glm/mat2x2.hpp>
 #include <glm/vec2.hpp>
+#include <SDL.h>
 
 namespace sle {
 

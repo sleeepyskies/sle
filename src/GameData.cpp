@@ -4,7 +4,7 @@ namespace sle {
 
 void GameData::init() { m_map.load(); }
 
-void GameData::draw(const Renderer &ren) const {
+void GameData::draw(const wref<Renderer> &ren) const {
     m_map.draw(m_camera, ren);
     // draw entities
 }

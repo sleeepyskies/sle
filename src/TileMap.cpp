@@ -5,8 +5,8 @@ namespace sle {
 // ReSharper disable once CppMemberFunctionMayBeStatic
 bool TileMap::save() const { return MapSerializer::save(m_name, m_chunks, m_tileTextures); }
 
-bool TileMap::load(const std::string &mapName) {
-    if (const auto result = MapSerializer::load(mapName)) {
+bool TileMap::load(AssetManager &am, const std::string &mapName) {
+    if (const auto result = MapSerializer::load(am, mapName)) {
         m_name         = mapName;
         m_chunks       = result->chunks;
         m_tileTextures = result->tileTextures;
@@ -16,7 +16,7 @@ bool TileMap::load(const std::string &mapName) {
     return false;
 }
 
-void TileMap::draw(const Camera &cam, const Renderer &ren) const {
+void TileMap::draw(const Camera &cam, const wref<Renderer> &ren) const {
     for (const auto cIndex : m_chunkIndices) {
         const auto &chunk = m_chunks.at(cIndex);
 

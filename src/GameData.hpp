@@ -26,7 +26,7 @@ public:
 
     void update();
 
-    void draw(const Renderer &ren) const;
+    void draw(const wref<Renderer> &ren) const;
 
     void setMousePos(const int x, const int y) {
         m_mousePos.x = x;

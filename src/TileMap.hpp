@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <glm/vec2.hpp>
 #include <unordered_map>
+#include "AssetManager.hpp"
 
 namespace sle {
 
@@ -95,14 +96,14 @@ public:
     ~TileMap() = default;
 
     /// @brief Handles drawing the entire map to the window. Currently draws every chunk, even if not visible.
-    void draw(const Camera &cam, const Renderer &ren) const;
+    void draw(const Camera &cam, const wref<Renderer> &ren) const;
     /// @brief Calculates and determines the location of the tile the cursor is over.
     std::optional<SDL_Rect> findCursorTile(const Camera &cam, glm::ivec2 mousePos);
 
     /// @brief Saves the current map to disk.
     bool save() const;
     /// @brief Loads either the provided map or the sle default map from disk.
-    bool load(const std::string &mapName = DEFAULT_MAP);
+    bool load(AssetManager &am, const std::string &mapName = DEFAULT_MAP);
 };
 
 } // namespace sle

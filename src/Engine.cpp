@@ -24,18 +24,13 @@ void Engine::init() {
     }
 }
 
-void Engine::shutdown() {
-    SDL_Quit();
-    IMG_Quit();
-    nfo("Engine has shutdown.");
-}
-
 void Engine::run() {
     // still need to handle cycle length properly to get desired FPS, this has been
     // done for now with SDL_RENDERER_PRESENTVSYNC flag in the SDL_Renderer
-    while (m_gameData.running()) {
-        m_eventHandler.input(m_gameData);
-        m_gameData.update();
+    bool running = true;
+    while (running) {
+        running = m_eventHandler.pollEvents();
+        m_gameData.update(m_eventHandler.keys(), m_eventHandler.mousePos());
         draw();
     }
 }
@@ -44,6 +39,12 @@ void Engine::draw() const {
     m_window->clear();
     m_gameData.draw(m_window);
     m_window->present();
+}
+
+void Engine::shutdown() {
+    SDL_Quit();
+    IMG_Quit();
+    nfo("Engine has shutdown.");
 }
 
 } // namespace sle

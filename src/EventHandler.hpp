@@ -7,20 +7,31 @@
 #include "GameData.hpp"
 
 namespace sle {
+/**
+ * The EventManager is responsible for polling all SDL events
+ */
 class EventHandler {
 private:
+    /// @brief The event used for polling events. Prevents creating a new event each tick.
+    SDL_Event m_event;
     /// @brief The current mouse position in screen coordinates.
     glm::ivec2 m_mousePos;
     /// @brief A map of all keys, with information whether they are currently pressed.
     std::unordered_map<SDL_Keycode, bool> m_keys;
 
-    void handleMouseMotion(const SDL_Event &event, GameData &gameData);
-
 public:
-    EventHandler(): m_mousePos(glm::ivec2{0, 0}) {}
+    EventHandler();
     ~EventHandler() = default;
 
-    void input(GameData &gameData);
+    std::unordered_map<SDL_Keycode, bool> keys() { return m_keys; }
+
+    glm::ivec2 mousePos() { return m_mousePos; }
+
+    /**
+     * @brief This reads in all SDL_Events and updates its state accordingly. Will return false
+     * if the @ref Window should be closed and true otherwise.
+     */
+    bool pollEvents();
 };
 
 } // namespace sle

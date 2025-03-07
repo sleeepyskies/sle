@@ -2,34 +2,33 @@
 
 namespace sle {
 
-void EventHandler::input(GameData &gameData) {
-    SDL_Event event;
+EventHandler::EventHandler() : m_mousePos(glm::ivec2{ 0, 0 }) {
+    for (auto [_, v] : m_keys)
+        v = false;
+}
 
-    while (SDL_PollEvent(&event)) {
-        switch (event.type) {
+bool EventHandler::pollEvents() {
+    while (SDL_PollEvent(&m_event)) {
+        switch (m_event.type) {
         case SDL_QUIT:
-            gameData.stop();
-            break;
+            return false;
         case SDL_MOUSEMOTION:
-            handleMouseMotion(event, gameData);
+            m_mousePos.x = m_event.motion.x;
+            m_mousePos.y = m_event.motion.y;
             break;
         case SDL_KEYDOWN:
             // 0 if not a key repeat
-            if (event.key.repeat == 0)
-                gameData.keyDown(event.key.keysym.sym);
+            if (m_event.key.repeat == 0)
+                m_keys[m_event.key.keysym.sym] = true;
             break;
         case SDL_KEYUP:
-            gameData.keyUp(event.key.keysym.sym);
+            m_keys[m_event.key.keysym.sym] = false;
             break;
         default:
             break;
         }
     }
-}
-
-void EventHandler::handleMouseMotion(const SDL_Event &event, GameData &gameData) {
-    gameData.setMousePos(event.motion.x, event.motion.y);
-    trc("Mouse is at position x: {}, y: {}", event.motion.x, event.motion.y);
+    return !m_keys[SDLK_ESCAPE];
 }
 
 } // namespace sle

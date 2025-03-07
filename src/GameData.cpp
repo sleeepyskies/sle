@@ -9,27 +9,10 @@ void GameData::draw(const ref<Window> &ren) const {
     // draw entities
 }
 
-void GameData::update() {
-    updateRunning();
-    m_camera.update(m_keysPressed);
-    m_map.findCursorTile(m_camera, m_mousePos);
+void GameData::update(const std::unordered_map<SDL_Keycode, bool> &keys, const glm::ivec2 &mousePos) {
+    m_camera.update(keys);
+    m_map.findCursorTile(m_camera, mousePos);
     // update entities
-}
-
-void GameData::updateRunning() {
-    const auto gotEsc = m_keysPressed.find(SDLK_ESCAPE);
-    if (gotEsc != m_keysPressed.end() && m_keysPressed[SDLK_ESCAPE])
-        m_running = false;
-}
-
-void GameData::keyDown(const SDL_Keycode key) {
-    m_keysPressed[key] = true;
-    dbg("Key {} pressed", key);
-}
-
-void GameData::keyUp(const SDL_Keycode key) {
-    m_keysPressed[key] = false;
-    dbg("Key {} released", key);
 }
 
 } // namespace sle

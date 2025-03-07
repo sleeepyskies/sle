@@ -23,7 +23,7 @@ public:
     ~Window();
 
     /// @brief Fills the SDL back buffer with the given color. Defaults to black.
-    void clear(const Color &color = Color{255, 0, 0, 255}) const;
+    void clear(const Color &color = Color{0, 0, 0, 255}) const;
     /// @brief Swaps the SDL buffers. Presents the back buffer image to the screen.
     void present() const;
 

@@ -28,8 +28,8 @@ add_executable(sle
         src/main.cpp
         src/Engine.cpp
         src/Engine.hpp
-        src/Renderer.cpp
-        src/Renderer.hpp
+        src/Window.cpp
+        src/Window.hpp
         src/GameData.cpp
         src/GameData.hpp
         src/EventHandler.cpp

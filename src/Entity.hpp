@@ -1,7 +1,7 @@
 #pragma once
 #include <SDL_render.h>
 
-#include "Renderer.hpp"
+#include "Window.hpp"
 #include "slog.hpp"
 
 namespace sle {
@@ -15,7 +15,7 @@ public:
     Entity(const unsigned int id, const SDL_Rect pos, SDL_Texture *texture)
         : m_id(id), m_pos(pos), m_texture(texture) {}
 
-    void renderSelf(Renderer &ren) const;
+    void renderSelf(Window &ren) const;
 };
 
 } // namespace sle

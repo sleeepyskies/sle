@@ -4,7 +4,7 @@ namespace sle {
 
 void GameData::loadMap(const TileMapResult &tmRes) { m_map.load(tmRes); }
 
-void GameData::draw(const ref<Renderer> &ren) const {
+void GameData::draw(const ref<Window> &ren) const {
     m_map.draw(m_camera, ren);
     // draw entities
 }

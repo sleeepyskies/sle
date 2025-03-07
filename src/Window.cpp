@@ -1,7 +1,7 @@
-#include "Renderer.hpp"
+#include "Window.hpp"
 
 namespace sle {
-Renderer::Renderer() {
+Window::Window() {
     m_window = SDL_CreateWindow(
         WINDOW_NAME.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_RESIZABLE);
 
@@ -22,18 +22,18 @@ Renderer::Renderer() {
         throw std::runtime_error(err);
     }
 
-    nfo("Engine Renderer successfully initialised.");
+    nfo("Engine Window successfully initialised.");
 }
 
-Renderer::~Renderer() {
+Window::~Window() {
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_window);
 
-    nfo("Engine renderer has been destroyed.");
+    nfo("Engine Window has been destroyed.");
 }
 
-void Renderer::clear() const {
-    if (SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255) != 0) {
+void Window::clear(const Color &color) const {
+    if (SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a) != 0) {
         err("Could not set render draw color. {}", SDL_GetError());
     }
     if (SDL_RenderClear(m_renderer) != 0) {
@@ -41,6 +41,6 @@ void Renderer::clear() const {
     }
 }
 
-void Renderer::present() const { SDL_RenderPresent(m_renderer); }
+void Window::present() const { SDL_RenderPresent(m_renderer); }
 
 } // namespace sle

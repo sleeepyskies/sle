@@ -8,7 +8,7 @@ void TileMap::load(const TileMapResult &tmRes) {
     m_chunkIndices = tmRes.chunkIndices;
 }
 
-void TileMap::draw(const Camera &cam, const ref<Renderer> &ren) const {
+void TileMap::draw(const Camera &cam, const ref<Window> &ren) const {
     for (const auto cIndex : m_chunkIndices) {
         const auto &chunk = m_chunks.at(cIndex);
 

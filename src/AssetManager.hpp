@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer.hpp"
+#include "Window.hpp"
 #include "Texture.hpp"
 #include "core.hpp"
 #include "slog.hpp"
@@ -27,18 +27,18 @@ private:
     /// @brief A mapping of file path to Texture wref.
     std::unordered_map<std::filesystem::path, wref<Texture>> m_textures;
 
-    /// @ref A pointer to the current renderer/window.
-    ref<Renderer> m_renderer = nullptr;
+    /// @ref A pointer to the current window.
+    ref<Window> m_window = nullptr;
 
     /// @brief A helper function to create a texture
-    std::optional<Texture> createTexture(const std::filesystem::path &filePath);
+    std::optional<Texture> createTexture(const std::filesystem::path &filePath) const;
 
 public:
     AssetManager()  = default;
     ~AssetManager() = default;
 
     /// @brief Must be called before attempting to create any textures.
-    void init(const ref<Renderer> &renderer);
+    void init(const ref<Window> &window);
 
     /**
      * @brief This function will first check if an asset has already been loaded and return it. If it has

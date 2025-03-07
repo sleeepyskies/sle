@@ -2,7 +2,7 @@
 
 #include "Constants.hpp"
 #include "MapSerializer.hpp"
-#include "Renderer.hpp"
+#include "Window.hpp"
 #include "math.hpp"
 #include <SDL.h>
 #include <algorithm>
@@ -95,7 +95,7 @@ public:
     ~TileMap() = default;
 
     /// @brief Handles drawing the entire map to the window. Currently draws every chunk, even if not visible.
-    void draw(const Camera &cam, const ref<Renderer> &ren) const;
+    void draw(const Camera &cam, const ref<Window> &ren) const;
     /// @brief Calculates and determines the location of the tile the cursor is over.
     std::optional<SDL_Rect> findCursorTile(const Camera &cam, glm::ivec2 mousePos);
 

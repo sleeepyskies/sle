@@ -16,14 +16,12 @@ void Engine::init() {
     }
     nfo("IMG initialised successfully");
 
-    m_renderer = std::make_shared<Renderer>();
-    m_assetManager.init(m_renderer);
+    m_window = std::make_shared<Window>();
+    m_assetManager.init(m_window);
 
     if (const auto tmRes = m_mapSerializer.load(m_assetManager, DEFAULT_MAP)) {
         m_gameData.loadMap(*tmRes);
     }
-
-    nfo("Engine Renderer successfully initialised.");
 }
 
 void Engine::shutdown() {
@@ -43,9 +41,9 @@ void Engine::run() {
 }
 
 void Engine::draw() const {
-    m_renderer->clear();
-    m_gameData.draw(m_renderer);
-    m_renderer->present();
+    m_window->clear();
+    m_gameData.draw(m_window);
+    m_window->present();
 }
 
 } // namespace sle

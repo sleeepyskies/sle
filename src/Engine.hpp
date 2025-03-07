@@ -3,7 +3,7 @@
 #include "AssetManager.hpp"
 #include "EventHandler.hpp"
 #include "GameData.hpp"
-#include "Renderer.hpp"
+#include "Window.hpp"
 #include "slog.hpp"
 
 namespace sle {
@@ -15,7 +15,7 @@ namespace sle {
 class Engine {
 private:
     /// @brief The @ref Window acts as a wrapper for SDL_Window and SDL_Renderer, but serves more as a window in sle.
-    ref<Renderer> m_renderer = nullptr;
+    ref<Window> m_window = nullptr;
     /// @brief The @ref GameContext holds all of the games state.
     GameData m_gameData;
     /// @brief The @ref InputManager handles getting all user input and window events.

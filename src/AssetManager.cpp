@@ -2,26 +2,26 @@
 
 namespace sle {
 
-void AssetManager::init(const ref<Renderer> &renderer) {
+void AssetManager::init(const ref<Window> &window) {
     SDL_Surface *tempSurface = SDL_CreateRGBSurface(0, 1, 1, 32, 0, 0, 0, 0);
     if (!tempSurface) {
         wrn("Could not create surface for fallback texture. {}", SDL_GetError());
         throw std::runtime_error("AssetManager construction failed!");
     }
 
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer->renderer(), tempSurface);
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(window->renderer(), tempSurface);
     SDL_FreeSurface(tempSurface);
     if (!texture) {
         wrn("Could not create fallback texture from surface. {}", SDL_GetError());
         throw std::runtime_error("AssetManager construction failed!");
     }
 
-    m_renderer                  = renderer;
+    m_window = window;
     m_textures[MISSING_TEXTURE] = std::make_shared<Texture>(texture);
 }
 
-std::optional<Texture> AssetManager::createTexture(const std::filesystem::path &filePath) {
-    assert(m_renderer != nullptr);
+std::optional<Texture> AssetManager::createTexture(const std::filesystem::path &filePath) const {
+    assert(m_window != nullptr);
 
     SDL_Surface *tempSurface = IMG_Load(filePath.generic_string().c_str());
     if (!tempSurface) {
@@ -29,7 +29,7 @@ std::optional<Texture> AssetManager::createTexture(const std::filesystem::path &
         return {};
     }
 
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer->renderer(), tempSurface);
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(m_window->renderer(), tempSurface);
     SDL_FreeSurface(tempSurface);
     if (!texture) {
         wrn("Could not create texture from surface. {}", SDL_GetError());

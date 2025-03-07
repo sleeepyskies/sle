@@ -1,7 +1,7 @@
 #pragma once
 #include "Camera.hpp"
 #include "Entity.hpp"
-#include "Renderer.hpp"
+#include "Window.hpp"
 #include "TileMap.hpp"
 #include <SDL.h>
 #include <unordered_map>
@@ -26,7 +26,7 @@ public:
 
     void update();
 
-    void draw(const ref<Renderer> &ren) const;
+    void draw(const ref<Window> &ren) const;
 
     void setMousePos(const int x, const int y) {
         m_mousePos.x = x;

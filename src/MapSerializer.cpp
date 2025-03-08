@@ -4,7 +4,7 @@
 namespace sle {
 namespace fs = std::filesystem;
 
-std::optional<TileMapResult> MapSerializer::load(AssetManager &am, const std::string &mapName) {
+maybe<TileMapResult> MapSerializer::load(AssetManager &am, const std::string &mapName) {
     dbg("Loading map {}", mapName);
     const fs::path mapPath = fetchMapFile(mapName);
 
@@ -45,7 +45,7 @@ std::optional<TileMapResult> MapSerializer::load(AssetManager &am, const std::st
         return {};
 
     inFile.close();
-    return { TileMapResult{ chunks, tileTextures, chunkIndices } };
+    return std::make_optional{ TileMapResult{ chunks, tileTextures, chunkIndices } };
 }
 
 maybe<glm::i8vec2> MapSerializer::readChunkCoords(std::ifstream &inFile, const std::vector<glm::i8vec2> &chunkIndices) {
@@ -63,7 +63,7 @@ maybe<glm::i8vec2> MapSerializer::readChunkCoords(std::ifstream &inFile, const s
             return {};
     }
 
-    return coord;
+    return std::make_optional(coord);
 }
 
 bool MapSerializer::readChunkTiles(std::ifstream &inFile, Chunk &chunk, std::vector<ref<Texture>> &tileTextures,
@@ -94,7 +94,7 @@ bool MapSerializer::save(const std::string &mapName, const std::unordered_map<gl
     return true;
 }
 
-std::optional<uint8_t> MapSerializer::getIndex(const std::vector<ref<Texture>> &vec, const ref<Texture> &tex) {
+maybe<uint8_t> MapSerializer::getIndex(const std::vector<ref<Texture>> &vec, const ref<Texture> &tex) {
     for (int i = 0; i < vec.size(); i++) {
         if (vec[i]->texture() == tex->texture())
             return i;

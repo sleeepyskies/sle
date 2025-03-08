@@ -37,7 +37,7 @@ void TileMap::draw(const Camera &cam, const ref<Window> &ren) const {
     }
 }
 
-std::optional<SDL_Rect> TileMap::findCursorTile(const Camera &cam, const glm::ivec2 mousePos) {
+maybe<SDL_Rect> TileMap::findCursorTile(const Camera &cam, const glm::ivec2 mousePos) {
     const glm::ivec2 mouseTileIndex  = screenToTile(withCameraOffset(cam, mousePos));
     const glm::ivec2 mouseChunkIndex = mouseTileIndex / CHUNK_SIZE;
 
@@ -50,7 +50,7 @@ std::optional<SDL_Rect> TileMap::findCursorTile(const Camera &cam, const glm::iv
     if (const Tile tile = m_chunks[mouseChunkIndex].tile(x, y); tile.textureIndex() == 0xFF)
         return {}; // dead tile
 
-    return { SDL_Rect{ mouseChunkIndex.x + x, mouseChunkIndex.y + y, CHUNK_SIZE, CHUNK_SIZE } };
+    return std::make_optional(SDL_Rect{ mouseChunkIndex.x + x, mouseChunkIndex.y + y, CHUNK_SIZE, CHUNK_SIZE });
 }
 
 } // namespace sle

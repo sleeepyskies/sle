@@ -2,6 +2,7 @@
 
 #include <glm/vec4.hpp>
 #include <memory>
+#include "core.hpp"
 
 namespace sle {
 /// @brief A shared pointer for a given type.

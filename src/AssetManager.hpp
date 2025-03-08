@@ -48,7 +48,7 @@ private:
     ref<Window> m_window = nullptr;
 
     /// @brief A helper function to create a texture
-    std::optional<Texture> createTexture(const std::filesystem::path &filePath) const;
+    maybe<Texture> createTexture(const std::filesystem::path &filePath) const;
 };
 
 } // namespace sle

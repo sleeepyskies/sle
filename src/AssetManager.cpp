@@ -20,7 +20,7 @@ void AssetManager::init(const ref<Window> &window) {
     m_textures[MISSING_TEXTURE] = std::make_shared<Texture>(texture);
 }
 
-std::optional<Texture> AssetManager::createTexture(const std::filesystem::path &filePath) const {
+maybe<Texture> AssetManager::createTexture(const std::filesystem::path &filePath) const {
     assert(m_window != nullptr);
 
     SDL_Surface *tempSurface = IMG_Load(filePath.generic_string().c_str());

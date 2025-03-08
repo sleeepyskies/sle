@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Window.hpp"
 #include "Texture.hpp"
+#include "Window.hpp"
 #include "core.hpp"
 #include "slog.hpp"
 #include <SDL_image.h>
@@ -23,16 +23,6 @@ const std::filesystem::path MISSING_TEXTURE = "--missing-texture--";
  * the ability to hand out refs.
  */
 class AssetManager {
-private:
-    /// @brief A mapping of file path to Texture wref.
-    std::unordered_map<std::filesystem::path, wref<Texture>> m_textures;
-
-    /// @ref A pointer to the current window.
-    ref<Window> m_window = nullptr;
-
-    /// @brief A helper function to create a texture
-    std::optional<Texture> createTexture(const std::filesystem::path &filePath) const;
-
 public:
     AssetManager()  = default;
     ~AssetManager() = default;
@@ -49,6 +39,16 @@ public:
      * @return A ref to the created @ref Texture
      */
     ref<Texture> texture(const std::filesystem::path &filePath);
+
+private:
+    /// @brief A mapping of file path to Texture wref.
+    std::unordered_map<std::filesystem::path, wref<Texture>> m_textures;
+
+    /// @ref A pointer to the current window.
+    ref<Window> m_window = nullptr;
+
+    /// @brief A helper function to create a texture
+    std::optional<Texture> createTexture(const std::filesystem::path &filePath) const;
 };
 
 } // namespace sle

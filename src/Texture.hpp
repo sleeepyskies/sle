@@ -10,9 +10,6 @@ namespace sle {
  * @brief Texture serves as a wrapper for the SDL_Texture, since it is an opaque class using raw pointers.
  */
 class Texture {
-private:
-    /// @brief The underlying texture from the SDL library.
-    SDL_Texture *m_texture;
 
 public:
     /// @brief Make sure we cannot use the default constructor
@@ -49,6 +46,10 @@ public:
 
     /// @brief Allow checking if the texture is still valid
     explicit operator bool() const { return m_texture != nullptr; }
+
+private:
+    /// @brief The underlying texture from the SDL library.
+    SDL_Texture *m_texture;
 };
 
 } // namespace sle

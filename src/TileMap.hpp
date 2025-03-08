@@ -1,15 +1,15 @@
 #pragma once
 
+#include "AssetManager.hpp"
 #include "Constants.hpp"
 #include "MapSerializer.hpp"
 #include "Window.hpp"
 #include "math.hpp"
 #include <SDL.h>
 #include <algorithm>
-#include <vector>
 #include <glm/vec2.hpp>
 #include <unordered_map>
-#include "AssetManager.hpp"
+#include <vector>
 
 namespace sle {
 
@@ -21,17 +21,16 @@ namespace sle {
  * relative to its @ref Chunk via its index.
  */
 struct Tile {
-private:
-    /// @brief The index into the texture array stored in @ref GameData. uint8 is used here,
-    /// since this allows for up to 256 unique textures. Note that 0xFF is reserved for empty tiles.
-    uint8_t m_textureIndex;
-
 public:
     /// @brief Defaults to empty/invalid tile texture index indicator if no argument is given.
     explicit Tile(const uint8_t textureIndex = 0xFF) : m_textureIndex(textureIndex) {} // block type conversion
 
     uint8_t textureIndex() const { return m_textureIndex; } // getter
     uint8_t &textureIndex() { return m_textureIndex; }      // setter
+private:
+    /// @brief The index into the texture array stored in @ref GameData. uint8 is used here,
+    /// since this allows for up to 256 unique textures. Note that 0xFF is reserved for empty tiles.
+    uint8_t m_textureIndex;
 };
 
 /**
@@ -41,8 +40,6 @@ public:
  * storage, which should not be stack allocated.
  */
 struct Chunk {
-    /// @brief The 16x16 grid of tiles that represent this chunk.
-    std::vector<Tile> m_tiles;
 
     Chunk() : m_tiles(CHUNK_SIZE * CHUNK_SIZE) {} // allocate enough memory upon construction
 
@@ -71,6 +68,10 @@ struct Chunk {
         assert(i < CHUNK_SIZE * CHUNK_SIZE);
         return m_tiles[i];
     }
+
+private:
+    /// @brief The 16x16 grid of tiles that represent this chunk.
+    std::vector<Tile> m_tiles;
 };
 
 /**
@@ -82,14 +83,6 @@ struct Chunk {
  * expansions to sle.
  */
 class TileMap {
-private:
-    /// @brief The chunks of tiles that the map consists of.
-    std::unordered_map<glm::i8vec2, Chunk> m_chunks;
-    /// @brief The textures used by tiles. Store this way to avoid redundant copies.
-    std::vector<ref<Texture>> m_tileTextures;
-    /// @brief A sorted list of chunk indices. Order must be maintained when inserting.
-    std::vector<glm::i8vec2> m_chunkIndices;
-
 public:
     TileMap()  = default; // must call load() on TileMap after creating.
     ~TileMap() = default;
@@ -101,6 +94,14 @@ public:
 
     /// @brief Sets this instances data using the given @ref TileMapResult struct.
     void load(const TileMapResult &tmRes);
+
+private:
+    /// @brief The chunks of tiles that the map consists of.
+    std::unordered_map<glm::i8vec2, Chunk> m_chunks;
+    /// @brief The textures used by tiles. Store this way to avoid redundant copies.
+    std::vector<ref<Texture>> m_tileTextures;
+    /// @brief A sorted list of chunk indices. Order must be maintained when inserting.
+    std::vector<glm::i8vec2> m_chunkIndices;
 };
 
 } // namespace sle

@@ -31,16 +31,16 @@ struct TileMapResult {
 
 /**
  * @brief This static class is used for loading map data from files and writing map data to files. sle
- * uses a custom text format for storing map data. The format for the .map files used is as follows:
- * [Chunk location given as x y]
- * [blue | gray | green | red | empty] x CHUNK_SIZE * CHUNK_SIZE
- *
- *	This repeats for as many chunks as there are.
+ * uses a custom text format for storing map data. The format for the .map files can be found at:
  */
 class MapSerializer {
 private:
     /// @brief Finds the index of the texture in the texture array. There may not exist one.
     std::optional<uint8_t> getIndex(const std::vector<ref<Texture>> &vec, const ref<Texture> &tex);
+    /// @brief Reads and validates the chunks coords from the ifstream.
+    maybe<glm::i8vec2> readChunkCoords(std::ifstream &inFile, const std::vector<glm::i8vec2> &chunkIndices);
+    /// @brief Reads and validates all chunk tiles from the ifstream. Returns true if success.
+    bool readChunkTiles(std::ifstream &inFile, Chunk &chunk, std::vector<ref<Texture>> &tileTextures, AssetManager &am);
 
 public:
     MapSerializer()  = default;
@@ -55,7 +55,7 @@ public:
 
     /// @brief Saves the given map to disk at the default map location.
     bool save(const std::string &mapName, const std::unordered_map<glm::i8vec2, Chunk> &chunks,
-                     const std::vector<ref<Texture>> &textures);
+              const std::vector<ref<Texture>> &textures);
 };
 
 } // namespace sle

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <memory>
 #include <glm/vec4.hpp>
+#include <memory>
 
 namespace sle {
 /// @brief A shared pointer for a given type.
@@ -15,5 +15,8 @@ template <typename T> using wref = std::weak_ptr<T>;
 
 /// @brief An RGBA color represented as a 4D vector
 using Color = glm::u8vec4;
+
+/// @brief An optional return value.
+template <typename T> using maybe = std::optional<T>;
 
 } // namespace sle

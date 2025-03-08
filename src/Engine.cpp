@@ -21,6 +21,8 @@ void Engine::init() {
 
     if (const auto tmRes = m_mapSerializer.load(m_assetManager, DEFAULT_MAP)) {
         m_gameData.loadMap(*tmRes);
+    } else {
+        throw std::runtime_error("Could not load a map, exiting program.");
     }
 }
 

@@ -5,6 +5,7 @@ namespace sle {
 namespace fs = std::filesystem;
 
 std::optional<TileMapResult> MapSerializer::load(AssetManager &am, const std::string &mapName) {
+    dbg("Loading map {}", mapName);
     const fs::path mapPath = fetchMapFile(mapName);
 
     std::ifstream inFile;
@@ -14,46 +15,77 @@ std::optional<TileMapResult> MapSerializer::load(AssetManager &am, const std::st
         return {};
     }
 
-    constexpr int tileAmount = CHUNK_SIZE * CHUNK_SIZE;
-
     std::unordered_map<glm::i8vec2, Chunk> chunks;
     std::vector<ref<Texture>> tileTextures;
     std::vector<glm::i8vec2> chunkIndices;
 
-    // TODO GET BETTER LOOP PARSING LOGIC!!!
-    dbg("PARSING NEW CHUNK!");
-    Chunk chunk;
-    glm::i8vec2 coords; // chunk coords in terms of chunks, not tiles
-    int x, y;
-    if (!(inFile >> x >> y)) {
-        err("Could not parse map {}", mapPath.generic_string());
-        throw std::runtime_error("Map Parsing Fail");
-    }
-    coords.x = static_cast<uint8_t>(x);
-    coords.y = static_cast<uint8_t>(y);
+    while (inFile) {
+        trc("Parsing new chunk!");
 
-    for (int i = 0; i < tileAmount; i++) {
-        std::string tileIndicator;
-        if (!(inFile >> tileIndicator)) {
+        Chunk chunk;
+        glm::i8vec2 coords;
+        if (auto result = readChunkCoords(inFile, chunkIndices))
+            coords = *result;
+        else
+            break; // end of file, no new chunk left
+
+        if (!readChunkTiles(inFile, chunk, tileTextures, am)) {
             err("Could not parse map {}", mapPath.generic_string());
-            throw std::runtime_error("Map Parsing Fail");
+            return {};
         }
+
+        trc("Finished parsing chunk ({}, {})", coords.x, coords.y);
+
+        chunks[coords] = chunk;
+        chunkIndices.push_back(coords);
+    }
+
+    // make sure at least one chunk has been parsed.
+    if (chunkIndices.size() < 1)
+        return {};
+
+    inFile.close();
+    return { TileMapResult{ chunks, tileTextures, chunkIndices } };
+}
+
+maybe<glm::i8vec2> MapSerializer::readChunkCoords(std::ifstream &inFile, const std::vector<glm::i8vec2> &chunkIndices) {
+    int x, y;
+
+    if (!(inFile >> x >> y))
+        return {};
+
+    if (x < INT8_MIN || x > INT8_MAX || y < INT8_MIN || y > INT8_MAX)
+        return {};
+
+    const glm::i8vec2 coord{ static_cast<int8_t>(x), static_cast<int8_t>(y) };
+    for (const auto &c : chunkIndices) {
+        if (c.x == coord.x && c.y == coord.y)
+            return {};
+    }
+
+    return coord;
+}
+
+bool MapSerializer::readChunkTiles(std::ifstream &inFile, Chunk &chunk, std::vector<ref<Texture>> &tileTextures,
+                                   AssetManager &am) {
+    for (int i = 0; i < CHUNK_TILE_COUNT; i++) {
+        std::string tileIndicator;
+        if (!(inFile >> tileIndicator))
+            return false;
+
+        if (!VALID_TILES.contains(tileIndicator + ".png"))
+            return false;
+
         const std::filesystem::path texturePath = fetchTileTexture(tileIndicator);
         ref<Texture> texture                    = am.texture(texturePath);
-        auto indexResult                        = getIndex(tileTextures, texture);
+
+        auto indexResult = getIndex(tileTextures, texture);
         Tile tile{ indexResult.value_or(tileTextures.size()) };
         if (!indexResult)
             tileTextures.push_back(texture);
         chunk.tile(i) = tile;
     }
-
-    dbg("FINSIHED PARSING CHUNK");
-
-    chunks[coords] = chunk;
-    chunkIndices.push_back(coords);
-
-    inFile.close();
-    return { TileMapResult{ chunks, tileTextures, chunkIndices } };
+    return true;
 }
 
 // TODO: Implement actual logic here!

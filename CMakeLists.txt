@@ -50,7 +50,7 @@ add_executable(sle
         src/core.hpp
         src/utils.hpp
         src/MapEditor.cpp
-        src/MapEditor.h
+        src/MapEditor.hpp
 )
 
 target_include_directories(sle PRIVATE ${slog_SOURCE_DIR})

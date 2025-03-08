@@ -27,6 +27,7 @@ void Engine::run() {
         running = !m_eventHandler.engineData().quit;
         m_state.update(m_eventHandler.inputData());
         m_state.draw();
+        m_state.stateChange();
     }
 }
 

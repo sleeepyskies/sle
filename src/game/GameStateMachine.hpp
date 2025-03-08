@@ -54,8 +54,10 @@ public:
     void update(const InputData &inputData);
     /// @brief Handles rendering/drawing the current state to the screen.
     void draw();
+    /// @brief Handles transitions between states.
+    void stateChange();
 
-    /// @brief Registers a new state into the state machine.
+    /// @brief Registers a new state into the state machine. Will use the first registered state as currentState.
     void registerState(ref<IGameState> newState);
     /// @brief De-Registers a state from the state machine, if it is currently present.
     void deregisterState(GameStateType type);

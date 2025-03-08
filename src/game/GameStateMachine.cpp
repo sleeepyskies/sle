@@ -2,9 +2,27 @@
 
 namespace sle {
 
-void GameStateMachine::update(const InputData &inputData) { m_currentState->update(inputData); }
+void GameStateMachine::update(const InputData &inputData) {
+    assert(m_currentState);
+    m_currentState->update(inputData);
+}
 
-void GameStateMachine::draw() { m_currentState->draw(); }
+void GameStateMachine::draw() {
+    assert(m_currentState);
+    m_currentState->draw();
+}
+
+void GameStateMachine::stateChange() {
+    assert(m_currentState);
+    GameStateType nextState = m_currentState->transition();
+    if (m_currentState->toEnum() == nextState)
+        return;
+    for (auto &state : m_states) {
+        if (state->toEnum() == nextState) {
+            transition(state);
+        }
+    }
+}
 
 void GameStateMachine::setState(GameStateType type) {
     for (const auto state : m_states) {
@@ -14,7 +32,11 @@ void GameStateMachine::setState(GameStateType type) {
     }
 }
 
-void GameStateMachine::registerState(ref<IGameState> newState) { m_states.insert(newState); }
+void GameStateMachine::registerState(ref<IGameState> newState) {
+    if (m_states.size() == 0)
+        m_currentState = newState;
+    m_states.insert(newState);
+}
 
 void GameStateMachine::deregisterState(GameStateType type) {
     for (const auto &state : m_states) {

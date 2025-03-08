@@ -45,7 +45,7 @@ maybe<TileMapResult> MapSerializer::load(AssetManager &am, const std::string &ma
         return {};
 
     inFile.close();
-    return std::make_optional{ TileMapResult{ chunks, tileTextures, chunkIndices } };
+    return std::make_optional(TileMapResult{ chunks, tileTextures, chunkIndices });
 }
 
 maybe<glm::i8vec2> MapSerializer::readChunkCoords(std::ifstream &inFile, const std::vector<glm::i8vec2> &chunkIndices) {

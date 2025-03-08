@@ -49,6 +49,8 @@ add_executable(sle
         src/Texture.hpp
         src/core.hpp
         src/utils.hpp
+        src/MapEditor.cpp
+        src/MapEditor.h
 )
 
 target_include_directories(sle PRIVATE ${slog_SOURCE_DIR})

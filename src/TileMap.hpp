@@ -90,10 +90,15 @@ public:
     /// @brief Handles drawing the entire map to the window. Currently draws every chunk, even if not visible.
     void draw(const Camera &cam, const ref<Window> &ren) const;
     /// @brief Calculates and determines the location of the tile the cursor is over.
-    maybe<SDL_Rect> findCursorTile(const Camera &cam, glm::ivec2 mousePos);
+    maybe<glm::i8vec2> findCursorTile(const Camera &cam, glm::ivec2 mousePos);
 
     /// @brief Sets this instances data using the given @ref TileMapResult struct.
     void load(const TileMapResult &tmRes);
+
+    /// @brief Return a const reference to the tile. Coordinates in tile coordinates, and not chunk coordinates.
+    const Tile *tile(const int x, const int y) const;
+    /// @brief Return a const reference to the tile. Coordinates in tile coordinates, and not chunk coordinates.
+    Tile *tile(const int x, const int y); // setter
 
 private:
     /// @brief The chunks of tiles that the map consists of.

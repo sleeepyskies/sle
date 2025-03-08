@@ -2,6 +2,26 @@
 
 namespace sle {
 
+const Tile *TileMap::tile(const int x, const int y) const {
+    // find what chunk this coord lies in
+    glm::i8vec2 chunkXY{ x / CHUNK_SIZE, y / CHUNK_SIZE };
+    const auto chunk = m_chunks.find(chunkXY);
+    if (chunk != m_chunks.end()) {
+        return &(chunk->second.tile(x % CHUNK_SIZE, y % CHUNK_SIZE));
+    }
+    return {};
+}
+
+Tile *TileMap::tile(const int x, const int y) {
+    // find what chunk this coord lies in
+    glm::i8vec2 chunkXY{ x / CHUNK_SIZE, y / CHUNK_SIZE };
+    const auto chunk = m_chunks.find(chunkXY);
+    if (chunk != m_chunks.end()) {
+        return &(chunk->second.tile(x % CHUNK_SIZE, y % CHUNK_SIZE));
+    }
+    return {};
+}
+
 void TileMap::load(const TileMapResult &tmRes) {
     m_chunks       = tmRes.chunks;
     m_tileTextures = tmRes.tileTextures;
@@ -37,20 +57,19 @@ void TileMap::draw(const Camera &cam, const ref<Window> &ren) const {
     }
 }
 
-maybe<SDL_Rect> TileMap::findCursorTile(const Camera &cam, const glm::ivec2 mousePos) {
-    const glm::ivec2 mouseTileIndex  = screenToTile(withCameraOffset(cam, mousePos));
-    const glm::ivec2 mouseChunkIndex = mouseTileIndex / CHUNK_SIZE;
+maybe<glm::i8vec2> TileMap::findCursorTile(const Camera &cam, const glm::ivec2 mousePos) {
+    const glm::i8vec2 mouseTileIndex = screenToTile(withCameraOffset(cam, mousePos));
+    const glm::i8vec2 mouseChunkIndex{ mouseTileIndex.x / CHUNK_SIZE, mouseTileIndex.y / CHUNK_SIZE };
 
-    // First check if the mouse is over a valid chunk. Perform binary search on sorted indices vector.
     if (!m_chunks.contains(mouseChunkIndex))
         return {}; // cursor not over a chunk
 
     const int x = mouseTileIndex.x % CHUNK_SIZE;
     const int y = mouseChunkIndex.y % CHUNK_SIZE;
-    if (const Tile tile = m_chunks[mouseChunkIndex].tile(x, y); tile.textureIndex() == 0xFF)
+    if (m_chunks[mouseChunkIndex].tile(x, y).textureIndex() == 0xFF)
         return {}; // dead tile
 
-    return std::make_optional(SDL_Rect{ mouseChunkIndex.x + x, mouseChunkIndex.y + y, CHUNK_SIZE, CHUNK_SIZE });
+    return std::make_optional(glm::i8vec2{ mouseChunkIndex.x + x, mouseChunkIndex.y });
 }
 
 } // namespace sle

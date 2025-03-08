@@ -2,7 +2,7 @@
 #include "Engine.hpp"
 
 int main() {
-    slog::logLevel = slog::Level::TRACE;
+    // slog::logLevel = slog::Level::TRACE;
 
     sle::Engine engine{};
     engine.init();

@@ -9,7 +9,7 @@ const Tile *TileMap::tile(const int x, const int y) const {
     if (chunk != m_chunks.end()) {
         return &(chunk->second.tile(x % CHUNK_SIZE, y % CHUNK_SIZE));
     }
-    return {};
+    return nullptr;
 }
 
 Tile *TileMap::tile(const int x, const int y) {
@@ -19,7 +19,7 @@ Tile *TileMap::tile(const int x, const int y) {
     if (chunk != m_chunks.end()) {
         return &(chunk->second.tile(x % CHUNK_SIZE, y % CHUNK_SIZE));
     }
-    return {};
+    return nullptr;
 }
 
 void TileMap::load(const TileMapResult &tmRes) {
@@ -59,6 +59,7 @@ void TileMap::draw(const Camera &cam, const ref<Window> &ren) const {
 
 maybe<glm::i8vec2> TileMap::findCursorTile(const Camera &cam, const glm::ivec2 mousePos) {
     const glm::i8vec2 mouseTileIndex = screenToTile(withCameraOffset(cam, mousePos));
+    /*
     const glm::i8vec2 mouseChunkIndex{ mouseTileIndex.x / CHUNK_SIZE, mouseTileIndex.y / CHUNK_SIZE };
 
     if (!m_chunks.contains(mouseChunkIndex))
@@ -68,8 +69,9 @@ maybe<glm::i8vec2> TileMap::findCursorTile(const Camera &cam, const glm::ivec2 m
     const int y = mouseChunkIndex.y % CHUNK_SIZE;
     if (m_chunks[mouseChunkIndex].tile(x, y).textureIndex() == 0xFF)
         return {}; // dead tile
+        */
 
-    return std::make_optional(glm::i8vec2{ mouseChunkIndex.x + x, mouseChunkIndex.y });
+    return std::make_optional(mouseTileIndex);
 }
 
 } // namespace sle

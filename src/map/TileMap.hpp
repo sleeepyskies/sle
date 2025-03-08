@@ -89,7 +89,7 @@ public:
 
     /// @brief Handles drawing the entire map to the window. Currently draws every chunk, even if not visible.
     void draw(const Camera &cam, const ref<Window> &ren) const;
-    /// @brief Calculates and determines the location of the tile the cursor is over.
+    /// @brief Calculates and determines the location of the tile the cursor is over in global tile coords.
     maybe<glm::i8vec2> findCursorTile(const Camera &cam, glm::ivec2 mousePos);
 
     /// @brief Sets this instances data using the given @ref TileMapResult struct.

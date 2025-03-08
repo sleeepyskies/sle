@@ -14,7 +14,7 @@ void Engine::init() {
     ref<TileMap> tileMap = std::make_shared<TileMap>(*mapResult);
 
     // Create states we want to register, for now just MapEditor
-    ref<MapEditorState> meState = std::make_shared<MapEditorState>(window, tileMap);
+    ref<MapEditorState> meState = std::make_shared<MapEditorState>(window, tileMap, m_assetManager);
     m_state.registerState(meState);
 }
 

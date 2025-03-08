@@ -13,6 +13,7 @@ namespace sle {
 struct InputData {
     std::unordered_map<SDL_Keycode, bool> keys;
     glm::ivec2 mousePos{ 0, 0 };
+    std::array<bool, 5> mouseClicks{};
 };
 
 /**

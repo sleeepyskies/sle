@@ -13,6 +13,12 @@ void EventHandler::pollEvents() {
         case SDL_QUIT:
             m_engineData.quit = true;
             break;
+        case SDL_MOUSEBUTTONDOWN:
+            m_inputData.mouseClicks[m_event.button.button] = true;
+            break;
+        case SDL_MOUSEBUTTONUP:
+            m_inputData.mouseClicks[m_event.button.button] = false;
+            break;
         case SDL_MOUSEMOTION:
             m_inputData.mousePos.x = m_event.motion.x;
             m_inputData.mousePos.y = m_event.motion.y;

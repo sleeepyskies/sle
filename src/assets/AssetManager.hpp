@@ -13,7 +13,7 @@
 
 namespace sle {
 
-const std::filesystem::path MISSING_TEXTURE = "--missing-texture--";
+const std::string MISSING_TEXTURE = "--missing-texture--";
 
 /**
  * @brief This class is responsible for loading and handling all assets used in sle.
@@ -38,11 +38,11 @@ public:
      * @param filePath The filepath to the texture to be loaded.
      * @return A ref to the created @ref Texture
      */
-    ref<Texture> texture(const std::filesystem::path &filePath);
+    ref<Texture> texture(const std::string &name, const std::filesystem::path &filePath);
 
 private:
     /// @brief A mapping of file path to Texture wref.
-    std::unordered_map<std::filesystem::path, wref<Texture>> m_textures;
+    std::unordered_map<std::string, wref<Texture>> m_textures;
 
     /// @ref A pointer to the current window.
     ref<Window> m_window = nullptr;

@@ -16,7 +16,7 @@ void AssetManager::init(const ref<Window> window) {
         throw std::runtime_error("AssetManager construction failed!");
     }
 
-    m_window = window;
+    m_window                    = window;
     m_textures[MISSING_TEXTURE] = std::make_shared<Texture>(texture);
 }
 
@@ -40,19 +40,19 @@ maybe<Texture> AssetManager::createTexture(const std::filesystem::path &filePath
     return std::make_optional<Texture>(texture);
 }
 
-ref<Texture> AssetManager::texture(const std::filesystem::path &filePath) {
+ref<Texture> AssetManager::texture(const std::string &name, const std::filesystem::path &filePath) {
     // Texture already exists, return it
-    if (m_textures.contains(filePath) && !m_textures[filePath].expired()) { // short circuit eval :)
-        return m_textures[filePath].lock();
+    if (m_textures.contains(name) && !m_textures[name].expired()) { // short circuit eval :)
+        return m_textures[name].lock();
     }
 
-    auto textureResult = createTexture(filePath);
+    auto textureResult = createTexture(filePath / name);
     if (!textureResult)
         return m_textures[MISSING_TEXTURE].lock(); // could not create, return default texture
 
     ref<Texture> textureRef   = std::make_shared<Texture>(std::move(*textureResult));
     wref<Texture> textureWref = textureRef;
-    m_textures[filePath]      = textureWref;
+    m_textures[name]      = textureWref;
 
     return textureRef; // nice, success :)
 }

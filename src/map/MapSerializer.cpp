@@ -78,8 +78,7 @@ bool MapSerializer::readChunkTiles(std::ifstream &inFile, Chunk &chunk, std::vec
         if (!VALID_TILES.contains(tileIndicator + ".png"))
             return false;
 
-        const std::filesystem::path texturePath = fetchTileTexture(tileIndicator);
-        ref<Texture> texture                    = am.texture(texturePath);
+        ref<Texture> texture                    = am.texture(tileIndicator, MAP_TEXTURES_PATH);
 
         auto indexResult = getIndex(tileTextures, texture);
         Tile tile{ indexResult.value_or(tileTextures.size()) };

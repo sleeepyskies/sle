@@ -10,6 +10,7 @@ file(WRITE "${CMAKE_BINARY_DIR}/config.h"
 
 const std::filesystem::path PROJECT_ROOT = \"${CMAKE_SOURCE_DIR}\";
 const std::filesystem::path ASSETS_PATH = \"${CMAKE_SOURCE_DIR}/assets\";
+const std::filesystem::path MAP_TEXTURES_PATH = \"${CMAKE_SOURCE_DIR}/assets/textures/map\";
 
 const std::unordered_set<std::string> VALID_TILES = {\n")
 

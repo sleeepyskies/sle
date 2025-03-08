@@ -18,6 +18,7 @@
 namespace sle {
 
 struct Chunk; // Forward declaration due to circular imports
+class TileMap;
 
 /**
  * @brief Used to encapsulate the result of parsing a .slemap file.
@@ -43,7 +44,7 @@ public:
      * specified in @ref Constants.hpp. Note that chunkIndices is required to be sorted for
      * rendering. This is done after all parsing has been done.
      */
-    maybe<TileMapResult> load(AssetManager &am, const std::string &mapName);
+    maybe<TileMap> load(AssetManager &am, const std::string &mapName);
 
     /// @brief Saves the given map to disk at the default map location.
     bool save(const std::string &mapName, const std::unordered_map<glm::i8vec2, Chunk> &chunks,

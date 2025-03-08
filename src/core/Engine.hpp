@@ -2,7 +2,9 @@
 
 #include "AssetManager.hpp"
 #include "EventHandler.hpp"
-#include "GameData.hpp"
+#include "GameStateMachine.hpp"
+#include "MapEditorState.hpp"
+#include "PlayState.hpp"
 #include "graphics/Window.hpp"
 #include "slog.hpp"
 
@@ -26,20 +28,18 @@ public:
     /// @brief Starts the main application loop.
     void run();
 
-    /// @brief Handles drawing the game to the window.
-    void draw() const;
-
 private:
-    /// @brief The @ref Window acts as a wrapper for SDL_Window and SDL_Renderer, but serves more as a window in sle.
-    ref<Window> m_window = nullptr;
-    /// @brief The @ref GameContext holds all of the games state.
-    GameData m_gameData;
+    /// @brief The @ref GameStateMachine manages switching between the engines current state.
+    GameStateMachine m_state;
     /// @brief The @ref InputManager handles getting all user input and window events.
     EventHandler m_eventHandler;
     /// @brief The @ref AssetManager handles getting all loadable assets.
     AssetManager m_assetManager;
     /// @brief The @ref MapSerializer handles loading and saving maps from disk.
     MapSerializer m_mapSerializer;
+
+    /// @brief Handles initialising SDL.
+    void initSDL();
 };
 
 } // namespace sle

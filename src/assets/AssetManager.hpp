@@ -28,7 +28,7 @@ public:
     ~AssetManager() = default;
 
     /// @brief Must be called before attempting to create any textures.
-    void init(const ref<Window> &window);
+    void init(const ref<Window> window);
 
     /**
      * @brief This function will first check if an asset has already been loaded and return it. If it has

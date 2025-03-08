@@ -30,8 +30,8 @@ add_executable(sle
         src/core/Engine.hpp
         src/graphics/Window.cpp
         src/graphics/Window.hpp
-        src/game/GameData.cpp
-        src/game/GameData.hpp
+        src/game/PlayState.cpp
+        src/game/PlayState.hpp
         src/core/EventHandler.cpp
         src/core/EventHandler.hpp
         src/ecs/Entity.cpp
@@ -45,8 +45,8 @@ add_executable(sle
         src/map/TileMap.cpp
         src/map/TileMap.hpp
         src/graphics/Texture.hpp
-        src/game/MapEditor.cpp
-        src/game/MapEditor.hpp
+        src/game/MapEditorState.cpp
+        src/game/MapEditorState.hpp
         src/game/GameStateMachine.hpp
         src/game/GameStateMachine.cpp
 

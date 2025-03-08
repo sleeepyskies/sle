@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../graphics/Window.hpp"
+#include "Window.hpp"
+#include "EventHandler.hpp"
 #include "types.hpp"
 #include <unordered_set>
 
@@ -16,13 +17,13 @@ enum class GameStateType { Game, MapEditor };
  * @brief The GameState Interface is used for handling the active state of the engine. Any class
  * using this must implement its methods.
  */
-class IGameStateMachine {
+class IGameState {
 public:
     /// @brief Make sure any classes that implement this have a destructor.
-    virtual ~IGameStateMachine() = default;
+    virtual ~IGameState () = default;
 
     /// @brief This function should update the current GameStates state.
-    virtual void update() = 0;
+    virtual void update(const InputData &inputData) = 0;
 
     /// @brief This function should be used to draw/render the current GameState.
     virtual void draw() = 0;
@@ -31,7 +32,7 @@ public:
     virtual GameStateType toEnum() = 0;
 
     /// @brief Updates the states window.
-    void setWindow(ref<Window> &win) { m_window = win; }
+    void setWindow(ref<Window> win) { m_window = win; }
 
     /**
      * @brief Indicates to @ref Engine what the next state should be. Since transitions may happen
@@ -50,12 +51,12 @@ public:
     ~GameStateMachine() = default;
 
     /// @brief Handles updating the current state.
-    void update();
+    void update(const InputData &inputData);
     /// @brief Handles rendering/drawing the current state to the screen.
     void draw();
 
     /// @brief Registers a new state into the state machine.
-    void registerState(ref<IGameStateMachine> &newState);
+    void registerState(ref<IGameState> newState);
     /// @brief De-Registers a state from the state machine, if it is currently present.
     void deregisterState(GameStateType type);
 
@@ -67,11 +68,11 @@ public:
 
 private:
     /// @brief The active @ref IGameState of the engine, ie where all functions are called for this tick.
-    ref<IGameStateMachine> m_currentState;
+    ref<IGameState> m_currentState;
     /// @brief A set containing all registered states. Theses are all inactive and will not be used this tick.
-    std::unordered_set<ref<IGameStateMachine>> m_states;
+    std::unordered_set<ref<IGameState>> m_states;
 
     /// @brief Changes the state to the given state.
-    void transition(const ref<IGameStateMachine> &state);
+    void transition(const ref<IGameState> &state);
 };
 } // namespace sle

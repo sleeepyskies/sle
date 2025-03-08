@@ -1,12 +1,27 @@
 #pragma once
-#include "../../cmake-build-debug/_deps/slog-src/slog.hpp"
-#include "../util/math.hpp"
+
+#include "math.hpp"
+#include "slog.hpp"
 #include <SDL_events.h>
 #include <queue>
 
-#include "GameData.hpp"
-
 namespace sle {
+
+/**
+ * @brief This struct is used to pass around any input data to the current state.
+ */
+struct InputData {
+    std::unordered_map<SDL_Keycode, bool> keys;
+    glm::ivec2 mousePos{ 0, 0 };
+};
+
+/**
+ * @brief This struct is for any data that the @ref Engine may need to know.
+ */
+struct EngineData {
+    bool quit = false;
+};
+
 /**
  * The EventManager is responsible for polling all SDL events
  */
@@ -15,23 +30,25 @@ public:
     EventHandler();
     ~EventHandler() = default;
 
-    std::unordered_map<SDL_Keycode, bool> keys() { return m_keys; }
-
-    glm::ivec2 mousePos() { return m_mousePos; }
-
     /**
      * @brief This reads in all SDL_Events and updates its state accordingly. Will return false
      * if the @ref Window should be closed and true otherwise.
      */
-    bool pollEvents();
+    void pollEvents();
+
+    /// @brief Returns a struct of all event data that is needed by the current state.
+    const InputData &inputData() const { return m_inputData; }
+
+    /// @brief Returns a struct of all engine relevant data.
+    const EngineData &engineData() const { return m_engineData; }
 
 private:
     /// @brief The event used for polling events. Prevents creating a new event each tick.
     SDL_Event m_event;
-    /// @brief The current mouse position in screen coordinates.
-    glm::ivec2 m_mousePos;
-    /// @brief A map of all keys, with information whether they are currently pressed.
-    std::unordered_map<SDL_Keycode, bool> m_keys;
+    /// @brief The struct used to store any data about direct user input for the current state.
+    InputData m_inputData;
+    /// @brief The struct used to store any data for the engine (such as SDL_Quit).
+    EngineData m_engineData;
 };
 
 } // namespace sle

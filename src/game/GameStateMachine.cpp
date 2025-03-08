@@ -2,7 +2,7 @@
 
 namespace sle {
 
-void GameStateMachine::update() { m_currentState->update(); }
+void GameStateMachine::update(const InputData &inputData) { m_currentState->update(inputData); }
 
 void GameStateMachine::draw() { m_currentState->draw(); }
 
@@ -14,7 +14,7 @@ void GameStateMachine::setState(GameStateType type) {
     }
 }
 
-void GameStateMachine::registerState(ref<IGameStateMachine> &newState) { m_states.insert(newState); }
+void GameStateMachine::registerState(ref<IGameState> newState) { m_states.insert(newState); }
 
 void GameStateMachine::deregisterState(GameStateType type) {
     for (const auto &state : m_states) {
@@ -29,6 +29,6 @@ void GameStateMachine::setWindow(ref<Window> &win) {
     }
 }
 
-void GameStateMachine::transition(const ref<IGameStateMachine> &state) { m_currentState = state; }
+void GameStateMachine::transition(const ref<IGameState> &state) { m_currentState = state; }
 
 } // namespace sle

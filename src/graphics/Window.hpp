@@ -2,7 +2,7 @@
 
 #include "constants.hpp"
 #include "slog.hpp"
-#include "util/types.hpp"
+#include "types.hpp"
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_render.h>

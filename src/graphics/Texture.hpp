@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core.hpp"
+#include "types.hpp"
 #include "slog.hpp"
 #include <SDL.h>
 

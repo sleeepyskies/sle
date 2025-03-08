@@ -1,8 +1,8 @@
 #pragma once
+#include "../graphics/Window.hpp"
+#include "../map/TileMap.hpp"
 #include "Camera.hpp"
 #include "Entity.hpp"
-#include "TileMap.hpp"
-#include "Window.hpp"
 #include <SDL.h>
 #include <unordered_map>
 #include <vector>
@@ -19,7 +19,6 @@ public:
 private:
     Camera m_camera;
     TileMap m_map;
-    std::vector<Entity> m_entities{};
 };
 
 } // namespace sle

@@ -7,6 +7,7 @@ int main() {
     sle::Engine engine{};
     engine.init();
     engine.run();
+    engine.shutdown();
 
     return 0;
 }

@@ -26,31 +26,45 @@ find_package(glm REQUIRED)
 # files turn into .o files. .o files are binary
 add_executable(sle
         src/main.cpp
-        src/Engine.cpp
-        src/Engine.hpp
-        src/Window.cpp
-        src/Window.hpp
-        src/GameData.cpp
-        src/GameData.hpp
-        src/EventHandler.cpp
-        src/EventHandler.hpp
-        src/Constants.hpp
-        src/Entity.cpp
-        src/Entity.hpp
-        src/AssetManager.cpp
-        src/AssetManager.hpp
-        src/math.hpp
-        src/Camera.cpp
-        src/Camera.hpp
-        src/MapSerializer.cpp
-        src/MapSerializer.hpp
-        src/TileMap.cpp
-        src/TileMap.hpp
-        src/Texture.hpp
-        src/core.hpp
-        src/utils.hpp
-        src/MapEditor.cpp
-        src/MapEditor.h
+        src/core/Engine.cpp
+        src/core/Engine.hpp
+        src/graphics/Window.cpp
+        src/graphics/Window.hpp
+        src/game/GameData.cpp
+        src/game/GameData.hpp
+        src/core/EventHandler.cpp
+        src/core/EventHandler.hpp
+        src/ecs/Entity.cpp
+        src/ecs/Entity.hpp
+        src/assets/AssetManager.cpp
+        src/assets/AssetManager.hpp
+        src/game/Camera.cpp
+        src/game/Camera.hpp
+        src/map/MapSerializer.cpp
+        src/map/MapSerializer.hpp
+        src/map/TileMap.cpp
+        src/map/TileMap.hpp
+        src/graphics/Texture.hpp
+        src/game/MapEditor.cpp
+        src/game/MapEditor.hpp
+        src/game/GameStateMachine.hpp
+        src/game/GameStateMachine.cpp
+
+        src/util/constants.hpp
+        src/util/math.hpp
+        src/util/types.hpp
+        src/util/files.hpp
+)
+
+target_include_directories(
+        sle PRIVATE ${CMAKE_SOURCE_DIR}/src
+        sle PRIVATE ${CMAKE_SOURCE_DIR}/src/assets
+        sle PRIVATE ${CMAKE_SOURCE_DIR}/src/core
+        sle PRIVATE ${CMAKE_SOURCE_DIR}/src/ecs
+        sle PRIVATE ${CMAKE_SOURCE_DIR}/src/game
+        sle PRIVATE ${CMAKE_SOURCE_DIR}/src/graphics
+        sle PRIVATE ${CMAKE_SOURCE_DIR}/src/map
+        sle PRIVATE ${CMAKE_SOURCE_DIR}/src/util
 )
 
 target_include_directories(sle PRIVATE ${slog_SOURCE_DIR})

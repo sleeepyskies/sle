@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Texture.hpp"
-#include "Window.hpp"
-#include "core.hpp"
+#include "graphics/Window.hpp"
 #include "slog.hpp"
+#include "types.hpp"
 #include <SDL_image.h>
 #include <SDL_render.h>
 #include <filesystem>

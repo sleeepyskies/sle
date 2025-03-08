@@ -3,7 +3,7 @@
 #include "AssetManager.hpp"
 #include "EventHandler.hpp"
 #include "GameData.hpp"
-#include "Window.hpp"
+#include "graphics/Window.hpp"
 #include "slog.hpp"
 
 namespace sle {

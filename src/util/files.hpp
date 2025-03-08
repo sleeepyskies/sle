@@ -1,5 +1,5 @@
 #pragma once
-#include <config.h>
+#include <../../cmake-build-debug/config.h>
 #include <filesystem>
 
 namespace sle {

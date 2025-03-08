@@ -1,7 +1,7 @@
 #pragma once
 #include <SDL_render.h>
 
-#include "Window.hpp"
+#include "../graphics/Window.hpp"
 #include "slog.hpp"
 
 namespace sle {

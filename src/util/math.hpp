@@ -1,6 +1,6 @@
 #pragma once
+#include "constants.hpp"
 #include "Camera.hpp"
-#include "Constants.hpp"
 #include <SDL.h>
 #include <glm/gtc/matrix_inverse.hpp>
 #include <glm/mat2x2.hpp>

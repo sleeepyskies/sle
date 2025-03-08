@@ -1,9 +1,9 @@
 #pragma once
 
 #include "AssetManager.hpp"
-#include "Constants.hpp"
 #include "MapSerializer.hpp"
 #include "Window.hpp"
+#include "constants.hpp"
 #include "math.hpp"
 #include <SDL.h>
 #include <algorithm>

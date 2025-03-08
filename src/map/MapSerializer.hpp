@@ -4,8 +4,8 @@
 #include "AssetManager.hpp"
 #include "Texture.hpp"
 #include "config.h"
-#include "core.hpp"
-#include "utils.hpp"
+#include "types.hpp"
+#include "util/files.hpp"
 #include <SDL.h>
 #include <filesystem>
 #include <fstream>

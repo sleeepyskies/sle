@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Constants.hpp"
 #include "slog.hpp"
+#include "constants.hpp"
 #include <SDL_keycode.h>
 #include <glm/geometric.hpp>
 #include <glm/vec2.hpp>

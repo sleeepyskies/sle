@@ -1,6 +1,6 @@
 #pragma once
-#include "math.hpp"
-#include "slog.hpp"
+#include "../../cmake-build-debug/_deps/slog-src/slog.hpp"
+#include "../util/math.hpp"
 #include <SDL_events.h>
 #include <queue>
 

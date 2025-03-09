@@ -23,6 +23,5 @@ using Color = glm::u8vec4;
 template <typename T> using maybe = std::optional<T>;
 
 /// @brief A hash map aka std::unordered_map
-template<typename K, typename V> using hashmap = std::unordered_map<K, V>;
-
+template <typename K, typename V> using hashmap = std::unordered_map<K, V>;
 } // namespace sle

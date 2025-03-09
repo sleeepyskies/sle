@@ -34,8 +34,6 @@ add_executable(sle
         src/game/PlayState.hpp
         src/core/EventHandler.cpp
         src/core/EventHandler.hpp
-        src/ecs/Entity.cpp
-        src/ecs/Entity.hpp
         src/assets/AssetManager.cpp
         src/assets/AssetManager.hpp
         src/game/Camera.cpp
@@ -54,6 +52,10 @@ add_executable(sle
         src/util/math.hpp
         src/util/types.hpp
         src/util/files.hpp
+        src/ecs/IScene.hpp
+        src/ecs/Scene2D.cpp
+        src/ecs/Scene2D.hpp
+        src/util/assert.hpp
 )
 
 target_include_directories(

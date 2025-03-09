@@ -12,7 +12,6 @@
 #include <glm/gtx/hash.hpp>
 #include <glm/vec2.hpp>
 #include <string>
-#include <unordered_map>
 #include <vector>
 
 namespace sle {
@@ -24,7 +23,7 @@ class TileMap;
  * @brief Used to encapsulate the result of parsing a .slemap file.
  */
 struct TileMapResult {
-    std::unordered_map<glm::i8vec2, Chunk> chunks;
+    hashmap<glm::i8vec2, Chunk> chunks;
     std::vector<ref<Texture>> tileTextures;
     std::vector<glm::i8vec2> chunkIndices;
 };
@@ -44,10 +43,10 @@ public:
      * specified in @ref Constants.hpp. Note that chunkIndices is required to be sorted for
      * rendering. This is done after all parsing has been done.
      */
-    maybe<TileMap> load(AssetManager &am, const std::string &mapName);
+    maybe<TileMap> load(ref<AssetManager> &am, const std::string &mapName);
 
     /// @brief Saves the given map to disk at the default map location.
-    bool save(const std::string &mapName, const std::unordered_map<glm::i8vec2, Chunk> &chunks,
+    bool save(const std::string &mapName, const hashmap<glm::i8vec2, Chunk> &chunks,
               const std::vector<ref<Texture>> &textures);
 
 private:
@@ -56,7 +55,8 @@ private:
     /// @brief Reads and validates the chunks coords from the ifstream.
     maybe<glm::i8vec2> readChunkCoords(std::ifstream &inFile, const std::vector<glm::i8vec2> &chunkIndices);
     /// @brief Reads and validates all chunk tiles from the ifstream. Returns true if success.
-    bool readChunkTiles(std::ifstream &inFile, Chunk &chunk, std::vector<ref<Texture>> &tileTextures, AssetManager &am);
+    bool readChunkTiles(std::ifstream &inFile, Chunk &chunk, std::vector<ref<Texture>> &tileTextures,
+                        ref<AssetManager> &am);
 };
 
 } // namespace sle

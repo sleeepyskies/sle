@@ -4,7 +4,7 @@
 namespace sle {
 namespace fs = std::filesystem;
 
-maybe<TileMap> MapSerializer::load(AssetManager &am, const std::string &mapName) {
+maybe<TileMap> MapSerializer::load(ref<AssetManager> &am, const std::string &mapName) {
     dbg("Loading map {}", mapName);
     const fs::path mapPath = fetchMapFile(mapName);
 
@@ -15,7 +15,7 @@ maybe<TileMap> MapSerializer::load(AssetManager &am, const std::string &mapName)
         return {};
     }
 
-    std::unordered_map<glm::i8vec2, Chunk> chunks;
+    hashmap<glm::i8vec2, Chunk> chunks;
     std::vector<ref<Texture>> tileTextures;
     std::vector<glm::i8vec2> chunkIndices;
 
@@ -69,7 +69,7 @@ maybe<glm::i8vec2> MapSerializer::readChunkCoords(std::ifstream &inFile, const s
 }
 
 bool MapSerializer::readChunkTiles(std::ifstream &inFile, Chunk &chunk, std::vector<ref<Texture>> &tileTextures,
-                                   AssetManager &am) {
+                                   ref<AssetManager> &am) {
     for (int i = 0; i < CHUNK_TILE_COUNT; i++) {
         std::string tileIndicator;
         if (!(inFile >> tileIndicator))
@@ -78,7 +78,7 @@ bool MapSerializer::readChunkTiles(std::ifstream &inFile, Chunk &chunk, std::vec
         if (!VALID_TILES.contains(tileIndicator + ".png"))
             return false;
 
-        ref<Texture> texture                    = am.texture(tileIndicator, MAP_TEXTURES_PATH);
+        ref<Texture> texture = am->texture(tileIndicator, MAP_TEXTURES_PATH);
 
         auto indexResult = getIndex(tileTextures, texture);
         Tile tile{ indexResult.value_or(tileTextures.size()) };
@@ -90,7 +90,7 @@ bool MapSerializer::readChunkTiles(std::ifstream &inFile, Chunk &chunk, std::vec
 }
 
 // TODO: Implement actual logic here!
-bool MapSerializer::save(const std::string &mapName, const std::unordered_map<glm::i8vec2, Chunk> &chunks,
+bool MapSerializer::save(const std::string &mapName, const hashmap<glm::i8vec2, Chunk> &chunks,
                          const std::vector<ref<Texture>> &textures) {
     return true;
 }

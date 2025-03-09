@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Texture.hpp"
-#include "graphics/Window.hpp"
+#include "Window.hpp"
 #include "slog.hpp"
 #include "types.hpp"
 #include <SDL_image.h>
@@ -9,7 +9,6 @@
 #include <filesystem>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace sle {
 
@@ -42,7 +41,7 @@ public:
 
 private:
     /// @brief A mapping of file path to Texture wref.
-    std::unordered_map<std::string, wref<Texture>> m_textures;
+    hashmap<std::string, wref<Texture>> m_textures;
 
     /// @ref A pointer to the current window.
     ref<Window> m_window = nullptr;

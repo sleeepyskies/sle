@@ -3,6 +3,7 @@
 namespace sle {
 
 void AssetManager::init(const ref<Window> window) {
+    assert(window != nullptr && this != nullptr);
     SDL_Surface *tempSurface = SDL_CreateRGBSurface(0, 1, 1, 32, 0, 0, 0, 0);
     if (!tempSurface) {
         wrn("Could not create surface for fallback texture. {}", SDL_GetError());
@@ -46,7 +47,7 @@ ref<Texture> AssetManager::texture(const std::string &name, const std::filesyste
         return m_textures[name].lock();
     }
 
-    auto textureResult = createTexture(filePath / name);
+    auto textureResult = createTexture(filePath / (name + ".png"));
     if (!textureResult)
         return m_textures[MISSING_TEXTURE].lock(); // could not create, return default texture
 

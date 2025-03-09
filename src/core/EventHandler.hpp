@@ -2,6 +2,7 @@
 
 #include "math.hpp"
 #include "slog.hpp"
+#include "types.hpp"
 #include <SDL_events.h>
 #include <queue>
 
@@ -11,7 +12,7 @@ namespace sle {
  * @brief This struct is used to pass around any input data to the current state.
  */
 struct InputData {
-    std::unordered_map<SDL_Keycode, bool> keys;
+    hashmap<SDL_Keycode, bool> keys;
     glm::ivec2 mousePos{ 0, 0 };
     std::array<bool, 5> mouseClicks{};
 };

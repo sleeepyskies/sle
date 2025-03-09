@@ -13,7 +13,7 @@ class MapEditorCamera {
 public:
     glm::ivec2 getPos() const { return m_pos; }
 
-    void update(const std::unordered_map<SDL_Keycode, bool> &keysPressed);
+    void update(const hashmap<SDL_Keycode, bool> &keysPressed);
 
 private:
     glm::ivec2 m_pos{ 0, 0 };
@@ -57,16 +57,24 @@ private:
     /// @brief The texture used to render the active tile.
     ref<Texture> m_activeTileTexture = nullptr;
     /// @brief The tile that should be drawn to the screen.
-    ref<Texture> m_tileToDraw = nullptr;
+    int m_tileToDraw = 0;
 
     /// @brief Draws a highlight around the active tile to the screen, if there is one.
     void drawActiveTile();
 
     /// @brief Picks the tile that will be placed, based on the users keyboard input.
-    void setTileToDraw(const std::unordered_map<SDL_Keycode, bool> &keys);
+    void setTileToDraw(const hashmap<SDL_Keycode, bool> &keys);
 
     /// @brief Edits the map if the user has pressed a mousse button.
-    void performMouseEdit(const std::array <bool, 5> &mouseButtons);
+    void performMouseEdit(const std::array<bool, 5> &mouseButtons);
+
+    /**
+     * @brief Adds the @ref m_tileToDraw to the mouse position. May create a new @ref Chunk
+     * or overwrite an existing tile.
+    */
+    void addTile();
+    /// @breif Removes the tile at the mouse position. May result in @ref Chunk deletion.
+    void removeTile();
 };
 
 } // namespace sle

@@ -1,8 +1,10 @@
 #pragma once
 
+#include "optional"
 #include <glm/vec4.hpp>
 #include <memory>
-#include "optional"
+
+#include <unordered_map>
 
 namespace sle {
 /// @brief A shared pointer for a given type.
@@ -19,5 +21,8 @@ using Color = glm::u8vec4;
 
 /// @brief An optional return value.
 template <typename T> using maybe = std::optional<T>;
+
+/// @brief A hash map aka std::unordered_map
+template<typename K, typename V> using hashmap = std::unordered_map<K, V>;
 
 } // namespace sle

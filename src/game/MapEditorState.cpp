@@ -4,7 +4,6 @@ namespace sle {
 
 MapEditorState::MapEditorState(ref<Window> window, ref<TileMap> tileMap, ref<AssetManager> &am)
     : m_tileMap(tileMap), m_window(window), m_assetManager(am) {
-    m_tileToDraw        = am->texture("blue", MAP_TEXTURES_PATH);
     m_activeTileTexture = am->texture("selected-tile", MAP_TEXTURES_PATH);
 }
 
@@ -30,22 +29,32 @@ void MapEditorState::drawActiveTile() {
     }
 }
 
-void MapEditorState::setTileToDraw(const std::unordered_map<SDL_Keycode, bool> &keysPressed) {
-    if (const auto it = keysPressed.find(SDLK_1); it != keysPressed.end() && it->second) // 1 = blue
-        m_tileToDraw = m_assetManager->texture("blue", MAP_TEXTURES_PATH);
-    if (const auto it = keysPressed.find(SDLK_2); it != keysPressed.end() && it->second) // 2 = green
-        m_tileToDraw = m_assetManager->texture("green", MAP_TEXTURES_PATH);
-    if (const auto it = keysPressed.find(SDLK_3); it != keysPressed.end() && it->second) // 3 = gray
-        m_tileToDraw = m_assetManager->texture("gray", MAP_TEXTURES_PATH);
-    if (const auto it = keysPressed.find(SDLK_4); it != keysPressed.end() && it->second) // 4 = red
-        m_tileToDraw = m_assetManager->texture("red", MAP_TEXTURES_PATH);
+void MapEditorState::setTileToDraw(const hashmap<SDL_Keycode, bool> &keysPressed) {
+    if (const auto it = keysPressed.find(SDLK_1); it != keysPressed.end() && it->second) // 0 = blue
+        m_tileToDraw = 0;
+    if (const auto it = keysPressed.find(SDLK_2); it != keysPressed.end() && it->second) // 1 = green
+        m_tileToDraw = 1;
+    if (const auto it = keysPressed.find(SDLK_3); it != keysPressed.end() && it->second) // 2 = gray
+        m_tileToDraw = 2;
+    if (const auto it = keysPressed.find(SDLK_4); it != keysPressed.end() && it->second) // 3 = red
+        m_tileToDraw = 3;
 }
 
 void MapEditorState::performMouseEdit(const std::array<bool, 5> &mouseButtons) {
     if (mouseButtons[1])
-        addTile()
+        addTile();
+    if (mouseButtons[3])
+        removeTile();
 }
 
+void MapEditorState::addTile() {
+    dbg("Updating tile at ({}, {})", m_activeTile->x, m_activeTile->y);
+    m_tileMap->tile(m_activeTile->x, m_activeTile->y)->textureIndex() = m_tileToDraw;
+}
+
+void MapEditorState::removeTile() {
+    m_tileMap->tile(m_activeTile->x, m_activeTile->y)->textureIndex() = 0xFF;
+}
 
 void MapEditorCamera::move(const glm::ivec2 direction) {
     glm::vec2 normalized = normalize(glm::vec2{ direction });
@@ -53,7 +62,7 @@ void MapEditorCamera::move(const glm::ivec2 direction) {
     trc("MapEditorCamera now located at ({}. {})", m_pos.x, m_pos.y);
 }
 
-void MapEditorCamera::update(const std::unordered_map<SDL_Keycode, bool> &keysPressed) {
+void MapEditorCamera::update(const hashmap<SDL_Keycode, bool> &keysPressed) {
     glm::vec2 direction{};
 
     if (const auto it = keysPressed.find(SDLK_w); it != keysPressed.end() && it->second)

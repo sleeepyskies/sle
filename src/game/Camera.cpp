@@ -8,7 +8,7 @@ void Camera::move(const glm::ivec2 direction) {
     trc("Camera now located at ({}. {})", m_pos.x, m_pos.y);
 }
 
-void Camera::update(const std::unordered_map<SDL_Keycode, bool> &keysPressed) {
+void Camera::update(const hashmap<SDL_Keycode, bool> &keysPressed) {
     glm::vec2 direction{};
 
     if (const auto it = keysPressed.find(SDLK_w); it != keysPressed.end() && it->second)

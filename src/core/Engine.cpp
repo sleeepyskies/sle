@@ -1,16 +1,17 @@
 #include "Engine.hpp"
 
-
 namespace sle {
 
 void Engine::init() {
     initSDL();
 
     ref<Window> window = std::make_shared<Window>();
-    m_assetManager.init(window);
+    m_assetManager = std::make_shared<AssetManager>();
+    m_assetManager->init(window);
 
     auto mapResult = m_mapSerializer.load(m_assetManager, DEFAULT_MAP);
-    if (!mapResult) throw std::runtime_error("Could not load a map, exiting the program.");
+    if (!mapResult)
+        throw std::runtime_error("Could not load a map, exiting the program.");
     ref<TileMap> tileMap = std::make_shared<TileMap>(*mapResult);
 
     // Create states we want to register, for now just MapEditor

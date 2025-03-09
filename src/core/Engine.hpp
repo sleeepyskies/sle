@@ -34,7 +34,7 @@ private:
     /// @brief The @ref InputManager handles getting all user input and window events.
     EventHandler m_eventHandler;
     /// @brief The @ref AssetManager handles getting all loadable assets.
-    AssetManager m_assetManager;
+    ref<AssetManager> m_assetManager = nullptr;
     /// @brief The @ref MapSerializer handles loading and saving maps from disk.
     MapSerializer m_mapSerializer;
 

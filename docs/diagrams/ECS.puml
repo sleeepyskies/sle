@@ -1,0 +1,65 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+' ----------------------- SCENE ----------------------
+
+class Scene {
+    - EntityManager m_entityManager
+    - ComponentManager m_componentManager
+    - SystemManager m_systemManager
+    - vector<Entity> m_entities
+}
+
+' ----------------------- ENTITY ---------------------
+
+' An entity is just an id with some components associated with it
+struct Entity {
+    + uint32 id
+    + bitmask components
+}
+
+' Entity Manager should keep track of valid Entity IDs, and be able to create new
+' Entity instances.
+class EntityManager {
+    - uint32 m_entityCount
+    - queue<Entity> m_unusedIDs
+
+    + Entity createEntity()
+    + void destroyEntity()
+}
+
+' ----------------------- COMPONENT ------------------
+
+enum ComponentEnum {
+    TEXTURE = 0,
+    TRANSFORM = 1,
+    ...
+}
+
+' A component is just a struct of some functionally related data
+struct IComponent
+
+' Just some examples, there will be ofc way more
+struct TransformComponent {
+    - SDL_Rect rect
+}
+
+struct SpriteComponent {
+    - Texture texture
+}
+
+class ComponentManager {
+
+}
+
+' ----------------------- SYSTEM --------------------
+
+' A system is some piece of logic, that applies to each entity each tick, so long as it
+' has a specific combination of components associated with it.
+class ISystem
+
+class SystemManager {
+
+}
+
+@enduml

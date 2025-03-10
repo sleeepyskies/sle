@@ -1,0 +1,110 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+!theme mono
+
+class main {
+    + int main()
+}
+
+main <-- Engine : calls Engine() and init, run, shutdown
+
+package core {
+
+    class Engine {
+        - GameStateMachine m_state
+        - EventHandler m_eventHandler
+        - ref<AssetManager> m_assetManager
+        - MapSerializer m_mapSerializer
+
+        + Engine()
+        + ~Engine()
+        + void run()
+        + void init()
+        + void shutdown()
+
+        - initSDL()
+    }
+
+    struct InputData {
+        hashmap<SDL_Keycode, bool> keys
+        ivec2 mousePos
+        array<bool, 5> mouseClicks
+    }
+
+    struct EngineData {
+        bool quit = false
+    }
+
+    class EventHandler {
+        - SDL_Event m_event
+        - InputData m_inputData
+        - EngineData m_engineData
+
+        + EventHandler()
+        + ~EventHandler()
+
+        + void pollEvents()
+        + const InputData &inputData const()
+        + const EngineData &engineData const()
+    }
+
+    Engine *-- GameStateMachine
+    Engine *-- EventHandler
+    Engine *-- assets.AssetManager
+    Engine *-- MapSerializer
+
+    EventHandler *-- InputData
+    EventHandler *-- EngineData
+
+}
+
+package assets {
+
+    class AssetManager {
+        hashmap<fs::path, wref<Texture>> m_textures;
+        ref<Window> m_window = nullptr;
+
+        + AssetManager()  = default;
+        + ~AssetManager() = default;
+        - ref<Texture> texture(const std::filesystem::path &filePath);
+        - maybe<Texture> createTexture(const std::filesystem::path &filePath) const;
+    }
+
+    AssetManager *-- Texture
+    AssetManager *-- Window
+}
+
+package ecs {
+
+}
+
+package graphics {
+    class Texture{
+        - SDL_Texture m_texture
+
+        + Texture() = delete;
+        + Texture(const Texture &) = delete;
+        + Texture &operator=(const Texture &) = delete;
+        + explicit Texture(SDL_Texture *texture)
+        + Texture(Texture &&other) noexcept
+        + Texture &operator=(Texture &&other) noexcept
+        + ~Texture()
+        + SDL_Texture *texture() const
+        + explicit operator bool() const
+    }
+
+    class Window {
+        - SDL_Window *m_window
+        - SDL_Renderer *m_renderer
+
+        + Window()
+        + ~Window()
+        + void clear(const Color &color)
+        + void present() const
+        + SDL_Renderer *renderer() const
+    }
+
+}
+
+@enduml

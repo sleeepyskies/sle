@@ -1,6 +1,14 @@
 @startuml
 'https://plantuml.com/class-diagram
 
+' ----------------------- ECS TYPES ------------------
+
+object Utils {
+    using EntityID = uint32_t
+    constexpr int MAX_COMPONENTS = 32
+    using ComponentMask = std::bitmask<MAX_COMPONENTS>
+}
+
 ' ----------------------- SCENE ----------------------
 
 class Scene {
@@ -35,7 +43,9 @@ class EntityManager {
 enum ComponentType {
     TEXTURE = 0,
     TRANSFORM = 1,
-    ...
+    ... = 2,
+    ... = 4,
+    ... = 8,
 }
 
 ' A component is just a struct of some functionally related data

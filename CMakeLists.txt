@@ -56,6 +56,8 @@ add_executable(sle
         src/ecs/Scene2D.cpp
         src/ecs/Scene2D.hpp
         src/util/assert.hpp
+        src/ecs/ECS.cpp
+        src/ecs/ECS.h
 )
 
 target_include_directories(

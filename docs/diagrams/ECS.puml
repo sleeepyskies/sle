@@ -10,6 +10,7 @@ class Scene {
     - vector<Entity> m_entities
 }
 
+
 ' ----------------------- ENTITY ---------------------
 
 ' An entity is just an id with some components associated with it
@@ -17,6 +18,7 @@ struct Entity {
     + uint32 id
     + bitmask components
 }
+
 
 ' Entity Manager should keep track of valid Entity IDs, and be able to create new
 ' Entity instances.
@@ -30,14 +32,16 @@ class EntityManager {
 
 ' ----------------------- COMPONENT ------------------
 
-enum ComponentEnum {
+enum ComponentType {
     TEXTURE = 0,
     TRANSFORM = 1,
     ...
 }
 
 ' A component is just a struct of some functionally related data
-struct IComponent
+struct IComponent {
+    + virtual ComponentType type() = 0
+}
 
 ' Just some examples, there will be ofc way more
 struct TransformComponent {
@@ -49,7 +53,10 @@ struct SpriteComponent {
 }
 
 class ComponentManager {
+    - HashMap<Entity.id, Component.id> m_entityToTransformIndex
+    - HashMap<Entity.id, Component.id> m_entityToSpriteIndex
 
+    - HashMap<ComponentType, vector<IComponent>> m_componentArrays
 }
 
 ' ----------------------- SYSTEM --------------------
@@ -61,5 +68,14 @@ class ISystem
 class SystemManager {
 
 }
+
+' ----------------------- RELATIONS -----------------
+
+Scene *-- Entity
+Scene *-- EntityManager
+Scene *-- ComponentManager
+Scene *-- SystemManager
+
+
 
 @enduml

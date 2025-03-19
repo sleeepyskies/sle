@@ -1,10 +1,10 @@
 #pragma once
 
 #include "slog.hpp"
-
-#define sle_assert(cond, msg)                                                                                          \
-    if (!cond) {                                                                                                       \
-        err("Assertion failed: {}", msg);                                                                              \
-        std::abort();                                                                                                  \
-    }                                                                                                                  \
-    \
+#define SLE_ASSERT(cond, msg)                                                                                          \
+    do {                                                                                                               \
+        if (!(cond)) {                                                                                                 \
+            err("Assertion failed: {}", msg);                                                                          \
+            std::abort();                                                                                              \
+        }                                                                                                              \
+    } while (0)

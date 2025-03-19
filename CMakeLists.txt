@@ -26,6 +26,13 @@ find_package(glm REQUIRED)
 # files turn into .o files. .o files are binary
 add_executable(sle
         src/main.cpp
+
+        src/util/constants.hpp
+        src/util/math.hpp
+        src/util/types.hpp
+        src/util/files.hpp
+        src/util/assert.hpp
+
         src/core/Engine.cpp
         src/core/Engine.hpp
         src/graphics/Window.cpp
@@ -48,16 +55,15 @@ add_executable(sle
         src/game/GameStateMachine.hpp
         src/game/GameStateMachine.cpp
 
-        src/util/constants.hpp
-        src/util/math.hpp
-        src/util/types.hpp
-        src/util/files.hpp
-        src/ecs/IScene.hpp
-        src/ecs/Scene2D.cpp
-        src/ecs/Scene2D.hpp
-        src/util/assert.hpp
-        src/ecs/ECS.cpp
-        src/ecs/ECS.h
+        src/ecs/EntityManager.cpp
+        src/ecs/EntityManager.hpp
+        src/ecs/ComponentManager.cpp
+        src/ecs/ComponentManager.hpp
+        src/ecs/components/IComponent.hpp
+        src/ecs/SystemManager.cpp
+        src/ecs/SystemManager.hpp
+        src/ecs/ecs.hpp
+        src/ecs/IComponentList.hpp
 )
 
 target_include_directories(
@@ -65,6 +71,7 @@ target_include_directories(
         sle PRIVATE ${CMAKE_SOURCE_DIR}/src/assets
         sle PRIVATE ${CMAKE_SOURCE_DIR}/src/core
         sle PRIVATE ${CMAKE_SOURCE_DIR}/src/ecs
+        sle PRIVATE ${CMAKE_SOURCE_DIR}/src/ecs/components
         sle PRIVATE ${CMAKE_SOURCE_DIR}/src/game
         sle PRIVATE ${CMAKE_SOURCE_DIR}/src/graphics
         sle PRIVATE ${CMAKE_SOURCE_DIR}/src/map

@@ -2,6 +2,8 @@
 
 #include "ComponentManager.hpp"
 #include "types.hpp"
+#include <queue>
+#include "IComponent.hpp"
 
 namespace sle {
 

@@ -40,19 +40,6 @@ public:
     /// @brief Gets the component of type T associated with the given entity.
     template <typename T> ref<T> getComponent(Entity entity);
 
-    /*
-    /// @brief Gets all components associated with this entity
-    std::vector<ref<IComponent>> getAllComponents(Entity entity) const {
-        std::vector<ref<IComponent>> components{};
-        for (const auto& [typeIndex, _] : m_components) {
-            if (m_entityToComponentIndex[entity.id][typeIndex] != INVALID_INDEX) {
-                const auto list = m_components.find(typeIndex);
-                components.push_back(list->getComponent())
-            }
-        }
-    }
-    */
-
     // ------------- PRIVATE FUNCTIONS ---------------
 private:
     template <typename T> bool hasComponent(const Entity &entity) {
@@ -72,6 +59,6 @@ private:
     /// @brief A map of EntityID to its index for each component list.
     hashmap<EntityID, hashmap<std::type_index, size_t>> m_entityToComponentIndex{};
     /// @brief Map of ComponentID to all Entities who had this component
-    hashmap<ComponentID, std::set<EntityID>> m_componentToEntities{};
+    hashmap<ComponentID, hashset<EntityID>> m_componentToEntities{};
 };
 } // namespace sle

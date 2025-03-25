@@ -7,6 +7,7 @@
 #include <limits>
 
 #include <unordered_map>
+#include <unordered_set>
 
 namespace sle {
 /// @brief A shared pointer for a given type.
@@ -29,6 +30,9 @@ template <typename T> using maybe = std::optional<T>;
 
 /// @brief A hash map aka std::unordered_map
 template <typename K, typename V> using hashmap = std::unordered_map<K, V>;
+
+/// @brief A hash set aka std::unordered_set
+template <typename K> using hashset = std::unordered_set<K>;
 
 // ----------------- ECS ------------------
 constexpr int MAX_COMPONENTS = 32;

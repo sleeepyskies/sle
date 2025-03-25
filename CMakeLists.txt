@@ -65,6 +65,8 @@ add_executable(sle
         src/ecs/ecs.hpp
         src/ecs/IComponentList.hpp
         src/ecs/systems/ISystem.h
+        src/ecs/Scene.cpp
+        src/ecs/Scene.hpp
 )
 
 target_include_directories(

@@ -15,7 +15,7 @@ Entity EntityManager::createEntity() {
 }
 
 /// @brief Destroys the given entity and frees up its ID for use.
-void EntityManager::destroyEntity(Entity entity) {
+void EntityManager::destroyEntity(const Entity entity) {
     SLE_ASSERT(entity.id <= m_entityCount, "Cannot destroy entity with invalid ID!");
 
     m_unusedIDs.push(entity.id);
@@ -26,24 +26,20 @@ void EntityManager::destroyEntity(Entity entity) {
  * @brief Updates the given entities bitmask to correspond with its new component type.
  * @returns true on success, false otherwise.
  */
-template <typename T> bool EntityManager::assignComponent(Entity &entity) {
-    const size_t pos = ComponentTypeID::getComponentTypeID<T>();
-    if (entity.mask.test(pos))
-        return false;
+void EntityManager::assignComponent(Entity &entity, ComponentType type) const {
+    const auto pos = static_cast<size_t>(type);
+    SLE_ASSERT(entity.mask.test(pos), "This entity already has this component assigned.");
     entity.mask.flip(pos);
-    return true;
 }
 
 /**
  * @brief Removes the given entities bitmask corresponding with the component type.
  * @returns true on success, false otherwise.
  */
-template <typename T> bool EntityManager::removeComponent(Entity &entity) {
-    const size_t pos = ComponentTypeID::getComponentTypeID<T>();
-    if (!entity.mask.test(pos))
-        return false;
+void EntityManager::removeComponent(Entity &entity, ComponentType type) const {
+    const auto pos = static_cast<size_t>(type);
+    SLE_ASSERT(!entity.mask.test(pos), "This entity already has this component assigned.");
     entity.mask.flip(pos);
-    return true;
 }
 
 } // namespace sle

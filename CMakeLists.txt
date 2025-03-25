@@ -64,6 +64,7 @@ add_executable(sle
         src/ecs/SystemManager.hpp
         src/ecs/ecs.hpp
         src/ecs/IComponentList.hpp
+        src/ecs/systems/ISystem.h
 )
 
 target_include_directories(

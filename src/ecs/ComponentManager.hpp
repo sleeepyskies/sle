@@ -1,10 +1,11 @@
 #pragma once
+
 #include "EntityManager.hpp"
 #include "IComponentList.hpp"
 #include "assert.hpp"
 #include "ecs.hpp"
-
-#include <SDL_image.h>
+#include "types.hpp"
+#include "IComponent.hpp"
 #include <set>
 #include <typeindex>
 
@@ -13,65 +14,67 @@ struct Entity;
 
 /**
  * @brief The ComponentManager is responsible for managing which exact Components belong to which
- * Entities. Furthermore, they provide lists of
+ * Entities. Furthermore, it provides dense lists of each component type.
  */
 class ComponentManager {
-
 public:
-    ComponentManager()  = default;
+    ComponentManager() = default;
+
     ~ComponentManager() = default;
 
     /**
      * @brief Registers the given component to the given entity. Caller must ensure entity does not already have this
      * type of component.
      */
-    template <typename T> void registerComponent(const Entity entity, const IComponent &component) {
-        SLE_ASSERT(!hasComponentBit<T>(entity), "This entity already has a component of this type.");
-    }
+    template<typename T>
+    void registerComponent(Entity entity, const IComponent &component);
 
     /**
      * @brief Unregisters the given component to the given entity. Caller must ensure entity does not already have this
      * type of component.
      */
-    template <typename T> void unregisterComponent(const Entity entity) {
-        SLE_ASSERT(hasComponentBit<T>(entity), "This entity doesnt have a component of this type.");
-    }
-
-    /// @brief Cleans up the given component. Must not be in use by any entities. Use getAllEntities() to clean this up.
-    template <typename T> void destroyComponent(IComponent &component) {
-        SLE_ASSERT(getAllEntities(component).empty(), "This component still has associated entities.");
-    }
+    template<typename T>
+    void unregisterComponent(Entity entity);
 
     /// @brief Returns the list of all active components of this type.
-    template <typename T> ComponentList<T> &getComponentList() const { return getList<T>(); }
+    template<typename T>
+    ComponentList<T> &getComponentList() const { return getList<T>(); }
 
     /// @brief Gets the component of type T associated with the given entity.
-    template <typename T> T &getComponent(Entity entity) {
-        SLE_ASSERT(hasComponentBit<T>(entity), "This entity does not have the given component type.");
-    }
+    template<typename T>
+    ref<T> getComponent(Entity entity);
 
+    /*
     /// @brief Gets all components associated with this entity
-    std::vector<ref<IComponent>> getAllComponents(const Entity entity) const {
+    std::vector<ref<IComponent>> getAllComponents(Entity entity) const {
         std::vector<ref<IComponent>> components{};
+        for (const auto& [typeIndex, _] : m_components) {
+            if (m_entityToComponentIndex[entity.id][typeIndex] != INVALID_INDEX) {
+                const auto list = m_components.find(typeIndex);
+                components.push_back(list->getComponent())
+            }
+        }
     }
-
-    /// @brief Gets all entity ID's that have this component.
-    std::set<EntityID> getAllEntities(const IComponent &component) const {
-        SLE_ASSERT(m_componentToEntity.contains(component.id), "The given component does not exist.");
-        return m_componentToEntity.at(component.id);
-    }
+    */
 
     // ------------- PRIVATE FUNCTIONS ---------------
 private:
+    template<typename T>
+    bool hasComponent(const Entity &entity) { return m_entityToComponentIndex[entity.id][index<T>()] != INVALID_INDEX; }
+
+    template<typename T>
+    ref<ComponentList<T> > getList() const { return static_cast<ComponentList<T>>(m_components[index<T>()]); }
+
+    template<typename T>
+    [[nodiscard]] std::type_index index() const { return std::type_index(typeid(T)); }
 
     // ------------- MEMBER VARIABLES ---------------
 private:
     /// @brief The dense blocks of components. Uses class as lookup.
-    hashmap<std::type_index, ref<IComponentList>> m_components{};
+    hashmap<std::type_index, ref<IComponentList> > m_components{};
     /// @brief A map of EntityID to its index for each component list.
-    hashmap<EntityID, std::array<size_t, MAX_COMPONENTS>> m_entityToComponentIndex{};
-    /// @brief A map of ComponentID to all Entity IDs associated with it.
-    hashmap<ComponentID, std::set<EntityID>> m_componentToEntity{};
+    hashmap<EntityID, hashmap<std::type_index, size_t> > m_entityToComponentIndex{};
+    /// @brief Map of ComponentID to all Entities who had this component
+    hashmap<ComponentID, std::set<EntityID> > m_componentToEntities{};
 };
-
 } // namespace sle

@@ -13,7 +13,7 @@ struct Entity {
     EntityID id = 0;
     ComponentMask mask{};
 
-    Entity(EntityID id) : id(id){};
+    explicit Entity(const EntityID id) : id(id){};
 };
 
 /**
@@ -34,12 +34,12 @@ public:
      * @brief Updates the given entities bitmask to correspond with its new component type.
      * @returns true on success, false otherwise.
      */
-    template <typename T> bool assignComponent(Entity &entity);
+    void assignComponent(Entity &entity, ComponentType type) const;
     /**
      * @brief Removes the given entities bitmask corresponding with the component type.
      * @returns true on success, false otherwise.
      */
-    template <typename T> bool removeComponent(Entity &entity);
+    void removeComponent(Entity &entity, ComponentType type) const;
 
 private:
     /// @brief The amount of alive entities active.

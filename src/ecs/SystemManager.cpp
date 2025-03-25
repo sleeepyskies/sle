@@ -1,4 +1,3 @@
 #include "SystemManager.hpp"
 
-namespace sle {
-} // sle
+namespace sle {} // namespace sle

@@ -4,9 +4,7 @@ namespace sle {
 
 class SystemManager {
 private:
-
 public:
-
 };
 
-} // sle
+} // namespace sle

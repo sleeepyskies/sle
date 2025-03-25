@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vector>
 #include "IComponent.hpp"
+#include <vector>
 
 namespace sle {
 
@@ -37,7 +37,6 @@ public:
     bool contains(const ComponentID id) const { return m_componentToIndex.contains(id); }
     /// @brief Returns the index the given ComponentID is stored at.
     size_t indexOf(const ComponentID id) const { return m_componentToIndex.at(id); }
-
 
     /// @brief Returns a pointer to the component at the given index.
     ref<IComponent> getComponent(size_t index) override { return m_list[index]; }

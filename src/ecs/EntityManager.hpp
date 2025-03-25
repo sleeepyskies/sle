@@ -1,7 +1,7 @@
 #pragma once
 
-#include "types.hpp"
 #include "ComponentManager.hpp"
+#include "types.hpp"
 
 namespace sle {
 

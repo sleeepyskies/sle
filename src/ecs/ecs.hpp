@@ -9,4 +9,3 @@
 #include "SystemManager.hpp"
 #include "assert.hpp"
 #include "types.hpp"
-

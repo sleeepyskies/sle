@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Scene.hpp"
-
 namespace sle {
+
+class Scene;
 
 /**
  * @brief The interface that all systems must implement. Allows for the data held in Component

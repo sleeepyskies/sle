@@ -1,7 +1,7 @@
 #pragma once
 
 #include "assert.hpp"
-#include "systems/ISystem.h"
+#include "systems/ISystem.hpp"
 #include "types.hpp"
 #include <set>
 #include <typeindex>

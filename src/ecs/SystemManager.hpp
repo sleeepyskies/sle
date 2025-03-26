@@ -10,6 +10,9 @@ namespace sle {
 
 class SystemManager {
 public:
+    SystemManager()  = default;
+    ~SystemManager() = default;
+
     /// @brief Registers and returns a pointer to the new system. There may only be one system of a
     /// type active at a time, since systems of the same type have the same functionality anyway.
     template <typename T> ref<ISystem> registerSystem();
@@ -22,7 +25,7 @@ private:
     template <typename T> [[nodiscard]] std::type_index index() const { return std::type_index(typeid(T)); }
 
 private:
-    hashmap<std::type_index, ref<ISystem>> m_registeredComponents{};
+    hashmap<std::type_index, ref<ISystem>> m_registeredSystems{};
 };
 
 } // namespace sle

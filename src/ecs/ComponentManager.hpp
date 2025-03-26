@@ -18,8 +18,7 @@ struct Entity;
  */
 class ComponentManager {
 public:
-    ComponentManager() = default;
-
+    ComponentManager()  = default;
     ~ComponentManager() = default;
 
     /**
@@ -27,7 +26,6 @@ public:
      * type of component.
      */
     template <typename T> void registerComponent(Entity entity, const IComponent &component);
-
     /**
      * @brief Unregisters the given component to the given entity. Caller must ensure entity does not already have this
      * type of component.

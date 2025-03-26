@@ -1,9 +1,9 @@
 #pragma once
 
 #include "ComponentManager.hpp"
+#include "IComponent.hpp"
 #include "types.hpp"
 #include <queue>
-#include "IComponent.hpp"
 
 namespace sle {
 

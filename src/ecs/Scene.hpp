@@ -4,6 +4,7 @@
 #include "ComponentManager.hpp"
 #include "SystemManager.hpp"
 #include "ISystem.hpp"
+#include "Texture.hpp"
 
 namespace sle {
 
@@ -38,6 +39,8 @@ private:
     EntityManager m_entityManager;
     ComponentManager m_componentManager;
     SystemManager m_systemManager;
+
+    std::vector<ref<Texture>> m_textures;
 };
 
 } // namespace sle

@@ -1,22 +1,12 @@
 #pragma once
 
-#include "ComponentManager.hpp"
 #include "IComponent.hpp"
+#include "assert.hpp"
 #include "types.hpp"
+#include "Entity.hpp"
 #include <queue>
 
 namespace sle {
-
-/**
- * @brief An Entity in sle is just an unsigned 32-bit integer id, as well as a component mask
- * representing which components this entity has.
- */
-struct Entity {
-    EntityID id = 0;
-    ComponentMask mask{};
-
-    explicit Entity(const EntityID id) : id(id){};
-};
 
 /**
  * @brief The EntityManager is responsible for managing Entities. This means creating and destroying

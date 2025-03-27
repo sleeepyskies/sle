@@ -67,6 +67,9 @@ add_executable(sle
         src/ecs/systems/ISystem.hpp
         src/ecs/Scene.cpp
         src/ecs/Scene.hpp
+        src/ecs/Entity.hpp
+        src/ecs/components/TextureComponent.hpp
+        src/ecs/components/PositionComponent.hpp
 )
 
 target_include_directories(

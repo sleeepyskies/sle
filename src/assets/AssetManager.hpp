@@ -27,13 +27,14 @@ public:
     ~AssetManager() = default;
 
     /// @brief Must be called before attempting to create any textures.
-    void init(const ref<Window> window);
+    void init(ref<Window> window);
 
     /**
      * @brief This function will first check if an asset has already been loaded and return it. If it has
      * not been loaded yet, it will create this @ref Texture and keep a wref for itself. The caller
      * then has ownership of the texture.
      *
+     * @param name The name of the file to load
      * @param filePath The filepath to the texture to be loaded.
      * @return A ref to the created @ref Texture
      */

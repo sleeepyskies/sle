@@ -1,9 +1,8 @@
 #pragma once
 
 #include "assert.hpp"
-#include "systems/ISystem.hpp"
+#include "ISystem.hpp"
 #include "types.hpp"
-#include <set>
 #include <typeindex>
 
 namespace sle {

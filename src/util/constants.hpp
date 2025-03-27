@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Constants.hpp"
 #include <glm/vec2.hpp>
 #include <string>
 

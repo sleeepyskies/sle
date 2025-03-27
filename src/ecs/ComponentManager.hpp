@@ -1,6 +1,6 @@
 #pragma once
 
-#include "EntityManager.hpp"
+#include "Entity.hpp"
 #include "IComponent.hpp"
 #include "IComponentList.hpp"
 #include "assert.hpp"

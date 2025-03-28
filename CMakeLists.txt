@@ -57,19 +57,17 @@ add_executable(sle
 
         src/ecs/EntityManager.cpp
         src/ecs/EntityManager.hpp
-        src/ecs/ComponentManager.cpp
         src/ecs/ComponentManager.hpp
         src/ecs/components/IComponent.hpp
-        src/ecs/SystemManager.cpp
         src/ecs/SystemManager.hpp
         src/ecs/ecs.hpp
         src/ecs/IComponentList.hpp
         src/ecs/systems/ISystem.hpp
-        src/ecs/Scene.cpp
         src/ecs/Scene.hpp
         src/ecs/Entity.hpp
         src/ecs/components/TextureComponent.hpp
         src/ecs/components/PositionComponent.hpp
+        src/ecs/components/ComponentID.hpp
 )
 
 target_include_directories(

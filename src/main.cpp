@@ -15,7 +15,8 @@ int main() {
 
     sle::Scene scene{};
     auto e = scene.createEntity();
-    auto textureComponent = scene.createComponent<TextureComponent>(e, 0);
+    auto textureComponent = sle::TextureComponent(0);
+    scene.registerComponent<sle::TextureComponent>(e, textureComponent);
 
 
 

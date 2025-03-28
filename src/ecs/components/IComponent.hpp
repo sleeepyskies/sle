@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ComponentID.hpp"
 #include "types.hpp"
 
 namespace sle {

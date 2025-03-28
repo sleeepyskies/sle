@@ -21,41 +21,65 @@ public:
     ComponentManager()  = default;
     ~ComponentManager() = default;
 
-    /**
-     * @brief Registers the given component to the given entity. Caller must ensure entity does not already have this
-     * type of component.
-     */
-    template <typename T> void registerComponent(Entity entity, const IComponent &component);
-    /**
-     * @brief Unregisters the given component to the given entity. Caller must ensure entity does not already have this
-     * type of component.
-     */
-    template <typename T> void unregisterComponent(Entity entity);
+    /// @brief Registers the given component to the given entity.
+    template <typename T> void registerComponent(const Entity entity, const T &component) {
+        SLE_ASSERT(!hasComponent<T>(entity), "This entity already has a component of this type.");
 
-    /// @brief Returns the list of all active components of this type.
-    template <typename T> ComponentList<T> &getComponentList() const { return getList<T>(); }
+        ComponentList<T> list = getList<T>();
+        if (!list.contains(component.id)) {
+            list.insert(component);
+        }
+        m_entityToComponentID[entity.id][index<T>()] = component.id;
+        m_componentToEntities[component.id].insert(entity.id);
+    }
+
+    /// @brief Unregisters the given component to the given entity.
+    template <typename T> void unregisterComponent(const Entity entity) {
+        SLE_ASSERT(hasComponent<T>(entity), "This entity doesnt have a component of this type.");
+
+        const T component = getComponent<T>(m_entityToComponentID.at(entity.id));
+        if (m_componentToEntities[component.id].size() > 1) {
+            // many entities have this
+            m_componentToEntities[component->id].erase(entity.id);
+        } else {
+            // only 1
+            m_entityToComponentID[entity.id][index<T>()] = INVALID_INDEX;
+            list->remove(insertedIndex);
+            m_componentToEntities[component->id].erase(entity.id);
+        }
+    }
+
+    /// @brief Returns a list reference of type T.
+    template <typename T> ComponentList<T> &getList() const {
+        return static_cast<ComponentList<T> &>(*m_components.at(index<T>()));
+    }
 
     /// @brief Gets the component of type T associated with the given entity.
-    template <typename T> ref<T> getComponent(Entity entity);
+    template <typename T> T &getComponent(const Entity entity) {
+        SLE_ASSERT(hasComponent<T>(entity), "This entity does not have the given component type.");
+
+        const ComponentList<T> list = getList<T>();
+        const ComponentID cid = m_entityToComponentID[entity.id][index<T>()];
+        return list.getComponent(cid);
+    }
 
     // ------------- PRIVATE FUNCTIONS ---------------
 private:
+    /// @brief Checks if the entity has this component type. A ComponentID of 0 is invalid, so we just cast this to a
+    /// boolean.
     template <typename T> bool hasComponent(const Entity &entity) {
-        return m_entityToComponentIndex[entity.id][index<T>()] != INVALID_INDEX;
+        return static_cast<bool>(m_entityToComponentID[entity.id][index<T>()]);
     }
 
-    template <typename T> ref<ComponentList<T>> getList() const {
-        return static_cast<ComponentList<T>>(m_components[index<T>()]);
-    }
-
+    /// @brief Returns the hashmap index for checking which components an entity has.
     template <typename T> [[nodiscard]] std::type_index index() const { return std::type_index(typeid(T)); }
 
     // ------------- MEMBER VARIABLES ---------------
 private:
     /// @brief The dense blocks of components. Uses class as lookup.
     hashmap<std::type_index, ref<IComponentList>> m_components{};
-    /// @brief A map of EntityID to its index for each component list.
-    hashmap<EntityID, hashmap<std::type_index, size_t>> m_entityToComponentIndex{};
+    /// @brief A map of EntityID to its ComponentID.
+    hashmap<EntityID, hashmap<std::type_index, ComponentID>> m_entityToComponentID{};
     /// @brief Map of ComponentID to all Entities who had this component
     hashmap<ComponentID, hashset<EntityID>> m_componentToEntities{};
 };

@@ -25,7 +25,7 @@ public:
     template <typename T> void registerComponent(const Entity entity, const T &component) {
         SLE_ASSERT(!hasComponent<T>(entity), "This entity already has a component of this type.");
 
-        ComponentList<T> list = getList<T>();
+        ComponentList<T> &list = getList<T>();
         if (!list.contains(component.id)) {
             list.insert(component);
         }
@@ -37,28 +37,29 @@ public:
     template <typename T> void unregisterComponent(const Entity entity) {
         SLE_ASSERT(hasComponent<T>(entity), "This entity doesnt have a component of this type.");
 
-        const T component = getComponent<T>(m_entityToComponentID.at(entity.id));
-        if (m_componentToEntities[component.id].size() > 1) {
-            // many entities have this
-            m_componentToEntities[component->id].erase(entity.id);
-        } else {
-            // only 1
-            m_entityToComponentID[entity.id][index<T>()] = INVALID_INDEX;
-            list->remove(insertedIndex);
-            m_componentToEntities[component->id].erase(entity.id);
+        const T& component = getComponent<T>(entity);
+        m_componentToEntities[component.id].erase(entity.id);
+        m_entityToComponentID[entity.id][index<T>()] = INVALID_ID;
+        if (m_componentToEntities[component.id].size() <= 1) {
+            ComponentList<T> &list = getList<T>();
+            list.remove(component.id);
         }
     }
 
     /// @brief Returns a list reference of type T.
-    template <typename T> ComponentList<T> &getList() const {
-        return static_cast<ComponentList<T> &>(*m_components.at(index<T>()));
+    template <typename T> ComponentList<T> &getList() {
+        const std::type_index index = this->index<T>();
+        if (!m_components.contains(index)) {
+            m_components[index] = makeRef<ComponentList<T>>();
+        }
+        return static_cast<ComponentList<T> &>(*m_components.at(index));
     }
 
     /// @brief Gets the component of type T associated with the given entity.
     template <typename T> T &getComponent(const Entity entity) {
         SLE_ASSERT(hasComponent<T>(entity), "This entity does not have the given component type.");
 
-        const ComponentList<T> list = getList<T>();
+        ComponentList<T> list = getList<T>();
         const ComponentID cid = m_entityToComponentID[entity.id][index<T>()];
         return list.getComponent(cid);
     }

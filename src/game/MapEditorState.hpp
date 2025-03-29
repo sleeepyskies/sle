@@ -34,7 +34,7 @@ public:
 
     void draw() override;
 
-    GameStateType transition() { return m_nextState; }
+    GameStateType transition() override { return m_nextState; }
 
     GameStateType toEnum() override { return GameStateType::MapEditor; }
 

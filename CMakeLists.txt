@@ -7,13 +7,7 @@ set(CMAKE_CXX_STANDARD 20)
 include(cmake/config.cmake)
 
 # slog is my own lightweight header only logging library used throughout this project
-include(FetchContent)
-FetchContent_Declare(
-        slog
-        GIT_REPOSITORY https://github.com/sleeepyskies/slog.git
-        GIT_TAG main
-)
-FetchContent_MakeAvailable(slog)
+add_subdirectory(external/slog)
 
 # get dependencies. I have installed these using vcpkg, and have configured
 # clion to look at this install location
@@ -83,5 +77,5 @@ target_include_directories(
         sle PRIVATE ${CMAKE_SOURCE_DIR}/src/util
 )
 
-target_include_directories(sle PRIVATE ${slog_SOURCE_DIR})
+target_include_directories(sle PRIVATE external/slog)
 target_link_libraries(sle PRIVATE SDL2::SDL2 SDL2_image::SDL2_image glm::glm)

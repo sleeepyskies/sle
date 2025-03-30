@@ -52,6 +52,5 @@ constexpr int MAX_ENTITIES   = 1000;
 using EntityID               = uint32_t;
 using ComponentID            = uint32_t;
 using ComponentMask          = std::bitset<MAX_COMPONENTS>;
-constexpr ComponentID INVALID_ID = std::numeric_limits<uint32_t>::max();
 
 } // namespace sle

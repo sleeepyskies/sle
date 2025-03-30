@@ -18,8 +18,7 @@ int main() {
     auto textureComponent = sle::TextureComponent(0);
     scene.registerComponent<sle::TextureComponent>(e, textureComponent);
     scene.unregisterComponent<sle::TextureComponent>(e, textureComponent.type());
-
-
+    scene.destroyEntity(e);
 
     return 0;
 }

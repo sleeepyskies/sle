@@ -29,8 +29,8 @@ public:
         if (!list.contains(component.id)) {
             list.insert(component);
         }
-        m_entityToComponentID[entity.id][index<T>()] = component.id;
-        m_componentToEntities[component.id].insert(entity.id);
+        m_entityToComponentID[entity.id()][index<T>()] = component.id;
+        m_componentToEntities[component.id].insert(entity.id());
     }
 
     /// @brief Unregisters the given component to the given entity.
@@ -38,8 +38,8 @@ public:
         SLE_ASSERT(hasComponent<T>(entity), "This entity doesnt have a component of this type.");
 
         const T& component = getComponent<T>(entity);
-        m_componentToEntities[component.id].erase(entity.id);
-        m_entityToComponentID[entity.id][index<T>()] = INVALID_ID;
+        m_componentToEntities[component.id].erase(entity.id());
+        m_entityToComponentID[entity.id()].erase(index<T>());
         if (m_componentToEntities[component.id].size() <= 1) {
             ComponentList<T> &list = getList<T>();
             list.remove(component.id);
@@ -59,9 +59,16 @@ public:
     template <typename T> T &getComponent(const Entity entity) {
         SLE_ASSERT(hasComponent<T>(entity), "This entity does not have the given component type.");
 
-        ComponentList<T> list = getList<T>();
-        const ComponentID cid = m_entityToComponentID[entity.id][index<T>()];
+        ComponentList<T>& list = getList<T>();
+        const ComponentID cid = m_entityToComponentID[entity.id()][index<T>()];
         return list.getComponent(cid);
+    }
+
+    void entityDestroyed(const Entity entity) {
+        for (const auto [_, cid] : m_entityToComponentID.at(entity.id())) {
+            m_componentToEntities.at(cid).erase(entity.id());
+        }
+        m_entityToComponentID.erase(entity.id());
     }
 
     // ------------- PRIVATE FUNCTIONS ---------------
@@ -69,7 +76,7 @@ private:
     /// @brief Checks if the entity has this component type. A ComponentID of 0 is invalid, so we just cast this to a
     /// boolean.
     template <typename T> bool hasComponent(const Entity &entity) {
-        return static_cast<bool>(m_entityToComponentID[entity.id][index<T>()]);
+        return static_cast<bool>(m_entityToComponentID[entity.id()][index<T>()]);
     }
 
     /// @brief Returns the hashmap index for checking which components an entity has.

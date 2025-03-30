@@ -3,16 +3,25 @@
 #include "types.hpp"
 
 namespace sle {
-
 /**
  * @brief An Entity in sle is just an unsigned 32-bit integer id, as well as a component mask
  * representing which components this entity has.
  */
 struct Entity {
-    EntityID id = 0;
-    ComponentMask mask{};
+public:
+    explicit Entity(const EntityID id) : m_id(id) {};
 
-    explicit Entity(const EntityID id) : id(id){};
+    EntityID id() const { return m_id; }
+    bool alive() const { return m_id != 0; }
+    explicit operator bool() const { return alive(); }
+    void kill() { m_id = 0; }
+
+    bool test(const size_t pos) const { return m_mask.test(pos); }
+    void flip(const size_t pos) { m_mask.flip(pos); }
+    bool operator[](const size_t pos) const { return test(pos); }
+
+private:
+    EntityID m_id = 0;
+    ComponentMask m_mask{};
 };
-
 } // namespace sle

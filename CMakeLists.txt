@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15...3.31)
-project(sle) # set project name
+project(sle)
 
 set(CMAKE_CXX_STANDARD 20)
 
@@ -11,8 +11,13 @@ add_subdirectory(external/slog)
 # secs is my own ecs library
 add_subdirectory(external/secs)
 
-# get dependencies. I have installed these using vcpkg, and have configured
-# clion to look at this install location
+# init submodules
+execute_process(
+        COMMAND git submodule update --init --recursive
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
+# get dependencies. I have installed these using vcpkg, and have configured clion to look at this install location
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(glm REQUIRED)

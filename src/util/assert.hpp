@@ -1,6 +1,6 @@
 #pragma once
 
-#include "slog.hpp"
+#include "slog"
 #define SLE_ASSERT(cond, msg)                                                                                          \
     do {                                                                                                               \
         if (!(cond)) {                                                                                                 \

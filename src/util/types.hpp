@@ -46,11 +46,5 @@ template <typename K, typename V> using hashmap = std::unordered_map<K, V>;
 /// @brief A hash set aka std::unordered_set
 template <typename K> using hashset = std::unordered_set<K>;
 
-// ----------------- ECS ------------------
-constexpr int MAX_COMPONENTS = 32;
-constexpr int MAX_ENTITIES   = 1000;
-using EntityID               = uint32_t;
-using ComponentID            = uint32_t;
-using ComponentMask          = std::bitset<MAX_COMPONENTS>;
 
 } // namespace sle

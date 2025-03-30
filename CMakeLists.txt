@@ -8,6 +8,8 @@ include(cmake/config.cmake)
 
 # slog is my own lightweight header only logging library used throughout this project
 add_subdirectory(external/slog)
+# secs is my own ecs library
+add_subdirectory(external/secs)
 
 # get dependencies. I have installed these using vcpkg, and have configured
 # clion to look at this install location
@@ -48,20 +50,6 @@ add_executable(sle
         src/game/MapEditorState.hpp
         src/game/GameStateMachine.hpp
         src/game/GameStateMachine.cpp
-
-        src/ecs/EntityManager.cpp
-        src/ecs/EntityManager.hpp
-        src/ecs/ComponentManager.hpp
-        src/ecs/components/IComponent.hpp
-        src/ecs/SystemManager.hpp
-        src/ecs/ecs.hpp
-        src/ecs/IComponentList.hpp
-        src/ecs/systems/ISystem.hpp
-        src/ecs/Scene.hpp
-        src/ecs/Entity.hpp
-        src/ecs/components/TextureComponent.hpp
-        src/ecs/components/TransformComponent.hpp
-        src/ecs/systems/RenderSystem.hpp
 )
 
 target_include_directories(
@@ -78,4 +66,5 @@ target_include_directories(
 )
 
 target_include_directories(sle PRIVATE external/slog)
+target_include_directories(sle PRIVATE external/secs)
 target_link_libraries(sle PRIVATE SDL2::SDL2 SDL2_image::SDL2_image glm::glm)

@@ -1,9 +1,19 @@
 #pragma once
 
-#include "ComponentID.hpp"
 #include "types.hpp"
 
 namespace sle {
+
+/**
+ * @brief This class is used by components to make sure they receive a unique ID without much overhead. Note that an id
+ * of 0 is considered invalid.
+ */
+class ComponentIDGenerator {
+public:
+    static ComponentID id() { return s_currentId++; }
+private:
+    static inline ComponentID s_currentId = 1;
+};
 
 enum class ComponentType {
     TEXTURE_COMPONENT = 0,
@@ -13,8 +23,7 @@ enum class ComponentType {
 
 /// @brief The base Component class that all other Components must implement.
 struct IComponent {
-    ComponentID id                     = 0;
-    explicit IComponent(const ComponentID id) : id(id) {}
+    ComponentID id                     = ComponentIDGenerator::id();
     virtual ~IComponent()              = default;
     virtual ComponentType type() const = 0;
 };

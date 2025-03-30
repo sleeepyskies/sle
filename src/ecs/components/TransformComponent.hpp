@@ -5,11 +5,10 @@
 
 namespace sle {
 
-struct PositionComponent : IComponent {
+struct TransformComponent : IComponent {
     SDL_Rect position;
 
-    explicit PositionComponent(const ComponentID id, const SDL_Rect rect)
-    : IComponent(id), position(rect) {}
+    explicit TransformComponent(const SDL_Rect rect) : IComponent(), position(rect) {}
     ComponentType type() const override { return ComponentType::POSITION_COMPONENT; }
 };
 

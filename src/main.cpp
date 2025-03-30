@@ -17,6 +17,7 @@ int main() {
     auto e = scene.createEntity();
     auto textureComponent = sle::TextureComponent(0);
     scene.registerComponent<sle::TextureComponent>(e, textureComponent);
+    if (scene.getComponent<sle::TextureComponent>(e).id != textureComponent.id) return -1;
     scene.unregisterComponent<sle::TextureComponent>(e, textureComponent.type());
     scene.destroyEntity(e);
 

@@ -10,8 +10,10 @@ class Scene;
  */
 class ISystem {
 public:
+    virtual ~ISystem() = default;
+
     /// @brief Handles updating this systems logic.
-    virtual void update(float deltaTime, const Scene &scene) = 0;
+    virtual void update(const float deltaTime, const Scene &scene) = 0;
 };
 
 } // namespace sle

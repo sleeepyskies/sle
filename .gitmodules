@@ -1,6 +1,3 @@
-[submodule "slog"]
-	path = external/slog
-	url = https://github.com/sleeepyskies/slog.git
 [submodule "external/secs"]
 	path = external/secs
 	url = https://github.com/sleeepyskies/secs.git

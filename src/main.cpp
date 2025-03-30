@@ -1,7 +1,7 @@
 #define SDL_MAIN_HANDLED
 #include "Engine.hpp"
-#include "Scene.hpp"
-#include "TextureComponent.hpp"
+#include "secs/Scene.hpp"
+#include "secs/components/TextureComponent.hpp"
 
 int main() {
     // slog::logLevel = slog::Level::TRACE;
@@ -13,12 +13,12 @@ int main() {
     engine.shutdown();
     */
 
-    sle::Scene scene{};
+    secs::Scene scene{};
     auto e = scene.createEntity();
-    auto textureComponent = sle::TextureComponent(0);
-    scene.registerComponent<sle::TextureComponent>(e, textureComponent);
-    if (scene.getComponent<sle::TextureComponent>(e).id != textureComponent.id) return -1;
-    scene.unregisterComponent<sle::TextureComponent>(e, textureComponent.type());
+    auto textureComponent = secs::TextureComponent(0);
+    scene.registerComponent<secs::TextureComponent>(e, textureComponent);
+    if (scene.getComponent<secs::TextureComponent>(e).id != textureComponent.id) return -1;
+    scene.unregisterComponent<secs::TextureComponent>(e, textureComponent.type());
     scene.destroyEntity(e);
 
     return 0;

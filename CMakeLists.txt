@@ -28,12 +28,6 @@ find_package(glm REQUIRED)
 add_executable(sle
         src/main.cpp
 
-        src/util/constants.hpp
-        src/util/math.hpp
-        src/util/types.hpp
-        src/util/files.hpp
-        src/util/assert.hpp
-
         src/core/Engine.cpp
         src/core/Engine.hpp
         src/graphics/Window.cpp
@@ -55,6 +49,13 @@ add_executable(sle
         src/game/MapEditorState.hpp
         src/game/GameStateMachine.hpp
         src/game/GameStateMachine.cpp
+
+        # Util
+        src/util/constants.hpp
+        src/util/math.hpp
+        src/util/types.hpp
+        src/util/files.hpp
+        src/util/assert.hpp
 )
 
 target_include_directories(

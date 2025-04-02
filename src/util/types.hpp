@@ -3,8 +3,6 @@
 #include "optional"
 #include <glm/vec4.hpp>
 #include <memory>
-#include <bitset>
-#include <limits>
 
 #include <unordered_map>
 #include <unordered_set>

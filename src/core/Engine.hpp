@@ -24,7 +24,6 @@ public:
     void init();
     /// @brief Shuts down the engine. Should only be called once the engine is no longer needed.
     void shutdown();
-
     /// @brief Starts the main application loop.
     void run();
 

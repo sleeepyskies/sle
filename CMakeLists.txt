@@ -50,6 +50,15 @@ add_executable(sle
         src/game/GameStateMachine.hpp
         src/game/GameStateMachine.cpp
 
+        # ecs
+        # components
+        src/ecs/components/CameraComponent.hpp
+        src/ecs/components/TextureComponent.hpp
+        src/ecs/components/TransformComponent.hpp
+        # systems
+        src/ecs/systems/CameraSystem.hpp
+        src/ecs/systems/RenderSystem.hpp
+
         # Util
         src/util/constants.hpp
         src/util/math.hpp

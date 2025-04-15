@@ -7,7 +7,7 @@ MapEditorState::MapEditorState(ref<Window> window, ref<TileMap> tileMap, ref<Ass
     m_activeTileTexture = am->texture("selected-tile", MAP_TEXTURES_PATH);
 }
 
-void MapEditorState::update(const InputData &inputData) {
+void MapEditorState::update(const secs::InputData &inputData) {
     m_camera.update(inputData.keys);
     m_activeTile = m_tileMap->findCursorTile(m_camera, inputData.mousePos);
     setTileToDraw(inputData.keys);

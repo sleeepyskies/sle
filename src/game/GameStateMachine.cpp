@@ -2,7 +2,7 @@
 
 namespace sle {
 
-void GameStateMachine::update(const InputData &inputData) {
+void GameStateMachine::update(const secs::InputData &inputData) {
     assert(m_currentState);
     m_currentState->update(inputData);
 }

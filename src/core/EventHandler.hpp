@@ -13,6 +13,7 @@ namespace sle {
  * @brief This struct is for any data that the @ref Engine may need to know.
  */
 struct EngineData {
+public:
     bool quit = false;
 };
 

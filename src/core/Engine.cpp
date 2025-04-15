@@ -5,40 +5,12 @@ namespace sle {
 void Engine::init() {
     initSDL();
 
-    auto window = std::make_shared<Window>();
+    const auto window = std::make_shared<Window>();
     m_assetManager = std::make_shared<AssetManager>();
     m_assetManager->init(window);
-
-    auto mapResult = m_mapSerializer.load(m_assetManager, DEFAULT_MAP);
-    if (!mapResult)
-        throw std::runtime_error("Could not load a map, exiting the program.");
-    auto tileMap = std::make_shared<TileMap>(*mapResult);
-
-    // Create states we want to register, for now just MapEditor
-    const auto meState = std::make_shared<MapEditorState>(window, tileMap, m_assetManager);
-    m_state.registerState(meState);
 }
 
-void Engine::run() {
-    // still need to handle cycle length properly to get desired FPS, this has been
-    // done for now with SDL_RENDERER_PRESENTVSYNC flag in the SDL_Renderer
-    bool running = true;
-    while (running) {
-        m_eventHandler.pollEvents();
-        running = !m_eventHandler.engineData().quit;
-        m_state.update(m_eventHandler.inputData());
-        m_state.draw();
-        m_state.stateChange();
-    }
-}
-
-void Engine::shutdown() {
-    SDL_Quit();
-    IMG_Quit();
-    nfo("Engine has shutdown.");
-}
-
-void Engine::initSDL() {
+void Engine::initSDL() const {
     // 0 on success
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         throw std::runtime_error(SDL_GetError());
@@ -51,6 +23,31 @@ void Engine::initSDL() {
         throw std::runtime_error(IMG_GetError());
     }
     nfo("IMG initialised successfully");
+}
+
+void Engine::run() {
+    bool running = true;
+    Uint64 now = SDL_GetPerformanceCounter();
+    Uint64 previous = now;
+    double deltaTime = 0;
+    const double frequencyInv = 1000 / static_cast<double>(SDL_GetPerformanceFrequency());
+    while (running) {
+        previous = now;
+        now = SDL_GetPerformanceCounter();
+        deltaTime = (static_cast<double>(now) - static_cast<double>(previous)) * frequencyInv;
+
+        m_scene.update(deltaTime, m_eventHandler.inputData());
+
+        // TODO: Handle rendering here too
+
+        running = !m_eventHandler.engineData().quit;
+    }
+}
+
+void Engine::shutdown() const {
+    SDL_Quit();
+    IMG_Quit();
+    nfo("Engine has shutdown.");
 }
 
 } // namespace sle

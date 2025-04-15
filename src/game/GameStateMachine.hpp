@@ -23,7 +23,7 @@ public:
     virtual ~IGameState () = default;
 
     /// @brief This function should update the current GameStates state.
-    virtual void update(const InputData &inputData) = 0;
+    virtual void update(const secs::InputData &inputData) = 0;
 
     /// @brief This function should be used to draw/render the current GameState.
     virtual void draw() = 0;
@@ -51,7 +51,7 @@ public:
     ~GameStateMachine() = default;
 
     /// @brief Handles updating the current state.
-    void update(const InputData &inputData);
+    void update(const secs::InputData &inputData);
     /// @brief Handles rendering/drawing the current state to the screen.
     void draw();
     /// @brief Handles transitions between states.

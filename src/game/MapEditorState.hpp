@@ -30,7 +30,7 @@ public:
     MapEditorState(ref<Window> window, ref<TileMap> tileMap, ref<AssetManager> &am);
     ~MapEditorState() = default;
 
-    void update(const InputData &inputData) override;
+    void update(const secs::InputData &inputData) override;
 
     void draw() override;
 

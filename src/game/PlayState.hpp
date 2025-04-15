@@ -10,7 +10,7 @@ class PlayState {
 public:
     void loadMap(const TileMapResult &tmRes);
 
-    void update(const InputData &inputData);
+    void update(const secs::InputData &inputData);
 
     void draw(const ref<Window> &ren) const;
 

@@ -3,10 +3,11 @@
 #include "AssetManager.hpp"
 #include "EventHandler.hpp"
 #include "GameStateMachine.hpp"
-#include "MapEditorState.hpp"
 #include "PlayState.hpp"
 #include "graphics/Window.hpp"
 #include "slog.hpp"
+#include "secs/Scene.hpp"
+#include "SDL_timer.h"
 
 namespace sle {
 
@@ -23,22 +24,20 @@ public:
     /// @brief Sets up the engine. Must be called before calling run().
     void init();
     /// @brief Shuts down the engine. Should only be called once the engine is no longer needed.
-    void shutdown();
+    void shutdown() const;
     /// @brief Starts the main application loop.
     void run();
 
 private:
-    /// @brief The @ref GameStateMachine manages switching between the engines current state.
-    GameStateMachine m_state;
+    /// @brief The scene object that contains the game.
+    secs::Scene m_scene{};
     /// @brief The @ref InputManager handles getting all user input and window events.
     EventHandler m_eventHandler;
     /// @brief The @ref AssetManager handles getting all loadable assets.
     ref<AssetManager> m_assetManager = nullptr;
-    /// @brief The @ref MapSerializer handles loading and saving maps from disk.
-    MapSerializer m_mapSerializer;
 
     /// @brief Handles initialising SDL.
-    void initSDL();
+    void initSDL() const;
 };
 
 } // namespace sle

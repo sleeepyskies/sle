@@ -10,8 +10,6 @@ struct TransformComponent final : secs::Component {
 
     explicit TransformComponent(const SDL_Rect rect)
         : position(rect) {}
-
-    secs::ComponentType type() const override { return secs::ComponentType::POSITION_COMPONENT; }
 };
 
 } // namespace sle

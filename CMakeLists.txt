@@ -72,6 +72,9 @@ target_include_directories(
         ${CMAKE_SOURCE_DIR}/src
         ${CMAKE_SOURCE_DIR}/src/assets
         ${CMAKE_SOURCE_DIR}/src/core
+        ${CMAKE_SOURCE_DIR}/src/ecs
+        ${CMAKE_SOURCE_DIR}/src/ecs/components
+        ${CMAKE_SOURCE_DIR}/src/ecs/systems
         ${CMAKE_SOURCE_DIR}/src/game
         ${CMAKE_SOURCE_DIR}/src/graphics
         ${CMAKE_SOURCE_DIR}/src/map

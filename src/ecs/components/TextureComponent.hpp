@@ -3,7 +3,6 @@
 #include "secs/Component.hpp"
 
 namespace sle {
-
 struct TextureComponent final : secs::Component {
     size_t textureIndex;
 
@@ -11,5 +10,4 @@ struct TextureComponent final : secs::Component {
         : textureIndex(textureIndex) {
     }
 };
-
 } // namespace sle

@@ -1,7 +1,7 @@
 #define SDL_MAIN_HANDLED
 #include "assert.hpp"
 #include "Engine.hpp"
-#include "secs/Scene.hpp"
+#include "../external/secs/secs/include/secs/Scene.hpp"
 
 int main() {
     // slog::logLevel = slog::Level::TRACE;

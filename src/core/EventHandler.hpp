@@ -5,7 +5,7 @@
 #include "types.hpp"
 #include <SDL_events.h>
 #include <queue>
-#include "secs/util/InputData.hpp"
+#include "../../external/secs/secs/internal/InputData.hpp"
 
 namespace sle {
 

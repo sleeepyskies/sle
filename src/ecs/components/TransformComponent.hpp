@@ -1,6 +1,6 @@
 #pragma once
 
-#include "secs/Component.hpp"
+#include "../../../external/secs/secs/include/secs/Component.hpp"
 #include <SDL.h>
 
 namespace sle {

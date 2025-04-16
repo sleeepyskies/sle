@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Scene.hpp"
+#include "../../../external/secs/secs/include/secs/Scene.hpp"
 #include "System.hpp"
 #include "TransformComponent.hpp"
 #include "TextureComponent.hpp"

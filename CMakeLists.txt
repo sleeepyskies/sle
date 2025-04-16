@@ -80,8 +80,7 @@ target_include_directories(
         ${CMAKE_SOURCE_DIR}/src/map
         ${CMAKE_SOURCE_DIR}/src/util
         ${slog_SOURCE_DIR}
-        ${CMAKE_SOURCE_DIR}/external/secs
-        ${CMAKE_SOURCE_DIR}/external/secs/secs
+        ${CMAKE_SOURCE_DIR}/external/secs/include
 )
 
 target_link_libraries(sle PRIVATE

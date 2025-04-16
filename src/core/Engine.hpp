@@ -6,7 +6,7 @@
 #include "PlayState.hpp"
 #include "graphics/Window.hpp"
 #include "slog.hpp"
-#include "secs/Scene.hpp"
+#include "../../external/secs/secs/include/secs/Scene.hpp"
 #include "SDL_timer.h"
 
 namespace sle {

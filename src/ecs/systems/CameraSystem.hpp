@@ -5,7 +5,7 @@
 #include <glm/vec2.hpp>
 #include "CameraComponent.hpp"
 #include "TransformComponent.hpp"
-#include "Scene.hpp"
+#include "../../../external/secs/secs/include/secs/Scene.hpp"
 
 
 namespace sle {

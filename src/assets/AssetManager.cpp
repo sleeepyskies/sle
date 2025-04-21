@@ -3,7 +3,7 @@
 namespace sle {
 
 void AssetManager::init(const ref<Window> window) {
-    assert(window != nullptr && this != nullptr);
+    assert(window != nullptr);
     SDL_Surface *tempSurface = SDL_CreateRGBSurface(0, 1, 1, 32, 0, 0, 0, 0);
     if (!tempSurface) {
         wrn("Could not create surface for fallback texture. {}", SDL_GetError());

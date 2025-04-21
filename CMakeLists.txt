@@ -36,8 +36,6 @@ add_executable(sle
         src/core/Input.hpp
         src/assets/AssetManager.cpp
         src/assets/AssetManager.hpp
-        src/game/Camera.cpp
-        src/game/Camera.hpp
         src/map/MapSerializer.cpp
         src/map/MapSerializer.hpp
         src/map/TileMap.cpp

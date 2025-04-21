@@ -34,8 +34,8 @@ add_executable(sle
         src/graphics/Window.hpp
         src/game/PlayState.cpp
         src/game/PlayState.hpp
-        src/core/EventHandler.cpp
-        src/core/EventHandler.hpp
+        src/core/Input.cpp
+        src/core/Input.hpp
         src/assets/AssetManager.cpp
         src/assets/AssetManager.hpp
         src/game/Camera.cpp
@@ -65,6 +65,8 @@ add_executable(sle
         src/util/types.hpp
         src/util/files.hpp
         src/util/assert.hpp
+        src/core/MouseKey.hpp
+        src/core/KeyboardKey.hpp
 )
 
 target_include_directories(
@@ -79,8 +81,10 @@ target_include_directories(
         ${CMAKE_SOURCE_DIR}/src/graphics
         ${CMAKE_SOURCE_DIR}/src/map
         ${CMAKE_SOURCE_DIR}/src/util
+
         ${slog_SOURCE_DIR}
-        ${CMAKE_SOURCE_DIR}/external/secs/include
+
+        external/secs
 )
 
 target_link_libraries(sle PRIVATE

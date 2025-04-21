@@ -12,8 +12,8 @@ namespace sle {
 /**
  * @brief System responsible for handling camera movement based on user input.
  *
- * Process all entities with @ref CameraComponent and @ref TransformComponent,
- * and handles user input of the WASD keys to the camera, scaled by a speed factor.
+ * Process all entities with @ref CameraComponent and @ref TransformComponent.
+ * Handles user input of the WASD keys to the camera, scaled by a speed factor.
  *
  * @implements secs::System
  */

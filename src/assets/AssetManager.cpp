@@ -1,5 +1,8 @@
 #include "AssetManager.hpp"
 
+#include "TextureComponent.hpp"
+#include "assert.hpp"
+
 namespace sle {
 
 void AssetManager::init(const ref<Window> window) {
@@ -18,7 +21,8 @@ void AssetManager::init(const ref<Window> window) {
     }
 
     m_window                    = window;
-    m_textures[MISSING_TEXTURE] = std::make_shared<Texture>(texture);
+    m_textureArray.emplace_back( texture );
+    m_loaded[MISSING_TEXTURE] = 0;
 }
 
 maybe<Texture> AssetManager::createTexture(const std::filesystem::path &filePath) const {
@@ -41,21 +45,26 @@ maybe<Texture> AssetManager::createTexture(const std::filesystem::path &filePath
     return std::make_optional<Texture>(texture);
 }
 
-ref<Texture> AssetManager::texture(const std::string &name, const std::filesystem::path &filePath) {
+TextureIndex AssetManager::loadTexture(const std::string &name, const std::filesystem::path &filePath) {
     // Texture already exists, return it
-    if (m_textures.contains(name) && !m_textures[name].expired()) { // short circuit eval :)
-        return m_textures[name].lock();
+    if (!m_loaded.contains(name)) {
+        return m_loaded[name];
     }
 
     auto textureResult = createTexture(filePath / (name + ".png"));
     if (!textureResult)
-        return m_textures[MISSING_TEXTURE].lock(); // could not create, return default texture
+        return m_loaded[MISSING_TEXTURE]; // fallback texture
 
-    ref<Texture> textureRef   = std::make_shared<Texture>(std::move(*textureResult));
-    wref<Texture> textureWref = textureRef;
-    m_textures[name]      = textureWref;
+    m_textureArray.push_back(std::move(*textureResult));
+    m_loaded[name] = m_textureArray.size() - 1;
 
-    return textureRef; // nice, success :)
+    return m_loaded[name]; // nice, success :)
 }
+
+Texture AssetManager::getByIndex(const TextureIndex index) {
+    SLE_ASSERT(index < m_textureArray.size(), "Cannot index the AssetManager Texture array out of bounds!");
+    return std::move(m_textureArray[index]);
+}
+
 
 } // namespace sle

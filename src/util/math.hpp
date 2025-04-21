@@ -1,6 +1,5 @@
 #pragma once
 #include "constants.hpp"
-#include "Camera.hpp"
 #include <SDL.h>
 #include <glm/gtc/matrix_inverse.hpp>
 #include <glm/mat2x2.hpp>
@@ -11,25 +10,26 @@ namespace sle {
 // -------- Camera Offset ----------------
 
 /**
- * @brief Finds the exact tile index relative to the cameras current offset. Note that this must be
- * divided by CHUNK_SIZE for finding chunk indices.
- * @param cam The camera to use the position of.
+ * @brief Offsets the given pos vector relative to the camera vector.
+ * @param cam The camera position vector.
  * @param pos The position to offset as a 2D vector.
- * @returns An offset glm::vec2.
+ * @returns An offset glm::ivec2.
  */
-inline glm::ivec2 withCameraOffset(const Camera &cam, const glm::ivec2 pos) { return pos - cam.getPos(); }
+inline glm::ivec2 makeOffsetVec(const glm::ivec2 cam, const glm::ivec2 pos) {
+    return pos - cam;
+}
 
 /**
- * @brief Finds the exact tile index relative to the cameras current offset. Note that this must be
- * divided by CHUNK_SIZE for finding chunk indices.
- * @param cam The camera to use the position of.
- * @param pos The position to offset as a SDL_Rect.
+ * @brief Offsets the given pos vector relative to the camera vector.
+ * @param cam The camera position vector.
+ * @param pos The position to offset as a 2D vector.
  * @returns An offset SDL_Rect.
  */
-inline SDL_Rect withCameraOffset(const Camera &cam, const SDL_Rect &pos) {
-    const glm::ivec2 camPos = cam.getPos();
-    return { (camPos.x + pos.x), (camPos.y + pos.y), pos.w, pos.h };
+inline SDL_Rect makeOffsetRect(const glm::ivec2 cam, const glm::ivec2 pos) {
+    const glm::ivec2 offs = pos - cam;
+    return SDL_Rect{ offs.x, offs.y, 0, 0 };
 }
+
 
 // -------- Linear Algebra Math ----------------
 
@@ -66,8 +66,8 @@ inline glm::ivec2 screenToTile(const glm::ivec2 &pos) {
  * @brief Takes a tiles indices in a 2D std::vector, and outputs its corresponding coordinates on the screen.
  */
 inline SDL_Rect tileToScreen(const SDL_Rect pos) {
-    glm::ivec2 posVec{ pos.x, pos.y };
-    glm::ivec2 resultVec = tileToScreenM * posVec;
+    const glm::ivec2 posVec{ pos.x, pos.y };
+    const glm::ivec2 resultVec = tileToScreenM * posVec;
     return { resultVec.x, resultVec.y, pos.w, pos.h };
 }
 
@@ -76,8 +76,8 @@ inline SDL_Rect tileToScreen(const SDL_Rect pos) {
  * @warning The function may output negative indices or out of bound indices. This is not checked here.
  */
 inline SDL_Rect screenToTile(const SDL_Rect &pos) {
-    glm::ivec2 posVec{ pos.x - HALF_TILE_HEIGHT, pos.y };
-    glm::ivec2 resultVec = screenToTileM * posVec;
+    const glm::ivec2 posVec{ pos.x - HALF_TILE_HEIGHT, pos.y };
+    const glm::ivec2 resultVec = screenToTileM * posVec;
     return { resultVec.x, resultVec.y, pos.w, pos.h };
 }
 

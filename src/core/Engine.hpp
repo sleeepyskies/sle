@@ -1,12 +1,11 @@
 #pragma once
 
 #include "AssetManager.hpp"
-#include "EventHandler.hpp"
-#include "GameStateMachine.hpp"
-#include "PlayState.hpp"
-#include "graphics/Window.hpp"
+#include "Renderer.hpp"
+#include "Input.hpp"
+#include "Window.hpp"
 #include "slog.hpp"
-#include "../../external/secs/secs/include/secs/Scene.hpp"
+#include "secs/secs.hpp"
 #include "SDL_timer.h"
 
 namespace sle {
@@ -18,21 +17,22 @@ namespace sle {
 class Engine {
 
 public:
-    Engine()  = default;
+    Engine() = default;
+
     ~Engine() = default;
 
     /// @brief Sets up the engine. Must be called before calling run().
     void init();
+
     /// @brief Shuts down the engine. Should only be called once the engine is no longer needed.
     void shutdown() const;
+
     /// @brief Starts the main application loop.
     void run();
 
 private:
     /// @brief The scene object that contains the game.
     secs::Scene m_scene{};
-    /// @brief The @ref InputManager handles getting all user input and window events.
-    EventHandler m_eventHandler;
     /// @brief The @ref AssetManager handles getting all loadable assets.
     ref<AssetManager> m_assetManager = nullptr;
 

@@ -15,11 +15,7 @@ namespace sle {
 const std::string MISSING_TEXTURE = "--missing-texture--";
 
 /**
- * @brief This class is responsible for loading and handling all assets used in sle.
- *
- * Currently, the AssetManager will only hold wrefs to any assets used. This is to make sure
- * any assets that are no longer being used are freed up automatically, whilst still retaining
- * the ability to hand out refs.
+ * @brief TODO add documentation, figure out a way to automatically handle cleanup when texture is not being used anymor.
  */
 class AssetManager {
 public:
@@ -30,19 +26,27 @@ public:
     void init(ref<Window> window);
 
     /**
-     * @brief This function will first check if an asset has already been loaded and return it. If it has
-     * not been loaded yet, it will create this @ref Texture and keep a wref for itself. The caller
-     * then has ownership of the texture.
+     * @brief This function will load the texture at the given location. If it has already been loaded,
+     * it will not load it again. Otherwise, it will create a new @ref Texture, store it and then return
+     * its index.
      *
      * @param name The name of the file to load
      * @param filePath The filepath to the texture to be loaded.
-     * @return A ref to the created @ref Texture
+     * @return The index of the loaded texture.
      */
-    ref<Texture> texture(const std::string &name, const std::filesystem::path &filePath);
+    TextureIndex loadTexture(const std::string &name, const std::filesystem::path &filePath);
+
+    /**
+     * @brief This function return the @ref Texture at the given index.
+     *
+     * @param index The desired index.
+     * @return The Texture at the given index.
+     */
+    Texture getByIndex(TextureIndex index);
 
 private:
-    /// @brief A mapping of file path to Texture wref.
-    hashmap<std::string, wref<Texture>> m_textures;
+    std::vector<Texture> m_textureArray{};
+    hashmap<std::string, TextureIndex> m_loaded{};
 
     /// @ref A pointer to the current window.
     ref<Window> m_window = nullptr;

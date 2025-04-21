@@ -32,6 +32,9 @@ uref<T> makeUref(Args&&... args) {
     return std::make_unique<T>(std::forward<Args>(args)...);
 }
 
+/// @brief Represents a textures index into an array.
+using TextureIndex = size_t;
+
 /// @brief An RGBA color represented as a 4D vector
 using Color = glm::u8vec4;
 
@@ -43,6 +46,5 @@ template <typename K, typename V> using hashmap = std::unordered_map<K, V>;
 
 /// @brief A hash set aka std::unordered_set
 template <typename K> using hashset = std::unordered_set<K>;
-
 
 } // namespace sle

@@ -1,13 +1,15 @@
 #include "Engine.hpp"
 
+
 namespace sle {
 
 void Engine::init() {
     initSDL();
 
     const auto window = std::make_shared<Window>();
-    m_assetManager = std::make_shared<AssetManager>();
+    m_assetManager    = std::make_shared<AssetManager>();
     m_assetManager->init(window);
+    Renderer::get().init(window);
 }
 
 void Engine::initSDL() const {
@@ -26,21 +28,18 @@ void Engine::initSDL() const {
 }
 
 void Engine::run() {
-    bool running = true;
-    Uint64 now = SDL_GetPerformanceCounter();
-    Uint64 previous = now;
-    double deltaTime = 0;
+    Uint64 now                = SDL_GetPerformanceCounter();
+    Uint64 previous           = now;
+    double deltaTime          = 0;
     const double frequencyInv = 1000 / static_cast<double>(SDL_GetPerformanceFrequency());
-    while (running) {
-        previous = now;
-        now = SDL_GetPerformanceCounter();
+    while (Input::get().running()) {
+        previous  = now;
+        now       = SDL_GetPerformanceCounter();
         deltaTime = (static_cast<double>(now) - static_cast<double>(previous)) * frequencyInv;
 
-        m_scene.update(deltaTime, m_eventHandler.inputData());
-
-        // TODO: Handle rendering here too
-
-        running = !m_eventHandler.engineData().quit;
+        Input::get().poll();
+        m_scene.update(deltaTime);
+        Renderer::get().render(m_assetManager);
     }
 }
 

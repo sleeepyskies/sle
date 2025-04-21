@@ -13,7 +13,7 @@ Input& Input::get() {
 }
 
 void Input::poll() {
-    SDL_Event e = SDL_Event();
+    auto e = SDL_Event();
     while (SDL_PollEvent(&e)) {
         switch (e.type) {
         case SDL_QUIT:
@@ -56,6 +56,9 @@ glm::ivec2 Input::mousePos() const {
     return m_mousePos;
 }
 
+bool Input::running() const {
+    return m_active;
+}
 
 
 

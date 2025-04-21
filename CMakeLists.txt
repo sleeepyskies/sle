@@ -59,6 +59,8 @@ add_executable(sle
         src/util/assert.hpp
         src/core/MouseKey.hpp
         src/core/KeyboardKey.hpp
+        src/graphics/Renderer.cpp
+        src/graphics/Renderer.hpp
 )
 
 target_include_directories(

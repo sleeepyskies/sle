@@ -46,6 +46,8 @@ public:
     bool mouseKey(MouseKey key) const;
     /// @brief Returns the current mouse position.
     glm::ivec2 mousePos() const;
+    /// @brief Returns true if no event has occurred to stop the engine.
+    bool running() const;
 
 private:
     /// Hide constructor

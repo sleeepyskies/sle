@@ -14,10 +14,6 @@ class Texture {
 public:
     /// @brief Make sure we cannot use the default constructor
     Texture() = delete;
-    /// @brief Make sure we cannot use the copy constructor
-    Texture(const Texture &) = delete;
-    /// @brief Make sure we cannot use copy assignment
-    Texture &operator=(const Texture &) = delete;
 
     /// @brief Make sure we must construct Texture explicitly
     explicit Texture(SDL_Texture *texture) : m_texture(texture) {}

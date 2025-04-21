@@ -1,6 +1,7 @@
 #include "Window.hpp"
 
 namespace sle {
+
 Window::Window() {
     m_window = SDL_CreateWindow(
         WINDOW_NAME.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_RESIZABLE);
@@ -38,6 +39,12 @@ void Window::clear(const Color &color) const {
     }
     if (SDL_RenderClear(m_renderer) != 0) {
         err("Could not clear the renderer. {}", SDL_GetError());
+    }
+}
+
+void Window::render(const Texture &texture, const SDL_Rect pos) const {
+    if (!SDL_RenderCopy(m_renderer, texture.texture(), nullptr, &pos)) {
+       dbg("Window::render() failed due to SDL_RenderCopy() fail : {}", SDL_GetError());
     }
 }
 

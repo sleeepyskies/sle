@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Texture.hpp"
 #include "constants.hpp"
 #include "slog.hpp"
 #include "types.hpp"
@@ -20,6 +21,8 @@ public:
 
     /// @brief Fills the SDL back buffer with the given color. Defaults to black.
     void clear(const Color &color = Color{ 0, 0, 0, 255 }) const;
+    /// @brief Renders the given @ref Texture at the given position on the back buffer.
+    void render(const Texture &texture, SDL_Rect pos) const;
     /// @brief Swaps the SDL buffers. Presents the back buffer image to the screen.
     void present() const;
 

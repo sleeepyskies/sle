@@ -1,12 +1,11 @@
 #pragma once
 
-#include "System.hpp"
-#include <SDL_keycode.h>
+#include "KeyboardKey.hpp"
 #include <glm/vec2.hpp>
 #include "CameraComponent.hpp"
 #include "TransformComponent.hpp"
-#include "../../../external/secs/secs/include/secs/Scene.hpp"
-
+#include "secs/secs.hpp"
+#include "Input.hpp"
 
 namespace sle {
 
@@ -20,29 +19,30 @@ namespace sle {
  */
 class CameraSystem final : public secs::System {
 
-    void update(const double deltaTime, secs::Scene &scene, const secs::InputData &inputData) override {
+    void update(const double deltaTime, secs::Scene &scene) override {
 
         for (const auto &e : scene.getComponentEntities<CameraComponent, TransformComponent>()) {
-            const auto camera    = scene.getComponent<CameraComponent>(e);
-            auto transform = scene.getComponent<TransformComponent>(e);
+            const auto camera = scene.getComponent<CameraComponent>(e);
+            auto transform    = scene.getComponent<TransformComponent>(e);
             glm::vec2 direction{};
 
-            if (inputData.keys.contains(SDLK_w)) {
+            if (Input::get().keyboardKey(SDLK_w)) {
                 direction.y += 1;
             }
-            if (inputData.keys.contains(SDLK_a)) {
+            if (Input::get().keyboardKey(SDLK_a)) {
                 direction.x += 1;
             }
-            if (inputData.keys.contains(SDLK_s)) {
+            if (Input::get().keyboardKey(SDLK_s)) {
                 direction.y -= 1;
             }
-            if (inputData.keys.contains(SDLK_d)) {
+            if (Input::get().keyboardKey(SDLK_s)) {
                 direction.x -= 1;
             }
             if (direction.x == 0 && direction.y == 0) {
                 return;
             }
-            const glm::ivec2 normalized = camera.speed * normalize(glm::vec2{ direction });
+            const glm::ivec2 normalized = static_cast<float>(deltaTime * camera.speed) * normalize(
+                                              glm::vec2{ direction });
             transform.position.x += normalized.x;
             transform.position.y += normalized.y;
         }

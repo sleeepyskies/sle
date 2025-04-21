@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../external/secs/secs/include/secs/Component.hpp"
+#include "secs/secs.hpp"
 
 namespace sle {
 struct TextureComponent final : secs::Component {

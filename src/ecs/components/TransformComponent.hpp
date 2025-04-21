@@ -1,13 +1,14 @@
 #pragma once
 
-#include "../../../external/secs/secs/include/secs/Component.hpp"
-#include <SDL.h>
+#include "secs/secs.hpp"
+#include <glm/vec2.hpp>
 
 namespace sle {
 struct TransformComponent final : secs::Component {
-    SDL_Rect position;
+    glm::ivec2 position;
 
-    explicit TransformComponent(const SDL_Rect rect)
-        : position(rect) {}
+    explicit TransformComponent(const glm::ivec2 pos)
+        : position(pos) {
+    }
 };
 } // namespace sle

@@ -32,8 +32,6 @@ add_executable(sle
         src/core/Engine.hpp
         src/graphics/Window.cpp
         src/graphics/Window.hpp
-        src/game/PlayState.cpp
-        src/game/PlayState.hpp
         src/core/Input.cpp
         src/core/Input.hpp
         src/assets/AssetManager.cpp
@@ -45,10 +43,6 @@ add_executable(sle
         src/map/TileMap.cpp
         src/map/TileMap.hpp
         src/graphics/Texture.hpp
-        src/game/MapEditorState.cpp
-        src/game/MapEditorState.hpp
-        src/game/GameStateMachine.hpp
-        src/game/GameStateMachine.cpp
 
         # ecs
         # components

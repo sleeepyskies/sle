@@ -43,7 +43,7 @@ void Input::poll() {
     }
 }
 
-bool Input::key(const KeyboardKey key) const {
+bool Input::keyboardKey(const KeyboardKey key) const {
     const auto it = m_keys.find(key);
     return it != m_keys.end() && it->second;
 }

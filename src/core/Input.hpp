@@ -41,7 +41,7 @@ public:
     void poll();
 
     /// @brief Returns true if the key is pressed.
-    bool key(KeyboardKey key) const;
+    bool keyboardKey(KeyboardKey key) const;
     /// @brief Returns true if the mouse button is pressed.
     bool mouseKey(MouseKey key) const;
     /// @brief Returns the current mouse position.

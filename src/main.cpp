@@ -1,6 +1,5 @@
 #define SDL_MAIN_HANDLED
 #include "Engine.hpp"
-#include "secs/secs.hpp"
 
 int main() {
     // slog::logLevel = slog::Level::TRACE;

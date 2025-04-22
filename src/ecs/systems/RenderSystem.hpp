@@ -1,5 +1,6 @@
 #pragma once
 
+#include "CameraComponent.hpp"
 #include "Renderer.hpp"
 #include "secs/secs.hpp"
 #include "TransformComponent.hpp"
@@ -19,11 +20,13 @@ namespace sle {
  */
 class RenderSystem final : public secs::System {
     void update(const double deltaTime, secs::Scene &scene) override {
-        // need to somehow get the camera component here also, so that we can offset everything for rendering.
-        const glm::ivec2 cameraPos;
+        const glm::ivec2 cameraPos = scene.getComponent<TransformComponent>(
+            scene.entityWithUniqueComponent<CameraComponent>()
+            ).position;
+
         for (const auto e : scene.getComponentEntities<TextureComponent, TransformComponent>()) {
             const auto transform = scene.getComponent<TransformComponent>(e);
-            auto texture         = scene.getComponent<TextureComponent>(e);
+            const auto texture   = scene.getComponent<TextureComponent>(e);
             Renderer::get().stage(texture.textureIndex, transform.position, cameraPos);
         }
     }

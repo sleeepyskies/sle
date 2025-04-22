@@ -5,8 +5,6 @@
 #include "secs/secs.hpp"
 #include "TransformComponent.hpp"
 #include "TextureComponent.hpp"
-#include "Window.hpp"
-#include "assert.hpp"
 
 namespace sle {
 /**

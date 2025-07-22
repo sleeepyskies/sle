@@ -10,15 +10,13 @@
 namespace sle {
 /// @brief A shared pointer for a given type.
 template <typename T> using ref = std::shared_ptr<T>;
-template <typename T, typename... Args>
-ref<T> makeRef(Args&&... args) {
+template <typename T, typename... Args> ref<T> makeRef(Args &&...args) {
     return std::make_shared<T>(std::forward<Args>(args)...);
 }
 
 /// @brief A shared const pointer for a given type.
 template <typename T> using cref = std::shared_ptr<const T>;
-template <typename T, typename... Args>
-cref<T> makeCref(Args&&... args) {
+template <typename T, typename... Args> cref<T> makeCref(Args &&...args) {
     return std::make_shared<const T>(std::forward<Args>(args)...);
 }
 
@@ -27,8 +25,7 @@ template <typename T> using wref = std::weak_ptr<T>;
 
 /// @brief A weak pointer for a given type.
 template <typename T> using uref = std::unique_ptr<T>;
-template <typename T, typename... Args>
-uref<T> makeUref(Args&&... args) {
+template <typename T, typename... Args> uref<T> makeUref(Args &&...args) {
     return std::make_unique<T>(std::forward<Args>(args)...);
 }
 

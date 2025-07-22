@@ -32,7 +32,7 @@ public:
     Input &operator=(const Input &in) = delete;
 
     /// @brief Returns the instance of Input.
-    static Input& get();
+    static Input &get();
 
     /**
      * @brief This reads in all SDL_Events and updates its state accordingly. Will return false
@@ -59,3 +59,4 @@ private:
 };
 
 } // namespace sle
+

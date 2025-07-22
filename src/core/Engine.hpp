@@ -1,12 +1,12 @@
 #pragma once
 
 #include "AssetManager.hpp"
-#include "Renderer.hpp"
 #include "Input.hpp"
-#include "Window.hpp"
-#include "slog.hpp"
-#include "secs/secs.hpp"
+#include "Renderer.hpp"
 #include "SDL_timer.h"
+#include "Window.hpp"
+#include "secs/secs.hpp"
+#include "slog.hpp"
 
 namespace sle {
 

@@ -7,7 +7,7 @@ Input::Input() {
         v = false;
 }
 
-Input& Input::get() {
+Input &Input::get() {
     static Input instance;
     return instance;
 }
@@ -31,8 +31,7 @@ void Input::poll() {
             break;
         case SDL_KEYDOWN:
             // 0 if not a key repeat
-            if (e.key.repeat == 0)
-                m_keys[e.key.keysym.sym] = true;
+            if (e.key.repeat == 0) m_keys[e.key.keysym.sym] = true;
             break;
         case SDL_KEYUP:
             m_keys[e.key.keysym.sym] = false;
@@ -48,19 +47,10 @@ bool Input::keyboardKey(const KeyboardKey key) const {
     return it != m_keys.end() && it->second;
 }
 
-bool Input::mouseKey(const MouseKey key) const {
-    return m_mouseClicks[key];
-}
+bool Input::mouseKey(const MouseKey key) const { return m_mouseClicks[key]; }
 
-glm::ivec2 Input::mousePos() const {
-    return m_mousePos;
-}
+glm::ivec2 Input::mousePos() const { return m_mousePos; }
 
-bool Input::running() const {
-    return m_active;
-}
-
-
-
+bool Input::running() const { return m_active; }
 
 } // namespace sle

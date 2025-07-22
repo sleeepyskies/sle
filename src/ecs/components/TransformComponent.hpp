@@ -7,8 +7,7 @@ namespace sle {
 struct TransformComponent final : secs::Component {
     glm::ivec2 position;
 
-    explicit TransformComponent(const glm::ivec2 pos)
-        : position(pos) {
-    }
+    explicit TransformComponent(const glm::ivec2 pos) : position(pos) {}
 };
 } // namespace sle
+

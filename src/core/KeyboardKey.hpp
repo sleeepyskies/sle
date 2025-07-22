@@ -3,3 +3,4 @@
 
 /// @brief Provides a sle type alias for SDL's key codes.
 using KeyboardKey = SDL_Keycode;
+

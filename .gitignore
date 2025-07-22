@@ -1,10 +1,14 @@
 /libs
 /cmake-build-debug
+/build
 /.idea
 Doxyfile
 /docs/html
 /docs/latex
 /.venv
+./compile_commands.json
+/.cache
+/external
 
 # macOS
 .DS_Store

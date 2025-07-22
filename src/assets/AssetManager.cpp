@@ -1,6 +1,5 @@
 #include "AssetManager.hpp"
 
-#include "TextureComponent.hpp"
 #include "assert.hpp"
 
 namespace sle {
@@ -20,8 +19,8 @@ void AssetManager::init(const ref<Window> window) {
         throw std::runtime_error("AssetManager construction failed!");
     }
 
-    m_window                    = window;
-    m_textureArray.emplace_back( texture );
+    m_window = window;
+    m_textureArray.emplace_back(texture);
     m_loaded[MISSING_TEXTURE] = 0;
 }
 
@@ -52,8 +51,7 @@ TextureIndex AssetManager::loadTexture(const std::string &name, const std::files
     }
 
     auto textureResult = createTexture(filePath / (name + ".png"));
-    if (!textureResult)
-        return m_loaded[MISSING_TEXTURE]; // fallback texture
+    if (!textureResult) return m_loaded[MISSING_TEXTURE]; // fallback texture
 
     m_textureArray.push_back(std::move(*textureResult));
     m_loaded[name] = m_textureArray.size() - 1;
@@ -65,6 +63,5 @@ Texture AssetManager::getByIndex(const TextureIndex index) {
     SLE_ASSERT(index < m_textureArray.size(), "Cannot index the AssetManager Texture array out of bounds!");
     return std::move(m_textureArray[index]);
 }
-
 
 } // namespace sle

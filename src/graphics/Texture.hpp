@@ -1,7 +1,7 @@
 #pragma once
 
-#include "types.hpp"
 #include "slog.hpp"
+#include "types.hpp"
 #include <SDL.h>
 
 namespace sle {
@@ -33,8 +33,7 @@ public:
 
     /// @brief Make sure to clean up the underlying SDL_Texture* when destructing. Only perform if not nullptr
     ~Texture() {
-        if (m_texture)
-            SDL_DestroyTexture(m_texture);
+        if (m_texture) SDL_DestroyTexture(m_texture);
     }
 
     /// @brief Getter method for the SDL_Texture*

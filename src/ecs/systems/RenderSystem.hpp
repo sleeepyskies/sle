@@ -2,11 +2,12 @@
 
 #include "CameraComponent.hpp"
 #include "Renderer.hpp"
-#include "secs/secs.hpp"
-#include "TransformComponent.hpp"
 #include "TextureComponent.hpp"
+#include "TransformComponent.hpp"
+#include "secs/secs.hpp"
 
 namespace sle {
+
 /**
  * @brief This system handles Rendering all Entities that have the following:
  *
@@ -18,9 +19,9 @@ namespace sle {
  */
 class RenderSystem final : public secs::System {
     void update(const double deltaTime, secs::Scene &scene) override {
-        const glm::ivec2 cameraPos = scene.getComponent<TransformComponent>(
-            scene.entityWithUniqueComponent<CameraComponent>()
-            ).position;
+        // TODO: only render textures that are within the screen.
+        const glm::ivec2 cameraPos =
+            scene.getComponent<TransformComponent>(scene.entityWithUniqueComponent<CameraComponent>()).position;
 
         for (const auto e : scene.getComponentEntities<TextureComponent, TransformComponent>()) {
             const auto transform = scene.getComponent<TransformComponent>(e);
@@ -31,3 +32,4 @@ class RenderSystem final : public secs::System {
 };
 
 } // namespace sle
+

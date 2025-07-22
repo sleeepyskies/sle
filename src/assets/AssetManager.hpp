@@ -15,7 +15,8 @@ namespace sle {
 const std::string MISSING_TEXTURE = "--missing-texture--";
 
 /**
- * @brief TODO add documentation, figure out a way to automatically handle cleanup when texture is not being used anymor.
+ *  TODO: add documentation, figure out a way to automatically handle cleanup when texture is not being used
+ * anymore.
  */
 class AssetManager {
 public:

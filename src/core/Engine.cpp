@@ -1,6 +1,5 @@
 #include "Engine.hpp"
 
-
 namespace sle {
 
 void Engine::init() {

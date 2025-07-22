@@ -1,11 +1,11 @@
 #pragma once
 
-#include "KeyboardKey.hpp"
-#include <glm/vec2.hpp>
 #include "CameraComponent.hpp"
+#include "Input.hpp"
+#include "KeyboardKey.hpp"
 #include "TransformComponent.hpp"
 #include "secs/secs.hpp"
-#include "Input.hpp"
+#include <glm/vec2.hpp>
 
 namespace sle {
 
@@ -20,7 +20,6 @@ namespace sle {
 class CameraSystem final : public secs::System {
 
     void update(const double deltaTime, secs::Scene &scene) override {
-
         for (const auto &e : scene.getComponentEntities<CameraComponent, TransformComponent>()) {
             const auto camera = scene.getComponent<CameraComponent>(e);
             auto transform    = scene.getComponent<TransformComponent>(e);
@@ -41,8 +40,8 @@ class CameraSystem final : public secs::System {
             if (direction.x == 0 && direction.y == 0) {
                 return;
             }
-            const glm::ivec2 normalized = static_cast<float>(deltaTime * camera.speed) * normalize(
-                                              glm::vec2{ direction });
+            const glm::ivec2 normalized =
+                static_cast<float>(deltaTime * camera.speed) * normalize(glm::vec2{ direction });
             transform.position.x += normalized.x;
             transform.position.y += normalized.y;
         }
@@ -50,3 +49,4 @@ class CameraSystem final : public secs::System {
 };
 
 } // namespace sle
+

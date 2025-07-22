@@ -1,16 +1,17 @@
-//
-// Created by Sky Waller on 22.04.25.
-//
+#pragma once
 
-#ifndef TEXTSCENESERIALIZER_HPP
-#define TEXTSCENESERIALIZER_HPP
+#include "ISceneSerializer.hpp"
+#include "files.hpp"
+#include <fstream>
 
 namespace sle {
 
-class TextSceneSerializer {
+class TextSceneSerializer final : ISceneSerializer {
+public:
+    secs::Scene load(const std::string &filePath) override;
 
+    void save(const secs::Scene &scene, const std::string &dirPath) override;
 };
 
-} // sle
+} // namespace sle
 
-#endif //TEXTSCENESERIALIZER_HPP

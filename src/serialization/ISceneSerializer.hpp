@@ -1,4 +1,5 @@
 #pragma once
+#include "AssetManager.hpp"
 #include <secs/Scene.hpp>
 #include <string>
 
@@ -13,7 +14,7 @@ public:
      *
      * @param filepath The filePath to the scene file is located at.
      */
-    virtual secs::Scene load(const std::string &filepath) = 0;
+    virtual secs::Scene load(const std::string& filepath, AssetManager& am) = 0;
 
     /**
      * @brief Saves the given scene in the given directory using the scenes name as the filename.
@@ -21,7 +22,7 @@ public:
      * @param scene The scene to save.
      * @param dirPath The directory in which the scene should be saved into.
      */
-    virtual void save(const secs::Scene &scene, const std::string &dirPath) = 0;
+    virtual void save(secs::Scene& scene, const std::string& dirPath) = 0;
 };
 
 } // namespace sle

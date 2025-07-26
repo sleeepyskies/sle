@@ -1,17 +1,17 @@
 #pragma once
 
+#include "AssetManager.hpp"
 #include "Texture.hpp"
 #include "Window.hpp"
-#include "types.hpp"
-#include "AssetManager.hpp"
 #include "math.hpp"
+#include "types.hpp"
 
 namespace sle {
 
 class Renderer {
 public:
     /// @brief Returns the instance of Renderer.
-    static Renderer &get();
+    static Renderer& get();
 
     /// @brief Inits the Renderer. Must be called before making any render calls.
     void init(ref<Window> window);
@@ -20,7 +20,7 @@ public:
     void stage(size_t textureIndex, glm::ivec2 position, glm::ivec2 cameraPos);
 
     /// @brief Renders all the staged textures.
-    void render(const ref<AssetManager> &am);
+    void render(const ref<AssetManager>& am);
 
 private:
     /// @brief Helper struct for simplifying code. Should only be used in @ref Renderer.hpp
@@ -36,7 +36,7 @@ private:
     ref<Window> m_window = nullptr;
     /// @ref All staged renderables.
     std::vector<Renderable> m_staged{};
-
 };
 
 } // namespace sle
+

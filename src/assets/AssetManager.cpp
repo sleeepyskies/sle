@@ -6,13 +6,13 @@ namespace sle {
 
 void AssetManager::init(const ref<Window> window) {
     assert(window != nullptr);
-    SDL_Surface *tempSurface = SDL_CreateRGBSurface(0, 1, 1, 32, 0, 0, 0, 0);
+    SDL_Surface* tempSurface = SDL_CreateRGBSurface(0, 1, 1, 32, 0, 0, 0, 0);
     if (!tempSurface) {
         wrn("Could not create surface for fallback texture. {}", SDL_GetError());
         throw std::runtime_error("AssetManager construction failed!");
     }
 
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(window->renderer(), tempSurface);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(window->renderer(), tempSurface);
     SDL_FreeSurface(tempSurface);
     if (!texture) {
         wrn("Could not create fallback texture from surface. {}", SDL_GetError());
@@ -24,16 +24,16 @@ void AssetManager::init(const ref<Window> window) {
     m_loaded[MISSING_TEXTURE] = 0;
 }
 
-maybe<Texture> AssetManager::createTexture(const std::filesystem::path &filePath) const {
+maybe<Texture> AssetManager::createTexture(const std::filesystem::path& filePath) const {
     assert(m_window != nullptr);
 
-    SDL_Surface *tempSurface = IMG_Load(filePath.generic_string().c_str());
+    SDL_Surface* tempSurface = IMG_Load(filePath.generic_string().c_str());
     if (!tempSurface) {
         wrn("Could not load img from given filePath. {}", IMG_GetError());
         return {};
     }
 
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(m_window->renderer(), tempSurface);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(m_window->renderer(), tempSurface);
     SDL_FreeSurface(tempSurface);
     if (!texture) {
         wrn("Could not create texture from surface. {}", SDL_GetError());
@@ -44,13 +44,13 @@ maybe<Texture> AssetManager::createTexture(const std::filesystem::path &filePath
     return std::make_optional<Texture>(texture);
 }
 
-TextureIndex AssetManager::loadTexture(const std::string &name, const std::filesystem::path &filePath) {
+TextureIndex AssetManager::loadTexture(const std::string& name) {
     // Texture already exists, return it
     if (!m_loaded.contains(name)) {
         return m_loaded[name];
     }
 
-    auto textureResult = createTexture(filePath / (name + ".png"));
+    auto textureResult = createTexture(fetchTexture(name));
     if (!textureResult) return m_loaded[MISSING_TEXTURE]; // fallback texture
 
     m_textureArray.push_back(std::move(*textureResult));
@@ -59,9 +59,9 @@ TextureIndex AssetManager::loadTexture(const std::string &name, const std::files
     return m_loaded[name]; // nice, success :)
 }
 
-Texture AssetManager::getByIndex(const TextureIndex index) {
+const Texture& AssetManager::getByIndex(const TextureIndex index) {
     SLE_ASSERT(index < m_textureArray.size(), "Cannot index the AssetManager Texture array out of bounds!");
-    return std::move(m_textureArray[index]);
+    return m_textureArray[index];
 }
 
 } // namespace sle

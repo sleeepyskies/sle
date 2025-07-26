@@ -6,6 +6,7 @@
 #include "SDL_timer.h"
 #include "Window.hpp"
 #include "secs/secs.hpp"
+#include "TextSceneSerializer.hpp"
 #include "slog.hpp"
 
 namespace sle {

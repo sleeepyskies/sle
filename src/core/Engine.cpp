@@ -9,6 +9,9 @@ void Engine::init() {
     m_assetManager    = std::make_shared<AssetManager>();
     m_assetManager->init(window);
     Renderer::get().init(window);
+
+    TextSceneSerializer tss{};
+    m_scene = tss.load("test.txt", *m_assetManager);
 }
 
 void Engine::initSDL() const {
@@ -27,10 +30,12 @@ void Engine::initSDL() const {
 }
 
 void Engine::run() {
-    Uint64 now                = SDL_GetPerformanceCounter();
-    Uint64 previous           = now;
-    double deltaTime          = 0;
+    Uint64 now       = SDL_GetPerformanceCounter();
+    Uint64 previous  = now;
+    double deltaTime = 0;
+
     const double frequencyInv = 1000 / static_cast<double>(SDL_GetPerformanceFrequency());
+
     while (Input::get().running()) {
         previous  = now;
         now       = SDL_GetPerformanceCounter();

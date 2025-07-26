@@ -2,6 +2,7 @@
 
 #include "Texture.hpp"
 #include "Window.hpp"
+#include "files.hpp"
 #include "slog.hpp"
 #include "types.hpp"
 #include <SDL_image.h>
@@ -35,7 +36,7 @@ public:
      * @param filePath The filepath to the texture to be loaded.
      * @return The index of the loaded texture.
      */
-    TextureIndex loadTexture(const std::string &name, const std::filesystem::path &filePath);
+    TextureIndex loadTexture(const std::string& name);
 
     /**
      * @brief This function return the @ref Texture at the given index.
@@ -43,7 +44,7 @@ public:
      * @param index The desired index.
      * @return The Texture at the given index.
      */
-    Texture getByIndex(TextureIndex index);
+    const Texture& getByIndex(TextureIndex index);
 
 private:
     std::vector<Texture> m_textureArray{};
@@ -53,7 +54,7 @@ private:
     ref<Window> m_window = nullptr;
 
     /// @brief A helper function to create a texture
-    maybe<Texture> createTexture(const std::filesystem::path &filePath) const;
+    maybe<Texture> createTexture(const std::filesystem::path& filePath) const;
 };
 
 } // namespace sle

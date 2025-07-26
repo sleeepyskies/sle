@@ -58,12 +58,14 @@ add_executable(
 	src/util/types.hpp
 	src/util/files.hpp
 	src/util/assert.hpp
+	src/util/strings.hpp
 	src/core/MouseKey.hpp
 	src/core/KeyboardKey.hpp
 	src/graphics/Renderer.cpp
 	src/graphics/Renderer.hpp
 	src/serialization/TextSceneSerializer.cpp
 	src/serialization/TextSceneSerializer.hpp
+	src/serialization/ComponentParser.hpp
 	src/serialization/ISceneSerializer.hpp)
 
 target_include_directories(
@@ -78,6 +80,7 @@ target_include_directories(
 			${CMAKE_SOURCE_DIR}/src/graphics
 			${CMAKE_SOURCE_DIR}/src/map
 			${CMAKE_SOURCE_DIR}/src/util
+			${CMAKE_SOURCE_DIR}/src/serialization
 			${slog_SOURCE_DIR}
 			external/secs)
 
